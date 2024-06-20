@@ -19,7 +19,7 @@ document.getElementById("code").value = input
 
 
 
-function assemble() {
+export function assemble() {
     let code = "";
     code = document.getElementById("code").value;
     document.getElementById("console").innerHTML = "";
@@ -31,24 +31,25 @@ function assemble() {
     }
 }
 
-function run() {
+export function run() {
 
 }
 
-
-document.getElementById('code').addEventListener('keydown', function(e) {
-    if (e.key == 'Tab') {
+export function handler(e) {
+  if (e.key === 'Tab') {
       e.preventDefault();
       var start = this.selectionStart;
       var end = this.selectionEnd;
-  
-      // set textarea value to: text before caret + tab + text after caret
+
+      // Modificar el valor del textarea para insertar un tab
       this.value = this.value.substring(0, start) +
-        "\t" + this.value.substring(end);
-  
-      // put caret at right position again
-      this.selectionStart =
-        this.selectionEnd = start + 1;
-    }
-  });
+          "\t" + this.value.substring(end);
+
+      // Ajustar la posición del cursor
+      this.selectionStart = this.selectionEnd = start + 1;
+  }
+}
+
+// Agregar el evento keydown al elemento con id 'code'
+document.getElementById('code').addEventListener('keydown', keydownHandler);
   
