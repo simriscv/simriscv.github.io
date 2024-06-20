@@ -35,6 +35,8 @@ export function run() {
 
 }
 
+
+
 export function handler(e) {
   if (e.key === 'Tab') {
       e.preventDefault();
@@ -52,4 +54,14 @@ export function handler(e) {
 
 // Agregar el evento keydown al elemento con id 'code'
 document.getElementById('code').addEventListener('keydown', keydownHandler);
-  
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Obtener el botón por su id
+  const loadButton = document.getElementById('loadButton');
+
+  // Agregar un event listener para el evento click
+  loadButton.addEventListener('click', function() {
+      // Llamar a la función assemble al hacer clic en el botón
+      assemble();
+  });
+});
