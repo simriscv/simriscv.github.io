@@ -36,7 +36,7 @@ function run() {
 }
 
 
-document.getElementById('x').addEventListener('keydown', function(e) {
+document.getElementById('code').addEventListener('keydown', function(e) {
     if (e.key == 'Tab') {
       e.preventDefault();
       var start = this.selectionStart;
