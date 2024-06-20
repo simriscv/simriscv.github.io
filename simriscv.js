@@ -57,16 +57,11 @@ document.getElementById('code').addEventListener('keydown', handler);
 
 document.addEventListener('DOMContentLoaded', function() {
   // Obtener el botón por su id
-  const loadButton = document.getElementById('loadButton');
+  const loadButton = document.getElementById('assemble');
 
-    // Verificar si el botón se encontró correctamente
-    if (loadButton) {
-      // Agregar un event listener para el evento click
-      loadButton.addEventListener('click', function() {
-          // Llamar a la función assemble al hacer clic en el botón
-          assemble();
-      });
-  } else {
-      console.error('No se encontró el botón con id "loadButton".');
-  }
+  // Agregar un event listener para el evento click
+  loadButton.addEventListener('click', function() {
+      // Llamar a la función assemble al hacer clic en el botón
+      assemble();
+  });
 });
