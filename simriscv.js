@@ -24,7 +24,7 @@ export function assemble() {
     code = document.getElementById("code").value;
     document.getElementById("console").innerHTML = "";
     try {
-        instr = PEG.parse(x);
+        instr = PEG.parse(code);
         document.getElementById("console").innerHTML = JSON.stringify(instr); 
      } catch (e) {
             document.getElementById("console").innerHTML = e;
