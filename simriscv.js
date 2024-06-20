@@ -53,7 +53,7 @@ export function handler(e) {
 }
 
 // Agregar el evento keydown al elemento con id 'code'
-document.getElementById('code').addEventListener('keydown', keydownHandler);
+document.getElementById('code').addEventListener('keydown', handler);
 
 document.addEventListener('DOMContentLoaded', function() {
   // Obtener el botón por su id
