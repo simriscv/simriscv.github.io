@@ -48,7 +48,7 @@ function tabHandler(e) {
 // del handler
 function delHandler(e) {
     if (e.key === 'Delete' || e.key === 'Backspace') {
-        // nothing
+        e.preventDefault();
     }
 }
 
