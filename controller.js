@@ -10,14 +10,14 @@ const vm = new CPU();
 export function assemble() {
     let code = "";
     let quad_json = "";
-    document.getElementById("console").innerHTML = "";
+    //document.getElementById("console").innerHTML = "";
     code = document.getElementById("code").value;
     try {
         vm.instructions = PEG.parse(code);
         quad_json = JSON.stringify(instr); 
-        document.getElementById("console").innerHTML = quad_json;
+        document.getElementById("console").value += quad_json+'\n$ ';
      } catch (e) {
-        document.getElementById("console").innerHTML = e;
+        document.getElementById("console").value = e+'\n$ ';
     }
 }
 
