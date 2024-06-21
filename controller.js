@@ -1,26 +1,19 @@
+/* model imports */
+
 import PEG from './pvm/parser.js'
 import CPU from './pvm/cpu.js'
 
+const machine = new CPU();
 
-let input = 
-`
-_start:
-        lw t1, 10
-        lw t2, 10
-        add t3, t1, t2
-        mv t0, t3
-
-`
-
-let instr = []
-
-document.getElementById("code").value = input
-
-
+export function load() {
+    let input = "_start:\n\tlw t1, 10\n\tlw t2, 10\n\tadd t3, t1, t2\n\tmv t0, t3\n"
+    document.getElementById("code").value = input
+}
 
 
 export function assemble() {
     let code = "";
+    let instr = []
     code = document.getElementById("code").value;
     document.getElementById("console").innerHTML = "";
     try {
