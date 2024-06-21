@@ -5,12 +5,6 @@ import CPU from './pvm/cpu.js'
 
 const machine = new CPU();
 
-export function load() {
-    let input = "_start:\n\tlw t1, 10\n\tlw t2, 10\n\tadd t3, t1, t2\n\tmv t0, t3\n"
-    document.getElementById("code").value = input
-}
-
-
 export function assemble() {
     let code = "";
     let instr = []
@@ -29,7 +23,6 @@ export function run() {
 }
 
 
-
 export function handler(e) {
   if (e.key === 'Tab') {
       e.preventDefault();
@@ -44,6 +37,12 @@ export function handler(e) {
       this.selectionStart = this.selectionEnd = start + 1;
   }
 }
+
+
+window.onload = function() {
+    let input = "_start:\n\tlw t1, 10\n\tlw t2, 10\n\tadd t3, t1, t2\n\tmv t0, t3\n"
+    document.getElementById("code").value = input
+};
 
 // Agregar el evento keydown al elemento con id 'code'
 document.getElementById('code').addEventListener('keydown', handler);
