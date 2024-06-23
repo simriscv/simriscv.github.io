@@ -1,6 +1,6 @@
 // import model 
-import PEG from './pvm/parser.js'
-import CPU from './pvm/cpu.js'
+import { StartRules, SyntaxError, parse } from './pvm/parser.mjs'
+import CPU from './pvm/cpu.mjs'
 
 
 const vm = new CPU();
@@ -10,7 +10,7 @@ const vm = new CPU();
 export function assemble() {
     let code = "";
     let quad_json = "";
-    document.getElementById("console").value += "as & ld code\n";
+    document.getElementById("console").value += "assemble\n";
     code = document.getElementById("code").value;
     try {
         vm.instructions = PEG.parse(code);

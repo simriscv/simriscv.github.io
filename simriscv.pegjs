@@ -9,46 +9,64 @@ instructions
 	= instruction * 
 		 
 instruction
-	// arithmetic 
+	// arithmetic R
 	= _ op:"add "i rd:reg comma rs1:reg comma rs2:reg end
-		{ i.push({ op: "add", rd:rd, rs1:rs1, rs2:rs2 }); }
+		{ i.push({ op: 51, f3: 0, f7: 0, rd:rd, rs1:rs1, rs2:rs2 }); }
  	/ _ op:"sub "i rd:reg comma rs1:reg comma rs2:reg end
-		{ i.push({ op: "sub", rd:rd, rs1:rs1, rs2:rs2 }); }
+		{ i.push({ op: 51, f3: 0, f7: 32, rd:rd, rs1:rs1, rs2:rs2 }); }
+	
+	// arithmetic immediate I
 	/ _ op:"addi "i rd:reg comma rs1:reg comma imm:imm end
-		{ i.push({ op: "addi", rd:rd, rs1:rs1, imm:imm }); }
+		{ i.push({ op: 19, f3: 0, rd:rd, rs1:rs1, imm:imm }); }
 
-	// logic
+	// logic R
 	/ _ op:"and "i rd:reg comma rs1:reg comma rs2:reg end
-		{ i.push({ op: "and", rd:rd, rs1:rs1, rs2:rs2 }); }
+		{ i.push({ op: 51, f3: 7, rd:rd, rs1:rs1, rs2:rs2 }); }
 	/ _ op:"or "i rd:reg comma rs1:reg comma rs2:reg end
-		{ i.push({ op: "or", rd:rd, rs1:rs1, rs2:rs2 }); }
+		{ i.push({ op: 51, f3: 6, rd:rd, rs1:rs1, rs2:rs2 }); }
 	/ _ op:"xor "i rd:reg comma rs1:reg comma rs2:reg end
-		{ i.push({ op: "xor", rd:rd, rs1:rs1, rs2:rs2 }); }
+		{ i.push({ op: 51, f3: 4, rd:rd, rs1:rs1, rs2:rs2 }); }
+	
+	// logic immediate I
 	/ _ op:"andi "i rd:reg comma rs1:reg comma imm:imm end
-		{ i.push({ op: "andi", rd:rd, rs1:rs1, imm:imm }); }
+		{ i.push({ op: 19, f3: 7, rd:rd, rs1:rs1, imm:imm }); }
 	/ _ op:"ori "i rd:reg comma rs1:reg comma imm:imm end
-		{ i.push({ op: "ori", rd:rd, rs1:rs1, imm:imm }); }
+		{ i.push({ op: 19, f3: 6, rd:rd, rs1:rs1, imm:imm }); }
 	/ _ op:"xori "i rd:reg comma rs1:reg comma imm:imm end
-		{ i.push({ op: "xori", rd:rd, rs1:rs1, imm:imm }); }
+		{ i.push({ op: 19, f3: 4, rd:rd, rs1:rs1, imm:imm }); }
 
-	// load/store
+	// load I
 	/ _ op:"lw "i rd:reg comma imm:imm end
-		{ i.push({ op: "lw", rd:rd, imm:imm }); }
-   	/ _ op:"st "i rd:reg comma imm:imm end
-		{ i.push({ op: "st", rd:rd, imm:imm }); }
+		{ i.push({ op: 3, f3: 2, rd:rd, imm:imm }); }
+
+	// store S
+   	/ _ op:"sw "i rd:reg comma imm:imm end
+		{ i.push({ op:35, f3:2, rd:rd, imm:imm }); }
+
+	// move
+
+
+
 
 	// pseudo
-	/ _ op:"mv "i rd:reg comma rs:reg end
-		{ i.push({ op: "mv", rd:rd, rs:rs }); }
-    / _ op:"nop"i _ end
-    	{ i.push({ op: "nop" }); }
-	/ _ op:"ret"i _ end
-    	{ i.push({ op: "ret" }); }
+	/ _ op:"mv "i rd:reg comma rs1:reg end // addi imm=0
+		{ i.push({ op:19, f3:0, rd:rd, rs1:rs1, imm:0 }); }
+ 	/ _ op:"li "i rd:reg comma imm:imm end // addi rs1=x0
+		{ i.push({ op:19, f3:0, rd:rd, rs1:0, imm:imm }); }
+	/ _ op:"nop"i _ end
+ 		{ i.push({ op:19, f3:0, rd:0, rs1:0, imm:0 }); }
+
+	// directives
+	/ __ ".global "i _ n:name _ end  	
+ 		{ i.push({ op:0, f3:1, name:n }); }
 
 	// others
     / la:label 
-		{ i.push({ op: "label", name: la }); }
-	/ end	
+		{ i.push({ op: 0, name: la }); }
+	/ _ "ecall"i _ end
+	/ end
+	/ ___
+
 
 reg "register"
 	= _ ("zero"i/"x0"i/"r0"i) { return 0; }
@@ -82,14 +100,19 @@ reg "register"
     	/ _ ("t5"i/"x30"i/"r30"i) { return 30; }
     	/ _ ("t6"i/"x31"i/"r31"i) { return 31; }
 
+
+
+
 label "label"
 	= __ n:name __ ":" __ { return n; }
 
 name "name"
 	= [A-Z_a-z][A-Z_a-z0-9]* { return text(); }
 
-imm "integer"
-	= _ i:[0-9]+ { return parseInt(i.join(""));}
+imm "signed immediate"
+	= _ s:("-"/"+")? _ n:[0-9]+ 
+    	{if(s) return parseInt(s + n.join("")); 
+        else return parseInt(n.join(""));}
 
 comma "comma"
 	= _ "," 
@@ -102,3 +125,8 @@ _ "ignored"
 
 __ "ignoredwithnewline"
 	= [ \t\n]*
+
+___ "ignoredwithnewlineempty"
+	= [ \t\n]+
+    
+    
