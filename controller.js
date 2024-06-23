@@ -17,7 +17,7 @@ export function assemble() {
         quad_json = JSON.stringify(vm.instructions); 
         document.getElementById("console").value += quad_json+'\n$ ';
      } catch (e) {
-        document.getElementById("console").value = e+'\n$ ';
+        document.getElementById("console").value += e+'\n$ ';
     }
 }
 
