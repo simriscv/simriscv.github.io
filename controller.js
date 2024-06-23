@@ -28,7 +28,7 @@ export function run() {
 
 // load initial code
 window.onload = function() {
-    let input = "_start:\n\tlw t1, 10\n\tlw t2, 10\n\tadd t3, t1, t2\n\tmv t0, t3\n"
+    let input = ".global _start\n\n_start:\n\tli t0, 15\n\tli t1, -2\n\tadd t2, t0, t1\n\tmv a0, t2\n\tli a7, 93\n\tecall\n"
     document.getElementById("code").value = input
 };
 

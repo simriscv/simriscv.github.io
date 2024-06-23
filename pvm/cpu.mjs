@@ -22,7 +22,15 @@ export default class CPU {
     }
 
     run() {
-
+        init();
+        if (this.registers.length != 0) {
+            while (this.pc < this.registers.length) {
+                switch(this.registers[this.pc]) {
+                    
+                }
+                this.pc++;
+            }
+        }
     }
 
     step() {
