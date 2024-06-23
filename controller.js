@@ -13,7 +13,7 @@ export function assemble() {
     document.getElementById("console").value += "assemble\n";
     code = document.getElementById("code").value;
     try {
-        vm.instructions = PEG.parse(code);
+        vm.instructions = parse(code);
         quad_json = JSON.stringify(vm.instructions); 
         document.getElementById("console").value += quad_json+'\n$ ';
      } catch (e) {
