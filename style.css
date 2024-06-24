@@ -27,12 +27,14 @@ body {
   table {
     border-collapse: collapse;
     width: 50%;
+    height: 100%;
     margin: 20px auto; /* Centrar la tabla */
+    table-layout: fixed;
   }
   
   table, th, td {
     border: 1px solid black;
-    padding: 8px;
+    padding: 2px;
     text-align: center;
   }
   
