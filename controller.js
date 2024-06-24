@@ -37,7 +37,7 @@ window.onload = function() {
 
 function updateConsole(append) {
     let c = document.getElementById("console");
-    const isScrolledToBottom = c.scrollTop + c.clientHeight === c.scrollHeight;
+    const isScrolledToBottom = c.scrollTop + c.clientHeight >= c.scrollHeight - 20;
     c.value += append;
     if (isScrolledToBottom) c.scrollTop = c.scrollHeight;
 }
