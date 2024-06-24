@@ -10,18 +10,20 @@ body {
     justify-content: space-between; /* Distribuye las columnas con espacio entre ellas */
     padding: 20px; /* Espacio alrededor del contenedor */
     align-items: center; /* Centrar verticalmente */
-    height: 100%; /* Ocupar el alto completo del viewport */
+    height: 100vh; /* Ocupar el alto completo del viewport */
   }
   .custom-text1 {
     width: 80%; /* Ancho del textarea */
     height: 50%; /* Altura del textarea */
-    padding: 10px; /* Relleno interior */  
+    padding: 10px; /* Relleno interior */
+    box-sizing: border-box;  
   }
 
   .custom-text2 {
     width: 80%; /* Ancho del textarea */
     height: 30%; /* Altura del textarea */
     padding: 10px; /* Relleno interior */  
+    box-sizing: border-box;
   }
 
   .left-column {
@@ -36,11 +38,15 @@ body {
     /*background-color: grey; /* Color de fondo de la columna derecha */
     padding: 20px; /* Espacio interno dentro de la columna */
     box-sizing: border-box; /* Incluir el padding en el ancho total */
+    display: flex; /* Convertir la columna derecha en flexbox */
+  justify-content: center; /* Centrar contenido horizontalmente */
+  align-items: center; /* Centrar contenido verticalmente */
   }
 
   table {
     border-collapse: collapse;
-    width: 90%;
+    width: 100%;
+    max-width: 100%;
     margin: 10px auto;
     table-layout: fixed;
   }
