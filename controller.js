@@ -70,7 +70,7 @@ function showRegisters() {
     indexHeader.textContent = 'Register';
     headerRow.appendChild(indexHeader);
     const aliasHeader = document.createElement('th');
-    indexHeader.textContent = 'Alias';
+    aliasHeader.textContent = 'Alias';
     headerRow.appendChild(aliasHeader);
     const contentHeader = document.createElement('th');
     contentHeader.textContent = 'Value';
@@ -84,7 +84,7 @@ function showRegisters() {
       indexCell.textContent = "x"+i;
       rowData.appendChild(indexCell);
       const aliasCell = document.createElement('td');
-      indexCell.textContent = vm.alias[i];
+      aliasCell.textContent = vm.alias[i];
       rowData.appendChild(aliasCell);
       const contentCell = document.createElement('td');
       contentCell.textContent = vm.registers[i];
