@@ -30,15 +30,13 @@ export default class CPU {
     }
 
     run() {
-        alert("init");
         // initialization
         init();
         let len = this.instructions.length 
 
         // pipeline cycle
         if (len != 0) {
-            while (this.pc < len) {
-                alert("execute line");                
+            while (this.pc < len) {               
                 // fetch
                 let op = this.instructions[this.pc];
                 let f3 = null;

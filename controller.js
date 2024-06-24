@@ -23,7 +23,6 @@ export function assemble() {
 
 // run program
 export function run() {
-    alert("run call");
     vm.run();
     document.getElementById("console").value += vm.output+'\n$ ';
     showRegisters();
@@ -100,3 +99,11 @@ document.addEventListener('DOMContentLoaded', function() {
       assemble();
   });
 });
+
+// run button listener
+document.addEventListener('DOMContentLoaded', function() {
+    const loadButton = document.getElementById('run');
+    loadButton.addEventListener('click', function() {
+        run();
+    });
+  });
