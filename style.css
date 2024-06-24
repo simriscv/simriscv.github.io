@@ -19,7 +19,9 @@ body, html {
     padding: 10px; /* Relleno interior */
     box-sizing: border-box; /* Incluir el padding en el ancho total */
     resize: none; /* Evitar redimensionamiento del textarea */
-  }
+    color: whitesmoke;
+    background-color: black;
+ }
   
   .custom-text2 {
     width: 100%; /* Ancho del textarea al 100% del contenedor */
@@ -27,7 +29,9 @@ body, html {
     padding: 10px; /* Relleno interior */
     box-sizing: border-box; /* Incluir el padding en el ancho total */
     resize: none; /* Evitar redimensionamiento del textarea */
-  }
+    color: whitesmoke;
+    background-color: black;
+ }
   
   .left-column {
     width: 70%; /* Ancho del 70% para la columna izquierda */
@@ -71,7 +75,6 @@ body, html {
   }
   
   th {
-    background-color: #f2f2f2; /* Fondo de encabezado */
     font-size: 10px
   }
   
