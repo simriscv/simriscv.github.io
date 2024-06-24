@@ -69,9 +69,9 @@ body, html {
   
   table, th, td {
     border: 1px solid grey; /* Borde de celda */
-    padding: 2px; /* Relleno de celda */
+    padding: 1px; /* Relleno de celda */
     text-align: center; /* Alineación de texto en celda */
-    font-size: 8px; /* Tamaño de la fuente */
+    font-size: 10px; /* Tamaño de la fuente */
   }
   
   th {
