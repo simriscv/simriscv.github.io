@@ -10,21 +10,27 @@ const vm = new CPU();
 export function assemble() {
     let code = "";
     let quad_json = "";
-    document.getElementById("console").value += "assemble\n";
+    let console = document.getElementById("console");
+    console.value += "assemble\n";
     code = document.getElementById("code").value;
     try {
         vm.instructions = parse(code);
         quad_json = JSON.stringify(vm.instructions); 
-        document.getElementById("console").value += quad_json+'\n$ ';
+        console.value += quad_json+'\n$ ';
+        console.scrollTop = console.scrollHeight;
      } catch (e) {
-        document.getElementById("console").value += e+'\n$ ';
+        console.value += e+'\n$ ';
+        console.scrollTop = console.scrollHeight;
     }
 }
 
 // run program
 export function run() {
+    let console = document.getElementById("console");
     vm.run();
-    document.getElementById("console").value += "run"+vm.output+'\n$ ';
+    console.value += "run"+vm.output+'\n$ ';
+    console.scrollTop = console.scrollHeight;
+
     showRegisters();
 }
 
@@ -72,7 +78,7 @@ function showRegisters() {
     for (let i = 0; i < vm.registers.length; i++) {
       const rowData = document.createElement('tr');
       const indexCell = document.createElement('td');
-      indexCell.textContent = i;
+      indexCell.textContent = "x"+i;
       rowData.appendChild(indexCell);
       const contentCell = document.createElement('td');
       contentCell.textContent = vm.registers[i];
