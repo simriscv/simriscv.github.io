@@ -79,6 +79,9 @@ export default class CPU {
                 }
                 this.pc++;
             }
+            this.output += "\n"+len+" instructions executed";
+        } else {
+            this.output += "\nwarning: no instruction found";
         }
     }
 
