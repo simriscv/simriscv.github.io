@@ -23,6 +23,7 @@ export function assemble() {
 
 // run program
 export function run() {
+    alert("run call");
     vm.run();
     document.getElementById("console").value += vm.output+'\n$ ';
     showRegisters();
