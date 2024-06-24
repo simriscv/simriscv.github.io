@@ -56,14 +56,13 @@ instruction
 	/ _ op:"nop"i _ end
  		{ i.push({ op:19, f3:0, rd:0, rs1:0, imm:0 }); }
 
-	// directives
+	// directives and others
 	/ __ ".global "i _ n:name _ end  	
- 		{ i.push({ op:0, f3:1, name:n }); }
-
-	// others
+ 		{ i.push({ op:0, f3:0, name:n }); }
     / la:label 
-		{ i.push({ op: 0, name: la }); }
+		{ i.push({ op: 1, name: la }); }
 	/ _ "ecall"i _ end
+		{ i.push({ op: 2 }); }
 	/ end
 	/ ___
 

@@ -30,6 +30,7 @@ export function run() {
 window.onload = function() {
     let input = ".global _start\n\n_start:\n\tli t0, 15\n\tli t1, -2\n\tadd t2, t0, t1\n\tmv a0, t2\n\tli a7, 93\n\tecall\n"
     document.getElementById("code").value = input
+    showRegisters();
 };
 
 
@@ -51,6 +52,35 @@ function delHandler(e) {
         e.preventDefault();
     }
 }
+
+// show register
+function showRegisters() {
+    const tableContainer = document.getElementById('registers-table');
+    const table = document.createElement('table');
+    const headerRow = document.createElement('tr');
+    const indexHeader = document.createElement('th');
+    indexHeader.textContent = 'Register';
+    headerRow.appendChild(indexHeader);
+    const contentHeader = document.createElement('th');
+    contentHeader.textContent = 'Value';
+    headerRow.appendChild(contentHeader);
+    table.appendChild(headerRow);
+
+    // load values
+    for (let i = 0; i < vm.registers.length; i++) {
+      const rowData = document.createElement('tr');
+      const indexCell = document.createElement('td');
+      indexCell.textContent = i;
+      rowData.appendChild(indexCell);
+      const contentCell = document.createElement('td');
+      contentCell.textContent = registers[i];
+      rowData.appendChild(contentCell);
+      table.appendChild(rowData);
+    }
+    tableContainer.innerHTML = '';
+    tableContainer.appendChild(table);
+}
+
 
 // keydown listener for tab handler
 document.getElementById('code').addEventListener('keydown', tabHandler);

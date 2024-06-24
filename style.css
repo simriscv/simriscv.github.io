@@ -1,0 +1,41 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0; /* Color de fondo para el cuerpo */
+  }
+  
+  .container {
+    display: flex;
+    justify-content: space-between; /* Distribuye las columnas con espacio entre ellas */
+    padding: 20px; /* Espacio alrededor del contenedor */
+  }
+  
+  .left-column {
+    width: 70%; /* Ancho del 70% para la columna izquierda */
+    background-color: #ffffff; /* Color de fondo de la columna izquierda */
+    padding: 20px; /* Espacio interno dentro de la columna */
+    box-sizing: border-box; /* Incluir el padding en el ancho total */
+  }
+  
+  .right-column {
+    width: 30%; /* Ancho del 30% para la columna derecha */
+    background-color: #e0e0e0; /* Color de fondo de la columna derecha */
+    padding: 20px; /* Espacio interno dentro de la columna */
+    box-sizing: border-box; /* Incluir el padding en el ancho total */
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 50%;
+    margin: 20px auto; /* Centrar la tabla */
+  }
+  
+  table, th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }

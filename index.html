@@ -5,19 +5,25 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
         <script type="module" src="controller.js"></script>
+        <link rel="stylesheet" href="style.css">
     </head>
 
 <body>
-    
-    <h2>SimRISC-V</h2>
-    code:<br \>
-    <textarea id="code" rows="20" cols="60"></textarea>
-    <br \><br \>
-    <button type="button" id="assemble">Assemble</button>
-    <br \><br \>
-    console:<br \>
-    <textarea id="console" rows="6" cols="60">$ </textarea>
-    
+    <div class="container">
+        <div class="left-column">
+            <h2>SimRISC-V</h2>
+            code:<br \>
+            <textarea id="code" rows="20" cols="60"></textarea>
+            <br \><br \>
+            button type="button" id="assemble">Assemble</button>
+            <br \><br \>
+            console:<br \>
+            <textarea id="console" rows="6" cols="60">$ </textarea>
+        </div>
+        <div class="right-column">
+            <div id="registers-table"></div>
+        </div>
+    </div>
 </body>
 
 </html>
