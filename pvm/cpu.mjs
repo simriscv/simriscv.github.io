@@ -48,14 +48,73 @@ export default class CPU {
                 if (op.code == c.I_TYPE) {
                     if (op.f3 == c.ADDI){
                         let rs1 = this.registers[op.rs1];
-                        this.registers[op.rd] =  rs1 + op.imm;
+                        this.registers[op.rd] = rs1 + op.imm;
+                    } else if (op.f3 == c.XORI) {
+                        let rs1 = this.registers[op.rs1];
+                        this.registers[op.rd] = rs1 ^ op.imm;
+                    } else if (op.f3 == c.ORI) {
+                        let rs1 = this.registers[op.rs1];
+                        this.registers[op.rd] = rs1 | op.imm;
+                    } else if (op.f3 == c.ANDI) {
+                        let rs1 = this.registers[op.rs1];
+                        this.registers[op.rd] = rs1 & op.imm;
                     }
                 } else if (op.code == c.R_TYPE) {
-                    if (op.f3 == c.ADD_SUB){
+                    if (op.f3 == c.R0){
                         if (op.f7 == c.ADD){
                             let rs1 = this.registers[op.rs1];
                             let rs2 = this.registers[op.rs2];
-                            this.registers[op.rd] =  rs1 + rs2;
+                            this.registers[op.rd] = rs1 + rs2;
+                        }  else if (op.f7 == c.SUB){
+                            let rs1 = this.registers[op.rs1];
+                            let rs2 = this.registers[op.rs2];
+                            this.registers[op.rd] = rs1 - rs2;
+                        }  else if (op.f7 == c.MUL){
+                            let rs1 = this.registers[op.rs1];
+                            let rs2 = this.registers[op.rs2];
+                            this.registers[op.rd] = rs1 * rs2;
+                        }
+                    } else if (op.f3 == c.R4){
+                        if (op.f7 == c.XOR){
+                            let rs1 = this.registers[op.rs1];
+                            let rs2 = this.registers[op.rs2];
+                            this.registers[op.rd] = rs1 ^ rs2;
+                        }  else if (op.f7 == c.DIV){
+                            let rs1 = this.registers[op.rs1];
+                            let rs2 = this.registers[op.rs2];
+                            let rd = parseInt(rs1 / rs2);
+                            this.registers[op.rd] = rd;
+                        }
+                    } else if (op.f3 == c.R5){
+                        if (op.f7 == c.OR){
+                            let rs1 = this.registers[op.rs1];
+                            let rs2 = this.registers[op.rs2];
+                            this.registers[op.rd] = rs1 | rs2;
+                        }  else if (op.f7 == c.DIVU){
+                            let rs1 = this.registers[op.rs1];
+                            let rs2 = this.registers[op.rs2];
+                            rs1 = Math.abs(rs1);
+                            rs2 = Math.abs(rs2);
+                            let rd = parseInt(rs1 / rs2);
+                            this.registers[op.rd] = rd;
+                        }
+                    } else if (op.f3 == c.R6){
+                        if (op.f7 == c.REM){
+                            let rs1 = this.registers[op.rs1];
+                            let rs2 = this.registers[op.rs2];
+                            this.registers[op.rd] = rs1 % rs2;
+                        }
+                    } else if (op.f3 == c.R7){
+                        if (op.f7 == c.AND){
+                            let rs1 = this.registers[op.rs1];
+                            let rs2 = this.registers[op.rs2];
+                            this.registers[op.rd] = rs1 & rs2;
+                        }  else if (op.f7 == c.REMU){
+                            let rs1 = this.registers[op.rs1];
+                            let rs2 = this.registers[op.rs2];
+                            rs1 = Math.abs(rs1);
+                            rs2 = Math.abs(rs2);
+                            this.registers[op.rd] = rs1 % rs2;
                         }
                     }
                 } else if (op.code == c.ECALL) {
