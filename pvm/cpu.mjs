@@ -14,6 +14,7 @@ export default class CPU {
     constructor() {
         this.registers = new Array(32).fill(0);
         this.instructions = [];
+        this.alias = c.ALIAS;
         this.pc = 0;
         this.debug = false;
         this.flag = flag;
