@@ -73,7 +73,7 @@ function showRegisters() {
       indexCell.textContent = i;
       rowData.appendChild(indexCell);
       const contentCell = document.createElement('td');
-      contentCell.textContent = registers[i];
+      contentCell.textContent = vm.registers[i];
       rowData.appendChild(contentCell);
       table.appendChild(rowData);
     }
