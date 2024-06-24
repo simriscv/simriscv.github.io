@@ -10,27 +10,21 @@ const vm = new CPU();
 export function assemble() {
     let code = "";
     let quad_json = "";
-    let console = document.getElementById("console");
-    console.value += "assemble\n";
+    updateConsole("assemble\n");
     code = document.getElementById("code").value;
     try {
         vm.instructions = parse(code);
         quad_json = JSON.stringify(vm.instructions); 
-        console.value += quad_json+'\n$ ';
-        console.scrollTop = console.scrollHeight;
+        updateConsole(quad_json+"\n$ ");
      } catch (e) {
-        console.value += e+'\n$ ';
-        console.scrollTop = console.scrollHeight;
+        updateConsole(e+"\n$ ");
     }
 }
 
 // run program
 export function run() {
-    let console = document.getElementById("console");
     vm.run();
-    console.value += "run"+vm.output+'\n$ ';
-    console.scrollTop = console.scrollHeight;
-
+    updateConsole("run"+vm.output+"\n$ ");
     showRegisters();
 }
 
@@ -41,6 +35,12 @@ window.onload = function() {
     showRegisters();
 };
 
+function updateConsole(append) {
+    let c = document.getElementById("console");
+    const isScrolledToBottom = c.scrollTop + c.clientHeight === textarea.scrollHeight;
+    c.value += append;
+    if (isScrolledToBottom) c.scrollTop = c.scrollHeight;
+}
 
 // tab handler
 function tabHandler(e) {
