@@ -31,7 +31,7 @@ export default class CPU {
 
     run() {
         // initialization
-        init();
+        this.init();
         let len = this.instructions.length 
 
         // pipeline cycle
