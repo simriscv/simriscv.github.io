@@ -28,6 +28,13 @@ body {
     box-sizing: border-box;
   }
 
+  button {
+    width: auto; /* Ancho automático para los botones */
+    padding: 10px 20px; /* Relleno interior de los botones */
+    font-size: 14px; /* Tamaño de la fuente de los botones */
+    margin-right: 10px; /* Margen derecho para separar los botones */
+  }
+  
   .left-column {
     width: 70%; /* Ancho del 70% para la columna izquierda */
     /*background-color: dimgrey; /* Color de fondo de la columna izquierda */
