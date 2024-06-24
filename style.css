@@ -35,7 +35,6 @@ body {
     padding: 20px; /* Espacio interno dentro de la columna */
     box-sizing: border-box; /* Incluir el padding en el ancho total */
     display: flex; /* Utiliza flexbox para alinear verticalmente */
-  flex-direction: column; /* Alinear elementos en columna */
   }
   
   .right-column {
@@ -53,7 +52,7 @@ body {
     width: 100%;
     max-width: 100%;
     margin: 10px auto;
-    table-layout: fixed;
+    table-layout:auto;
   }
   
   table, th, td {
