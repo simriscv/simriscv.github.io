@@ -23,7 +23,8 @@ export function assemble() {
 
 // run program
 export function run() {
-
+    vm.run();
+    showRegisters();
 }
 
 // load initial code
