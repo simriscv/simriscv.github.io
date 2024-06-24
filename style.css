@@ -35,7 +35,7 @@ body {
     padding: 20px; /* Espacio interno dentro de la columna */
     box-sizing: border-box; /* Incluir el padding en el ancho total */
     display: flex; /* Utiliza flexbox para alinear verticalmente */
-    justify-content: center; /* Centrar contenido horizontalmente */
+    justify-content: start; /* Centrar contenido horizontalmente */
     align-items: center; /* Centrar contenido verticalmente */
    }
   
