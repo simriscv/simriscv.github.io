@@ -44,12 +44,12 @@ export default class CPU {
                 // decode
 
                 // execute
-                if (op == c.I_TYPE) {
+                if (op.code == c.I_TYPE) {
                     if (op.f3 == c.ADDI){
                         let rs1 = this.registers[op.rs1];
                         this.registers[op.rd] =  rs1 + op.imm;
                     }
-                } else if (op == c.R_TYPE) {
+                } else if (op.code == c.R_TYPE) {
                     if (op.f3 == c.ADD_SUB){
                         if (op.f7 == c.ADD){
                             let rs1 = this.registers[op.rs1];
@@ -57,11 +57,11 @@ export default class CPU {
                             this.registers[op.rd] =  rs1 + rs2;
                         }
                     }
-                } else if (op == c.ECALL) {
+                } else if (op.code == c.ECALL) {
 
-                } else if (op == c.LABEL) {
+                } else if (op.code == c.LABEL) {
 
-                } else if (op == c.DIRECTIVE) {
+                } else if (op.code == c.DIRECTIVE) {
                     if (op.f3 == c.GLOBAL) {
                         if (op.name === "_start") {
                             this.entrySymbol = true;
