@@ -24,7 +24,7 @@ export function assemble() {
 // run program
 export function run() {
     vm.run();
-    document.getElementById("console").value += vm.output+'\n$ ';
+    document.getElementById("console").value += "run\n"+vm.output+'\n$ ';
     showRegisters();
 }
 

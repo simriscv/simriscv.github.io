@@ -39,23 +39,19 @@ export default class CPU {
             while (this.pc < len) {               
                 // fetch
                 let op = this.instructions[this.pc];
-                let f3 = null;
-                let f7 = null; 
-                if (f3) f3 = this.instructions[this.pc].f3;
-                if (f7) f7 = this.instructions[this.pc].f7;
                 this.pc++;
 
                 // decode
 
                 // execute
                 if (op == c.I_TYPE) {
-                    if (f3 == c.ADDI){
+                    if (op.f3 == c.ADDI){
                         let rs1 = this.registers[op.rs1];
                         this.registers[op.rd] =  rs1 + op.imm;
                     }
                 } else if (op == c.R_TYPE) {
-                    if (f3 == c.ADD_SUB){
-                        if (f7 == c.ADD){
+                    if (op.f3 == c.ADD_SUB){
+                        if (op.f7 == c.ADD){
                             let rs1 = this.registers[op.rs1];
                             let rs2 = this.registers[op.rs2];
                             this.registers[op.rd] =  rs1 + rs2;
@@ -66,7 +62,7 @@ export default class CPU {
                 } else if (op == c.LABEL) {
 
                 } else if (op == c.DIRECTIVE) {
-                    if (f3 == c.GLOBAL) {
+                    if (op.f3 == c.GLOBAL) {
                         if (op.name === "_start") {
                             this.entrySymbol = true;
                         }
@@ -76,7 +72,6 @@ export default class CPU {
                 } else {
                     this.output += "\nwarning: unknown instruction";
                 }
-                this.pc++;
             }
             this.output += "\n"+len+" instructions executed";
         } else {
