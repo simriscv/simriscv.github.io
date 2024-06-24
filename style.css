@@ -11,12 +11,12 @@ body {
     justify-content: space-between; /* Distribuye las columnas con espacio entre ellas */
     padding: 20px; /* Espacio alrededor del contenedor */
     /*align-items: center; /* Centrar verticalmente */
-    height: 100vh; /* Ocupar el alto completo del viewport */
-    align-items: stretch;
+    height: 100%; /* Ocupar el alto completo del viewport */
+
   }
   .custom-text1 {
     width: 80%; /* Ancho del textarea */
-    height: 50%; /* Altura del textarea */
+    height: 50%; /* Altura del textarea */  
     padding: 10px; /* Relleno interior */
     box-sizing: border-box;  
   }
@@ -28,13 +28,7 @@ body {
     box-sizing: border-box;
   }
 
-  button {
-    width: auto; /* Ancho automático para los botones */
-    padding: 10px 20px; /* Relleno interior de los botones */
-    font-size: 14px; /* Tamaño de la fuente de los botones */
-    margin-right: 10px; /* Margen derecho para separar los botones */
-  }
-  
+
   .left-column {
     width: 70%; /* Ancho del 70% para la columna izquierda */
     /*background-color: dimgrey; /* Color de fondo de la columna izquierda */
