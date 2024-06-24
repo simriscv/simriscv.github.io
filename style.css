@@ -1,7 +1,8 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0; /* Color de fondo para el cuerpo */
+    color: whitesmoke;
+    background-color: dimgrey; /* Color de fondo para el cuerpo */
   }
   
   .container {
@@ -12,22 +13,22 @@ body {
   
   .left-column {
     width: 70%; /* Ancho del 70% para la columna izquierda */
-    background-color: #ffffff; /* Color de fondo de la columna izquierda */
+    background-color: dimgrey; /* Color de fondo de la columna izquierda */
     padding: 20px; /* Espacio interno dentro de la columna */
     box-sizing: border-box; /* Incluir el padding en el ancho total */
   }
   
   .right-column {
     width: 30%; /* Ancho del 30% para la columna derecha */
-    background-color: #e0e0e0; /* Color de fondo de la columna derecha */
+    background-color: grey; /* Color de fondo de la columna derecha */
     padding: 20px; /* Espacio interno dentro de la columna */
     box-sizing: border-box; /* Incluir el padding en el ancho total */
   }
 
   table {
     border-collapse: collapse;
-    width: 50%;
-    margin: 20px auto;
+    width: 90%;
+    margin: 10px auto;
     table-layout: fixed;
   }
   
@@ -35,10 +36,10 @@ body {
     border: 1px solid black;
     padding: 1px;
     text-align: center;
-    font-size: 8px;
+    font-size: 10px;
   }
   
   th {
-    background-color: #f2f2f2;
-    font-size: 10px;
+    background-color: dimgrey;
+    font-size: 12px;
   }
