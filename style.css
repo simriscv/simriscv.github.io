@@ -67,11 +67,11 @@ body, html {
     border: 1px solid grey; /* Borde de celda */
     padding: 2px; /* Relleno de celda */
     text-align: center; /* Alineación de texto en celda */
-    font-size: 18px; /* Tamaño de la fuente */
+    font-size: 8px; /* Tamaño de la fuente */
   }
   
   th {
     background-color: #f2f2f2; /* Fondo de encabezado */
-    font-size: 12px
+    font-size: 10px
   }
   
