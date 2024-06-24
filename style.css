@@ -9,13 +9,13 @@ body, html {
   .container {
     display: flex;
     justify-content: space-between; /* Distribuye las columnas con espacio entre ellas */
-    padding: 20px; /* Espacio alrededor del contenedor */
+    padding: 10px; /* Espacio alrededor del contenedor */
     height: 100%; /* Ocupar el alto completo del viewport */
   }
   
   .custom-text1 {
     width: 100%; /* Ancho del textarea al 100% del contenedor */
-    height: 50%; /* Altura del textarea al 50% del contenedor */
+    height: 40%; /* Altura del textarea al 50% del contenedor */
     padding: 10px; /* Relleno interior */
     box-sizing: border-box; /* Incluir el padding en el ancho total */
     resize: none; /* Evitar redimensionamiento del textarea */
@@ -23,7 +23,7 @@ body, html {
   
   .custom-text2 {
     width: 100%; /* Ancho del textarea al 100% del contenedor */
-    height: 30%; /* Altura del textarea al 30% del contenedor */
+    height: 20%; /* Altura del textarea al 30% del contenedor */
     padding: 10px; /* Relleno interior */
     box-sizing: border-box; /* Incluir el padding en el ancho total */
     resize: none; /* Evitar redimensionamiento del textarea */
@@ -65,12 +65,13 @@ body, html {
   
   table, th, td {
     border: 1px solid grey; /* Borde de celda */
-    padding: 8px; /* Relleno de celda */
+    padding: 2px; /* Relleno de celda */
     text-align: center; /* Alineación de texto en celda */
-    font-size: 12px; /* Tamaño de la fuente */
+    font-size: 18px; /* Tamaño de la fuente */
   }
   
   th {
     background-color: #f2f2f2; /* Fondo de encabezado */
+    font-size: 12px
   }
   
