@@ -31,45 +31,82 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const tableContainer = document.getElementById('table-container');
-    
-            const csvPath = 'help.csv';
-    
+
+            // Ruta al archivo CSV
+            const csvPath = 'datos.csv';
+
+            // Función para cargar y procesar el CSV
             function loadCSV() {
                 fetch(csvPath)
                     .then(response => response.text())
                     .then(data => {
-                        const rows = data.trim().split('\n');
-                        const headers = rows[0].split(',');
-    
+                        const rows = parseCSV(data);
+                        const headers = rows[0];
+
                         let html = '<table><thead><tr>';
                         headers.forEach(header => {
                             html += `<th>${header}</th>`;
                         });
                         html += '</tr></thead><tbody>';
-    
+
                         for (let i = 1; i < rows.length; i++) {
-                            const row = rows[i].split(',');
+                            const row = rows[i];
                             html += '<tr>';
                             row.forEach(cell => {
                                 html += `<td>${cell}</td>`;
                             });
                             html += '</tr>';
                         }
-    
+
                         html += '</tbody></table>';
                         tableContainer.innerHTML = html;
                     })
                     .catch(error => {
-                        console.error('Onload file CSV error:', error);
+                        console.error('Error al cargar el archivo CSV:', error);
                     });
             }
-    
-            loadCSV();
 
-            row.forEach(cell => {
-                const cleanCell = cell.replace(/"/g, '');
-                html += `<td>${cleanCell}</td>`;
-            });
+            // Función para parsear el CSV teniendo en cuenta las comillas
+            function parseCSV(csv) {
+                // Divide el CSV en líneas
+                const lines = csv.trim().split('\n');
+                const result = [];
+
+                // Procesa cada línea
+                lines.forEach(line => {
+                    let insideQuotes = false;
+                    let field = '';
+                    const fields = [];
+
+                    // Itera sobre cada caracter de la línea
+                    for (let i = 0; i < line.length; i++) {
+                        const char = line[i];
+
+                        if (char === '"') {
+                            // Cambia el estado de "dentro de comillas"
+                            insideQuotes = !insideQuotes;
+                        } else if (char === ',' && !insideQuotes) {
+                            // Si no está dentro de comillas y encuentra una coma, guarda el campo
+                            fields.push(field.trim());
+                            field = '';
+                        } else {
+                            // Agrega el caracter al campo actual
+                            field += char;
+                        }
+                    }
+
+                    // Añade el último campo
+                    fields.push(field.trim());
+
+                    // Agrega la fila procesada al resultado final
+                    result.push(fields);
+                });
+
+                return result;
+            }
+
+            // Llamar a la función para cargar el CSV cuando se carga el contenido de la página
+            loadCSV();
         });
    </script>
 </body>
