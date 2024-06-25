@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SimRISC-V Help</title>
-    <a href="/">Back to home page</a>
+    <button type="button" onclick="window.location.href='/'" >Back</button>
     <style>
         body {
             background-color: black;
@@ -65,6 +65,11 @@
             }
     
             loadCSV();
+
+            row.forEach(cell => {
+                const cleanCell = cell.replace(/"/g, '');
+                html += `<td>${cleanCell}</td>`;
+            });
         });
    </script>
 </body>
