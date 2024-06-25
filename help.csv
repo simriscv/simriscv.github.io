@@ -1,0 +1,20 @@
+Instruction,Description,Operation,Type,opcode,f3,f7
+"""addi rd, rs1, imm""",add immediate,rd = rs1 + imm,I,19,0,-
+"""xori rd, rs1, imm""",xor immediate,rd = rs1 ^ imm,I,19,4,-
+"""ori rd, rs1, imm""",or immediate,rd = rs1 | imm,I,19,6,-
+"""andi rd, rs1, imm""",and immediate,rd = rs1 & imm,I,19,7,-
+"""add rd, rs1, rs2""",add,rd = rs1 + rs2,R,51,0,0
+"""sub rd, rs1, rs2""",sub,rd = rs1 - rs2,R,51,0,32
+"""xor rd, rs1, rs2""",xor,rd = rs1 ^ rs2,R,51,4,0
+"""or rd, rs1, rs2""",or,rd = rs1 | rs2,R,51,6,0
+"""and rd, rs1, rs2""",and,rd = rs1 & rs2,R,51,7,0
+"""mul rd, rs1, rs2""",multiply,rd = rs1 * rs2,R,51,0,1
+"""div rd, rs1, rs2""",divide signed,rd = rs1 / rs2,R,51,4,1
+"""divu rd, rs1, rs2""",divide unsigned,rd = rs1 / rs2,R,51,5,1
+"""rem rd, rs1, rs2""",remainder signed,rd = rs1 % rs2,R,51,6,1
+"""remu rd, rs1, rs2""",remainder unsigned,rd = rs1 % rs2,R,51,7,1
+"""nop""",no operation,"addi x0, x0, 0",Pseudo,-,-,-
+"""li rd, imm""",load immediate,"addi rd, x0, imm",Pseudo,-,-,-
+"""mv rd, rs1""",move/copy,"addi rd, rs1,0",Pseudo,-,-,-
+"""not rd, rs1""",one's complement,"xori rd, rs1, -1",Pseudo,-,-,-
+"""neg rd, rs1""",two's complement,"sub rd, x0, rs1",Pseudo,-,-,-
