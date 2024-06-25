@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SimRISC-V Help</title>
+    <a href="/">Back to home page</a>
+    <style>
+        body {
+            background-color: black;
+            color: whitesmoke;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid whitesmoke;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h2>Available Instructions</h2>
+    <div id="table-container"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tableContainer = document.getElementById('table-container');
+    
+            const csvPath = 'nemonic.csv';
+    
+            function loadCSV() {
+                fetch(csvPath)
+                    .then(response => response.text())
+                    .then(data => {
+                        const rows = data.trim().split('\n');
+                        const headers = rows[0].split(',');
+    
+                        let html = '<table><thead><tr>';
+                        headers.forEach(header => {
+                            html += `<th>${header}</th>`;
+                        });
+                        html += '</tr></thead><tbody>';
+    
+                        for (let i = 1; i < rows.length; i++) {
+                            const row = rows[i].split(',');
+                            html += '<tr>';
+                            row.forEach(cell => {
+                                html += `<td>${cell}</td>`;
+                            });
+                            html += '</tr>';
+                        }
+    
+                        html += '</tbody></table>';
+                        tableContainer.innerHTML = html;
+                    })
+                    .catch(error => {
+                        console.error('Onload file CSV error:', error);
+                    });
+            }
+    
+            loadCSV();
+        });
+   </script>
+</body>
+</html>
