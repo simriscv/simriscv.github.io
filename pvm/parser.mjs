@@ -436,7 +436,7 @@ function peg$parse(input, options) {
   var peg$e131 = peg$otherExpectation("ignoredwithnewlineempty");
   var peg$e132 = peg$literalExpectation("c", false);
 
-  var peg$f0 = function() {return 0;};
+  var peg$f0 = function() {return i;};
   var peg$f1 = function(stmt) { i.push(stmt); };
   var peg$f2 = function(stmt) { i.push(stmt); };
   var peg$f3 = function(stmt) { i.push(stmt); };
