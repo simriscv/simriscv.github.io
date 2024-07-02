@@ -122,7 +122,7 @@ function showStack() {
     for (let i = 0; i < vm.addr.length; i++) {
       const rowData = document.createElement('tr');
       const indexCell = document.createElement('td');
-      indexCell.textContent = i;
+      indexCell.textContent = vm.addr[i];
       rowData.appendChild(indexCell);
       const contentCell = document.createElement('td');
       contentCell.textContent = "0000 0000";
