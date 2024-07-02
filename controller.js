@@ -16,6 +16,7 @@ export function assemble() {
         vm.instructions = parse(code);
         quad_json = JSON.stringify(vm.instructions); 
         updateConsole(quad_json+"\n$ ");
+        stackUpdate();
      } catch (e) {
         updateConsole(e+"\n$ ");
     }
@@ -26,6 +27,7 @@ export function run() {
     vm.run();
     updateConsole("run"+vm.output+"\n$ ");
     showRegisters();
+    showStack();
 }
 
 // load initial code
@@ -35,6 +37,12 @@ window.onload = function() {
     showRegisters();
     showStack();
 };
+
+
+function stackUpdate() {
+
+}
+
 
 function updateConsole(append) {
     let c = document.getElementById("console");
@@ -98,7 +106,7 @@ function showRegisters() {
 
 
 // show stack
-function showRegisters() {
+function showStack() {
     const tableContainer = document.getElementById('stack-table');
     const table = document.createElement('table');
     const headerRow = document.createElement('tr');
