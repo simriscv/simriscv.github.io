@@ -37,6 +37,7 @@ export default class CPU {
         let addr = 0;
         let view = new DataView(this.stack);
         let len = this.instructions.length;
+        this.registers[28] = 2;
         for (let i=0; i<len; i++) {
             let op = this.instructions[i];
             if (op.code == c.DIRECTIVE) {
