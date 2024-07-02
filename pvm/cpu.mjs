@@ -39,8 +39,9 @@ export default class CPU {
         let len = this.instructions.length;
         
         for (let i=0; i<len; i++) {
-            this.registers[28] = i;
+            
             let op = this.instructions[i];
+            this.registers[28] = i;
             if (op.code == c.DIRECTIVE) {
                 this.registers[28] = 3;
                 if (op.f3 == c.DATA) {
@@ -58,7 +59,7 @@ export default class CPU {
                         }
                     }
                 }
-            }
+            } else this.registers[31] = 1;
         }
     }
 
