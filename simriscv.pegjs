@@ -1,87 +1,143 @@
 // Luis Espino
 // 2024
 
-{	let i = []; }
+{	
+	let i = [];		// opcodes array
+	let s = 0; 		// 0 text 1 data 2 bss 3 rodata 
+}
 
-program = instructions { return i; }
+program
+	=  statements {return i	;}
+    
+statements 
+	= statement *
 
-instructions
-	= instruction * 
-		 
+statement
+	= __ stmt:label		
+		{ i.push(stmt); }
+    / __ stmt:directive	
+    / __ stmt:instruction comments? end
+		{ i.push(stmt); }
+    / __ comments
+    
+label
+	= n:name _ ":" 
+		{ return { code: 1, name: n }; }
+
+directive
+	= "."("global "i/"globl "i) _ n:name end 	
+ 		{ i.push({ code:0, f3:0, name:n }); }
+	/ data
+   
+    / ".text"i end
+ 		{ i.push({ code:0, f3:4, name:"text" }); }
+
+data
+	= __ ".data"i end (declaration)*
+
+declaration
+	= __ n:name _ ":" tail:(__ definition end)*
+		{
+			i.push({ code:0, f3:2, name:n,
+			vars:[].concat(tail.map(function(i){return i[1];}))});
+		}         
+definition
+	= t:type v:value 
+    	{ return { type:t, value:v }; }
+	/ t:type_array head:values tail:(comma values)*
+		{
+			return {type:t, 
+			value:[head].concat(tail.map(function(i){return i[1];}))};
+		} 
+
+type
+	= ".ascii "i { return 4; }
+	/ ".asciz "i { return 5; }
+	/ ".string "i { return 6; }
+
+value
+	= "\""v:[a-z]*"\"" { return v;}
+
+type_array
+	= ".byte "i { return 0; }
+	/ ".half "i { return 1; }
+	/ ".word "i { return 2; }
+	/ ".dword "i { return 3; }
+
+values
+	= imm:imm { return imm;}
+ 	
+
 instruction
 	// arithmetic immediate I
-	= _ op:"addi "i rd:reg comma rs1:reg comma imm:imm end
-		{ i.push({ code: 19, f3: 0, rd:rd, rs1:rs1, imm:imm }); }
-	/ _ op:"xori "i rd:reg comma rs1:reg comma imm:imm end
-		{ i.push({ code: 19, f3: 4, rd:rd, rs1:rs1, imm:imm }); }
-	/ _ op:"ori "i rd:reg comma rs1:reg comma imm:imm end
-		{ i.push({ code: 19, f3: 5, rd:rd, rs1:rs1, imm:imm }); }
-	/ _ op:"andi "i rd:reg comma rs1:reg comma imm:imm end
-		{ i.push({ code: 19, f3: 7, rd:rd, rs1:rs1, imm:imm }); }
+	= op:"addi "i rd:reg comma rs1:reg comma imm:imm
+		{ return { code: 19, f3: 0, rd:rd, rs1:rs1, imm:imm }; }
+	/ op:"xori "i rd:reg comma rs1:reg comma imm:imm
+		{ return { code: 19, f3: 4, rd:rd, rs1:rs1, imm:imm }; }
+	/ op:"ori "i rd:reg comma rs1:reg comma imm:imm
+		{ return { code: 19, f3: 5, rd:rd, rs1:rs1, imm:imm }; }
+	/ op:"andi "i rd:reg comma rs1:reg comma imm:imm
+		{ return { code: 19, f3: 7, rd:rd, rs1:rs1, imm:imm }; }
 
 	// arithmetic R
-	/ _ op:"add "i rd:reg comma rs1:reg comma rs2:reg end
-		{ i.push({ code: 51, f3: 0, f7: 0, rd:rd, rs1:rs1, rs2:rs2 }); }
- 	/ _ op:"sub "i rd:reg comma rs1:reg comma rs2:reg end
-		{ i.push({ code: 51, f3: 0, f7: 32, rd:rd, rs1:rs1, rs2:rs2 }); }
+	/ op:"add "i rd:reg comma rs1:reg comma rs2:reg
+		{ return { code: 51, f3: 0, f7: 0, rd:rd, rs1:rs1, rs2:rs2 }; }
+ 	/ op:"sub "i rd:reg comma rs1:reg comma rs2:reg
+		{ return { code: 51, f3: 0, f7: 32, rd:rd, rs1:rs1, rs2:rs2 }; }
 
 	// RVM arithmetic R
- 	/ _ op:"mul "i rd:reg comma rs1:reg comma rs2:reg end
-		{ i.push({ code: 51, f3: 0, f7: 1, rd:rd, rs1:rs1, rs2:rs2 }); }
- 	/ _ op:"div "i rd:reg comma rs1:reg comma rs2:reg end
-		{ i.push({ code: 51, f3: 4, f7: 1, rd:rd, rs1:rs1, rs2:rs2 }); }
- 	/ _ op:"divu "i rd:reg comma rs1:reg comma rs2:reg end
-		{ i.push({ code: 51, f3: 5, f7: 1, rd:rd, rs1:rs1, rs2:rs2 }); }
- 	/ _ op:"rem "i rd:reg comma rs1:reg comma rs2:reg end
-		{ i.push({ code: 51, f3: 6, f7: 1, rd:rd, rs1:rs1, rs2:rs2 }); }
- 	/ _ op:"remu "i rd:reg comma rs1:reg comma rs2:reg end
-		{ i.push({ code: 51, f3: 7, f7: 1, rd:rd, rs1:rs1, rs2:rs2 }); }
+ 	/ op:"mul "i rd:reg comma rs1:reg comma rs2:reg
+		{ return { code: 51, f3: 0, f7: 1, rd:rd, rs1:rs1, rs2:rs2 }; }
+ 	/ op:"div "i rd:reg comma rs1:reg comma rs2:reg
+		{ return { code: 51, f3: 4, f7: 1, rd:rd, rs1:rs1, rs2:rs2 }; }
+ 	/ op:"divu "i rd:reg comma rs1:reg comma rs2:reg
+		{ return { code: 51, f3: 5, f7: 1, rd:rd, rs1:rs1, rs2:rs2 }; }
+ 	/ op:"rem "i rd:reg comma rs1:reg comma rs2:reg
+		{ return { code: 51, f3: 6, f7: 1, rd:rd, rs1:rs1, rs2:rs2 }; }
+ 	/ op:"remu "i rd:reg comma rs1:reg comma rs2:reg
+		{ return { code: 51, f3: 7, f7: 1, rd:rd, rs1:rs1, rs2:rs2 }; }
 
 	// logic R
-	/ _ op:"xor "i rd:reg comma rs1:reg comma rs2:reg end
-		{ i.push({ code: 51, f3: 4, f7: 0, rd:rd, rs1:rs1, rs2:rs2 }); }
-	/ _ op:"or "i rd:reg comma rs1:reg comma rs2:reg end
-		{ i.push({ code: 51, f3: 6, f7: 0, rd:rd, rs1:rs1, rs2:rs2 }); }
-	/ _ op:"and "i rd:reg comma rs1:reg comma rs2:reg end
-		{ i.push({ code: 51, f3: 7, f7: 0, rd:rd, rs1:rs1, rs2:rs2 }); }
+	/ op:"xor "i rd:reg comma rs1:reg comma rs2:reg
+		{ return { code: 51, f3: 4, f7: 0, rd:rd, rs1:rs1, rs2:rs2 }; }
+	/ op:"or "i rd:reg comma rs1:reg comma rs2:reg
+		{ return { code: 51, f3: 6, f7: 0, rd:rd, rs1:rs1, rs2:rs2 }; }
+	/ op:"and "i rd:reg comma rs1:reg comma rs2:reg
+		{ return { code: 51, f3: 7, f7: 0, rd:rd, rs1:rs1, rs2:rs2 }; }
 		
 	// logic immediate I
-	/ _ op:"andi "i rd:reg comma rs1:reg comma imm:imm end
-		{ i.push({ code: 19, f3: 7, rd:rd, rs1:rs1, imm:imm }); }
-	/ _ op:"ori "i rd:reg comma rs1:reg comma imm:imm end
-		{ i.push({ code: 19, f3: 6, rd:rd, rs1:rs1, imm:imm }); }
-	/ _ op:"xori "i rd:reg comma rs1:reg comma imm:imm end
-		{ i.push({ code: 19, f3: 4, rd:rd, rs1:rs1, imm:imm }); }
+	/ op:"andi "i rd:reg comma rs1:reg comma imm:imm
+		{ return { code: 19, f3: 7, rd:rd, rs1:rs1, imm:imm }; }
+	/ op:"ori "i rd:reg comma rs1:reg comma imm:imm
+		{ return { code: 19, f3: 6, rd:rd, rs1:rs1, imm:imm }; }
+	/ op:"xori "i rd:reg comma rs1:reg comma imm:imm
+		{ return { code: 19, f3: 4, rd:rd, rs1:rs1, imm:imm }; }
 
 	// load I
-	/ _ op:"lw "i rd:reg comma imm:imm end
-		{ i.push({ code: 3, f3: 2, rd:rd, imm:imm }); }
+	/ op:"lw "i rd:reg comma imm:imm
+		{ return { code: 3, f3: 2, rd:rd, imm:imm }; }
 
 	// store S
-   	/ _ op:"sw "i rd:reg comma imm:imm end
-		{ i.push({ code:35, f3:2, rd:rd, imm:imm }); }
+   	/ op:"sw "i rd:reg comma imm:imm
+		{ return { code:35, f3:2, rd:rd, imm:imm }; }
 
 	// pseudo
-	/ _ op:"nop"i _ end
- 		{ i.push({ code:19, f3:0, rd:0, rs1:0, imm:0 }); }
- 	/ _ op:"li "i rd:reg comma imm:imm end // addi rs1=x0
-		{ i.push({ code:19, f3:0, rd:rd, rs1:0, imm:imm }); }
-	/ _ op:"mv "i rd:reg comma rs1:reg end // addi imm=0
-		{ i.push({ code:19, f3:0, rd:rd, rs1:rs1, imm:0 }); }
-	/ _ op:"not "i rd:reg comma rs1:reg end // xori rs2=-1
-		{ i.push({ code:19, f3:4, rd:rd, rs1:rs1, rs2:-1 }); }
-	/ _ op:"neg "i rd:reg comma rs1:reg end // sub rs2=rs1 rs1=0
-		{ i.push({ code:51, f3:0, f7:32, rd:rd, rs1:0, rs2:rs1 }); }
+	/ op:"nop"i 
+ 		{ return { code:19, f3:0, rd:0, rs1:0, imm:0 }; }
+ 	/ op:"li "i rd:reg comma imm:imm // addi rs1=x0
+		{ return { code:19, f3:0, rd:rd, rs1:0, imm:imm }; }
+	/ op:"mv "i rd:reg comma rs1:reg // addi imm=0
+		{ return { code:19, f3:0, rd:rd, rs1:rs1, imm:0 }; }
+	/ op:"not "i rd:reg comma rs1:reg // xori rs2=-1
+		{ return { code:19, f3:4, rd:rd, rs1:rs1, rs2:-1 }; }
+	/ op:"neg "i rd:reg comma rs1:reg // sub rs2=rs1 rs1=0
+		{ return { code:51, f3:0, f7:32, rd:rd, rs1:0, rs2:rs1 }; }
 
-	// directives and others
-	/ __ ".global "i _ n:name _ end  	
- 		{ i.push({ code:0, f3:0, name:n }); }
-    / la:label 
-		{ i.push({ code: 1, name: la }); }
-	/ _ "ecall"i _ end
-		{ i.push({ code: 2 }); }
-	/ end
-	/ ___
+	// others
+	/ "ecall"i
+		{ return { code: 2 }; }
+	// / end
+	// / ___
 
 
 reg "register"
@@ -117,11 +173,6 @@ reg "register"
     	/ _ ("t6"i/"x31"i/"r31"i) { return 31; }
 
 
-
-
-label "label"
-	= __ n:name __ ":" __ { return n; }
-
 name "name"
 	= [A-Z_a-z][A-Z_a-z0-9]* { return text(); }
 
@@ -133,8 +184,8 @@ imm "signed immediate"
 comma "comma"
 	= _ "," 
 
-end "newline"
-	= _ "\n"
+end
+	= _ ("\n"/!.) __
     
 _ "ignored"
 	= [ \t]*
@@ -145,4 +196,8 @@ __ "ignoredwithnewline"
 ___ "ignoredwithnewlineempty"
 	= [ \t\n]+
     
+comments
+	= _ "c"
+    
+
     
