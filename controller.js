@@ -16,7 +16,6 @@ export function assemble() {
         vm.instructions = parse(code);
         quad_json = JSON.stringify(vm.instructions); 
         updateConsole(quad_json+"\n$ ");
-        updateStack();
      } catch (e) {
         updateConsole(e+"\n$ ");
     }
@@ -37,11 +36,6 @@ window.onload = function() {
     showRegisters();
     showStack();
 };
-
-
-function updateStack() {
-
-}
 
 
 function updateConsole(append) {
@@ -118,6 +112,7 @@ function showStack() {
     headerRow.appendChild(contentHeader);
     table.appendChild(headerRow);
 
+    let view = new DataView(vm.stack);
     // load values
     for (let i = 0; i < vm.addr.length; i++) {
       const rowData = document.createElement('tr');
@@ -125,7 +120,9 @@ function showStack() {
       indexCell.textContent = vm.addr[i];
       rowData.appendChild(indexCell);
       const contentCell = document.createElement('td');
-      contentCell.textContent = "0000 0000";
+      let l = dec2hex(view.getInt32(i*8),4);
+      let r = dec2hex(view.getInt32(i*8+4),4);
+      contentCell.textContent = l+" "+r;
       rowData.appendChild(contentCell);
       table.appendChild(rowData);
     }
@@ -133,7 +130,15 @@ function showStack() {
     tableContainer.appendChild(table);
 }
 
+function dec2hex(d, padding) {
+    var hex = Number(d).toString(16).toUpperCase;
+    
+    while (hex.length < padding) {
+        hex = "0" + hex;
+    }
 
+    return hex;
+}
 
 // keydown listener for tab handler
 document.getElementById('code').addEventListener('keydown', tabHandler);

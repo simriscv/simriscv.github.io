@@ -32,10 +32,31 @@ export default class CPU {
         this.entrySymbol = false;
     }
 
+    loadStack() {
+        let addr = 0;
+        let view = new DataView(this.stack);
+        for (const i of this.instructions) {
+            let op = this.instructions[i];
+            if (op.code == c.DIRECTIVE) {
+                if (op.f3 == c.DATA) {
+                    for (const j of op.vars) {
+                        if (j.type == 3){
+                            for (const k of op.vars.value) {
+                                view.setInt32(adrr,op.vars.value[k]);
+                                addr += 4;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     run() {
         // initialization
         this.init();
-        let len = this.instructions.length 
+        this.loadStack();
+        let len = this.instructions.length;
 
         // pipeline cycle
         if (len != 0) {
