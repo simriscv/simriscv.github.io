@@ -39,7 +39,7 @@ export default class CPU {
             if (i.code == c.DIRECTIVE) {
                 if (i.f3 == c.DATA) {
                     for (const j of i.vars) {
-                        if (j.type == 3){
+                        if (j.type == 2){
                             for (const k of j.value) {
                                 view.setInt32(addr,k);
                                 addr += 4;
