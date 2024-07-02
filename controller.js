@@ -120,9 +120,9 @@ function showStack() {
       indexCell.textContent = vm.addr[i];
       rowData.appendChild(indexCell);
       const contentCell = document.createElement('td');
-      //let l = dec2hex(view.getInt32(i*8),4);
-      //let r = dec2hex(view.getInt32(i*8+4),4);
-      contentCell.textContent = view.getInt32(i*8);
+      let l = dec2hex(view.getInt32((i-16)*8),4);
+      let r = dec2hex(view.getInt32((i-16)*8+4),4);
+      contentCell.textContent = l+" "+r;
       rowData.appendChild(contentCell);
       table.appendChild(rowData);
     }
