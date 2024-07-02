@@ -33,6 +33,7 @@ window.onload = function() {
     let input = ".global _start\n\n_start:\n\tli t0, 15\n\tli t1, -2\n\tadd t2, t0, t1\n\tmv a0, t2\n\tli a7, 93\n\tecall\n"
     document.getElementById("code").value = input
     showRegisters();
+    showStack();
 };
 
 function updateConsole(append) {
@@ -94,6 +95,36 @@ function showRegisters() {
     tableContainer.innerHTML = '';
     tableContainer.appendChild(table);
 }
+
+
+// show stack
+function showRegisters() {
+    const tableContainer = document.getElementById('stack-table');
+    const table = document.createElement('table');
+    const headerRow = document.createElement('tr');
+    const indexHeader = document.createElement('th');
+    indexHeader.textContent = 'Address';
+    headerRow.appendChild(indexHeader);
+    const contentHeader = document.createElement('th');
+    contentHeader.textContent = 'Content';
+    headerRow.appendChild(contentHeader);
+    table.appendChild(headerRow);
+
+    // load values
+    for (let i = 0; i < vm.stack.length; i++) {
+      const rowData = document.createElement('tr');
+      const indexCell = document.createElement('td');
+      indexCell.textContent = i;
+      rowData.appendChild(indexCell);
+      const contentCell = document.createElement('td');
+      contentCell.textContent = "0000 0000";
+      rowData.appendChild(contentCell);
+      table.appendChild(rowData);
+    }
+    tableContainer.innerHTML = '';
+    tableContainer.appendChild(table);
+}
+
 
 
 // keydown listener for tab handler

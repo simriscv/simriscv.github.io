@@ -14,6 +14,7 @@ export default class CPU {
     constructor() {
         this.registers = new Array(32).fill(0);
         this.stack = new ArrayBuffer(16777215);
+        this.addr = c.addr;
         this.instructions = [];
         this.alias = c.ALIAS;
         this.pc = 0;
