@@ -969,27 +969,36 @@ function peg$parse(input, options) {
           peg$currPos = s6;
           s6 = peg$FAILED;
         }
-        while (s6 !== peg$FAILED) {
-          s5.push(s6);
-          s6 = peg$currPos;
-          s7 = peg$parse__();
-          s8 = peg$parsedefinition();
-          if (s8 !== peg$FAILED) {
-            s9 = peg$parseend();
-            if (s9 !== peg$FAILED) {
-              s7 = [s7, s8, s9];
-              s6 = s7;
+        if (s6 !== peg$FAILED) {
+          while (s6 !== peg$FAILED) {
+            s5.push(s6);
+            s6 = peg$currPos;
+            s7 = peg$parse__();
+            s8 = peg$parsedefinition();
+            if (s8 !== peg$FAILED) {
+              s9 = peg$parseend();
+              if (s9 !== peg$FAILED) {
+                s7 = [s7, s8, s9];
+                s6 = s7;
+              } else {
+                peg$currPos = s6;
+                s6 = peg$FAILED;
+              }
             } else {
               peg$currPos = s6;
               s6 = peg$FAILED;
             }
-          } else {
-            peg$currPos = s6;
-            s6 = peg$FAILED;
           }
+        } else {
+          s5 = peg$FAILED;
         }
-        peg$savedPos = s0;
-        s0 = peg$f6(s2, s5);
+        if (s5 !== peg$FAILED) {
+          peg$savedPos = s0;
+          s0 = peg$f6(s2, s5);
+        } else {
+          peg$currPos = s0;
+          s0 = peg$FAILED;
+        }
       } else {
         peg$currPos = s0;
         s0 = peg$FAILED;

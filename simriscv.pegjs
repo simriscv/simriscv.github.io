@@ -36,7 +36,7 @@ data
 	= __ ".data"i end (declaration)*
 
 declaration
-	= __ n:name _ ":" tail:(__ definition end)*
+	= __ n:name _ ":" tail:(__ definition end)+
 		{
 			i.push({ code:0, f3:2, name:n,
 			vars:[].concat(tail.map(function(i){return i[1];}))});
