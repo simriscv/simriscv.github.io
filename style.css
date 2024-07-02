@@ -72,6 +72,7 @@ body, html {
     padding: 1px; /* Relleno de celda */
     text-align: center; /* Alineación de texto en celda */
     font-size: 10px; /* Tamaño de la fuente */
+    border: 2px solid white;
   }
   
   th {
