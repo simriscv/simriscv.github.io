@@ -38,7 +38,9 @@ export default class CPU {
         for (const i of this.instructions) {
             if (i.code == c.DIRECTIVE) {
                 if (i.f3 == c.DATA) {
+                    alert("directive data");
                     for (const j of i.vars) {
+                        alert("vars");
                         if (j.type == 2){
                             for (const k of j.value) {
                                 alert(k);
