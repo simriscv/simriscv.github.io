@@ -33,33 +33,21 @@ export default class CPU {
     }
 
     loadStack() {
-        this.registers[28] = 1;
         let addr = 0;
-        let view = new DataView(this.stack);
-        let len = this.instructions.length;
-        
+        let view = new DataView(this.stack);       
         for (let i of this.instructions) {
-            
-            //let op = this.instructions[i];
-            this.registers[28] = i;
             if (i.code == c.DIRECTIVE) {
-                this.registers[28] = 3;
                 if (i.f3 == c.DATA) {
-                    this.registers[29] = 1;
-                    //let lv = op.vars.length;
                     for (let j of i.vars) {
-                        this.registers[30] = 1;
                         if (j.type == 2){
-                            //ld = op.vars[j].value.length;
                             for (let k of j.value) {
-                                this.registers[31] = k;
                                 view.setInt32(addr,k);
                                 addr += 4;
                             }
                         }
                     }
                 }
-            } else this.registers[31] = 1;
+            }
         }
     }
 
