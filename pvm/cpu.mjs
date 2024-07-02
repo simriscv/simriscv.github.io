@@ -13,7 +13,7 @@ const flag = {
 export default class CPU {
     constructor() {
         this.registers = new Array(32).fill(0);
-        this.stack = new ArrayBuffer(4294967295);
+        this.stack = new ArrayBuffer(16777215);
         this.instructions = [];
         this.alias = c.ALIAS;
         this.pc = 0;
