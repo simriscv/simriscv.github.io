@@ -65,7 +65,7 @@ body, html {
     max-width: 100%; /* Máximo ancho de la tabla */
     border-collapse: collapse; /* Colapsar bordes de celda */
     table-layout: fixed; /* Fijar el tamaño de la tabla */
-    border: 1px solid white;
+    border: 1.5px solid white;
   }
   
   table, th, td {
@@ -79,4 +79,3 @@ body, html {
   th {
     font-size: 10px
   }
-  
