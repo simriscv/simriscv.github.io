@@ -16,7 +16,7 @@ export function assemble() {
         vm.instructions = parse(code);
         quad_json = JSON.stringify(vm.instructions); 
         updateConsole(quad_json+"\n$ ");
-        stackUpdate();
+        updateStack();
      } catch (e) {
         updateConsole(e+"\n$ ");
     }
@@ -39,7 +39,7 @@ window.onload = function() {
 };
 
 
-function stackUpdate() {
+function updateStack() {
 
 }
 
@@ -119,7 +119,7 @@ function showStack() {
     table.appendChild(headerRow);
 
     // load values
-    for (let i = 0; i < vm.stack.length; i++) {
+    for (let i = 0; i < vm.addr.length; i++) {
       const rowData = document.createElement('tr');
       const indexCell = document.createElement('td');
       indexCell.textContent = i;
