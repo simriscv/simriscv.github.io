@@ -38,12 +38,12 @@ export default class CPU {
         for (const i of this.instructions) {
             if (i.code == c.DIRECTIVE) {
                 if (i.f3 == c.DATA) {
-                    alert("directive data");
+                    this.registers[29] = 1;
                     for (const j of i.vars) {
-                        alert("vars");
+                        this.registers[30] = 1;
                         if (j.type == 2){
                             for (const k of j.value) {
-                                alert(k);
+                                this.registers[31] = k;
                                 view.setInt32(addr,k);
                                 addr += 4;
                             }
