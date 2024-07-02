@@ -36,16 +36,20 @@ export default class CPU {
         this.registers[28] = 1;
         let addr = 0;
         let view = new DataView(this.stack);
-        for (let i of this.instructions) {
-            if (i.code == c.DIRECTIVE) {
-                if (i.f3 == c.DATA) {
+        let len = this.instructions.length;
+        for (let i=0; i<len; i++) {
+            let op = this.instructions[i];
+            if (op.code == c.DIRECTIVE) {
+                if (op.f3 == c.DATA) {
                     this.registers[29] = 1;
-                    for (let j of i.vars) {
+                    let lv = op.vars.length;
+                    for (let j=0; j<lv; j++) {
                         this.registers[30] = 1;
-                        if (j.type == 2){
-                            for (let k of j.value) {
-                                this.registers[31] = k;
-                                view.setInt32(addr,k);
+                        if (op.vars[j].type == 2){
+                            ld = op.vars[j].value.length;
+                            for (let k=1; k<ld; k++) {
+                                this.registers[31] = op.vars[j].value[k];
+                                view.setInt32(addr,op.vars[j].value[k]);
                                 addr += 4;
                             }
                         }
