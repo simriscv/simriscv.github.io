@@ -113,6 +113,7 @@ function showStack() {
     table.appendChild(headerRow);
 
     let view = new DataView(vm.stack);
+    let a = 0;
     // load values
     for (let i = 0; i < vm.addr.length; i++) {
       const rowData = document.createElement('tr');
@@ -120,8 +121,10 @@ function showStack() {
       indexCell.textContent = vm.addr[i];
       rowData.appendChild(indexCell);
       const contentCell = document.createElement('td');
-      let l = dec2hex(view.getInt32((i-16)*8),4);
-      let r = dec2hex(view.getInt32((i-16)*8+4),4);
+      if (i<16) a = 16777087 + i;
+      else a = i
+      let l = dec2hex(view.getInt32(a*8),4);
+      let r = dec2hex(view.getInt32(a*8+4),4);
       contentCell.textContent = l+" "+r;
       rowData.appendChild(contentCell);
       table.appendChild(rowData);
