@@ -33,6 +33,7 @@ export default class CPU {
     }
 
     loadStack() {
+        this.registers[28] = 1;
         let addr = 0;
         let view = new DataView(this.stack);
         for (const i of this.instructions) {
