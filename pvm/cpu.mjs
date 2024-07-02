@@ -41,6 +41,7 @@ export default class CPU {
                     for (const j of i.vars) {
                         if (j.type == 2){
                             for (const k of j.value) {
+                                alert(k);
                                 view.setInt32(addr,k);
                                 addr += 4;
                             }
