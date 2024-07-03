@@ -45,17 +45,17 @@ export default class CPU {
                         }
                     } else if (j.type == c.HALF){
                         for (let k of j.value) {
-                            view.setInt16(addr,k,true);
+                            view.setInt16(addr,k);
                             addr += 2;
                         }
                     } else if (j.type == c.WORD){
                         for (let k of j.value) {
-                            view.setInt32(addr,k,true);
+                            view.setInt32(addr,k);
                             addr += 4;
                         }
                     } else if (j.type == c.DWORD){
                         for (let k of j.value) {
-                            view.setBigInt64(addr,k,true);
+                            view.setBigInt64(addr,k);
                             addr += 8;
                         }
                     } else if (j.type == c.ASCII || j.type == c.ASCIZ || j.type == c.STRING){
