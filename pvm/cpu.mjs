@@ -163,8 +163,10 @@ export default class CPU {
                         }
                     }
                 } else if (op.code == c.ECALL) {
-                    if (this.registers[17] == 93)
+                    if (this.registers[17] == 93) {
+                        this.output += "\n"+len+" instructions executed";
                         return; 
+                    }
 
                 } else if (op.code == c.LABEL) {
 
