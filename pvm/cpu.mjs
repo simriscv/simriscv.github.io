@@ -40,22 +40,22 @@ export default class CPU {
                 for (let j of i.vars) {
                     if (j.type == c.BYTE){
                         for (let k of j.value) {
-                            view.setInt8(addr,k);
+                            view.setInt8(addr,k,);
                             addr += 1;
                         }
                     } else if (j.type == c.HALF){
                         for (let k of j.value) {
-                            view.setInt16(addr,k);
+                            view.setInt16(addr,k,true);
                             addr += 2;
                         }
                     } else if (j.type == c.WORD){
                         for (let k of j.value) {
-                            view.setInt32(addr,k);
+                            view.setInt32(addr,k,true);
                             addr += 4;
                         }
                     } else if (j.type == c.DWORD){
                         for (let k of j.value) {
-                            view.setBigInt64(addr,k);
+                            view.setBigInt64(addr,k,true);
                             addr += 8;
                         }
                     } else if (j.type == c.ASCII || j.type == c.ASCIZ || j.type == c.STRING){
