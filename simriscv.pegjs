@@ -56,7 +56,7 @@ type
 	/ ".string "i { return 6; }
 
 value
-	= "\""v:[a-z]*"\"" { return v;}
+	= "\""str:("\t"/" "/"!"/[#-~])*"\"" { return str.join("");}
 
 type_array
 	= ".byte "i { return 0; }

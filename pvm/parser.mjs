@@ -305,7 +305,7 @@ function peg$parse(input, options) {
   var peg$c127 = "\n";
   var peg$c128 = "c";
 
-  var peg$r0 = /^[a-z]/;
+  var peg$r0 = /^[\t -!#-~]/;
   var peg$r1 = /^[A-Z_a-z]/;
   var peg$r2 = /^[A-Z_a-z0-9]/;
   var peg$r3 = /^[+\-]/;
@@ -323,7 +323,7 @@ function peg$parse(input, options) {
   var peg$e7 = peg$literalExpectation(".asciz ", true);
   var peg$e8 = peg$literalExpectation(".string ", true);
   var peg$e9 = peg$literalExpectation("\"", false);
-  var peg$e10 = peg$classExpectation([["a", "z"]], false, false);
+  var peg$e10 = peg$classExpectation(["\t", [" ", "!"], ["#", "~"]], false, false);
   var peg$e11 = peg$literalExpectation(".byte ", true);
   var peg$e12 = peg$literalExpectation(".half ", true);
   var peg$e13 = peg$literalExpectation(".word ", true);
@@ -476,7 +476,7 @@ function peg$parse(input, options) {
   var peg$f9 = function() { return 4; };
   var peg$f10 = function() { return 5; };
   var peg$f11 = function() { return 6; };
-  var peg$f12 = function(v) { return v;};
+  var peg$f12 = function(str) { return str.join("");};
   var peg$f13 = function() { return 0; };
   var peg$f14 = function() { return 1; };
   var peg$f15 = function() { return 2; };
