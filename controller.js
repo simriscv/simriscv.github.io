@@ -123,10 +123,7 @@ function showStack() {
         const contentCell = document.createElement('td');
         if (i<16) a = 2097135 + i;
         else a = i - 16;
-        let value = ""
-        for (let j = a*8; j<8;j++){
-            value += dec2hex(view.getInt8(j),2);
-        }
+        let value = dec2hex(view.getBigInt64(j),16);
       
         contentCell.textContent = value;
         rowData.appendChild(contentCell);
