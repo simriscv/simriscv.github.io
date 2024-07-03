@@ -137,7 +137,7 @@ function dec2hex(d, padding) {
     var hex = Number(d).toString(16).toUpperCase();
     
     while (hex.length < padding) {
-        hex = "0" + hex;
+        hex += "0";
     }
 
     return hex;
