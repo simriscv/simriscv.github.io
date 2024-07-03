@@ -53,21 +53,20 @@ export default class CPU {
                             view.setInt32(addr,k);
                             addr += 4;
                         }
-                    }  else if (j.type == c.DWORD){
+                    } else if (j.type == c.DWORD){
                         for (let k of j.value) {
                             view.setBigInt64(addr,k);
                             addr += 8;
                         }
                     } else if (j.type == c.ASCII || j.type == c.ASCIZ || j.type == c.STRING){
                         for (let k of j.value) {
-                            for (let l of k){
-                                view.setUint8(addr,l.charCodeAt(0));
-                                addr += 1;
-                            }
-                            if (j.type == c.ASCIZ || j.type == c.STRING) {
-                                view.setUint8(addr,0);
-                                addr += 1;
-                            }
+                            view.setUint8(addr,l.charCodeAt(0));
+                            addr += 1;
+                            
+                        }
+                        if (j.type == c.ASCIZ || j.type == c.STRING) {
+                            view.setUint8(addr,0);
+                            addr += 1;
                         }
                     }
                 }
