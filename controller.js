@@ -123,9 +123,14 @@ function showStack() {
         const contentCell = document.createElement('td');
         if (i<16) a = 2097135 + i;
         else a = i - 16;
-        let value = dec2hex(view.getBigInt64(a*8),16);
-      
-        contentCell.textContent = value;
+        let str = "";
+        let i8a = new Uint8Array(vm.stack.slice(a*8,a*8+8));
+        for (let j of i8a) {
+            let hex = j.toString(16).toUpperCase();
+            while (hex.length < 2) hex = "0" + hex;
+            str += hex
+        }      
+        contentCell.textContent = str;
         rowData.appendChild(contentCell);
         table.appendChild(rowData);
     }
@@ -133,15 +138,6 @@ function showStack() {
     tableContainer.appendChild(table);
 }
 
-function dec2hex(d, padding) {
-    var hex = Number(d).toString(16).toUpperCase();
-    
-    while (hex.length < padding) {
-        hex = "0" + hex;
-    }
-
-    return hex;
-}
 
 // keydown listener for tab handler
 document.getElementById('code').addEventListener('keydown', tabHandler);
