@@ -116,17 +116,21 @@ function showStack() {
     let a = 0;
     // load values
     for (let i = 0; i < vm.addr.length; i++) {
-      const rowData = document.createElement('tr');
-      const indexCell = document.createElement('td');
-      indexCell.textContent = vm.addr[i];
-      rowData.appendChild(indexCell);
-      const contentCell = document.createElement('td');
-      if (i<16) a = 2097135 + i;
-      else a = i - 16;
-      let value = dec2hex(view.getBigInt64(a*8,true),16);
-      contentCell.textContent = value;
-      rowData.appendChild(contentCell);
-      table.appendChild(rowData);
+        const rowData = document.createElement('tr');
+        const indexCell = document.createElement('td');
+        indexCell.textContent = vm.addr[i];
+        rowData.appendChild(indexCell);
+        const contentCell = document.createElement('td');
+        if (i<16) a = 2097135 + i;
+        else a = i - 16;
+        let value = ""
+        for (let j = a*8; j<8;j++){
+            value += dec2hex(view.getInt8(j),2);
+        }
+      
+        contentCell.textContent = value;
+        rowData.appendChild(contentCell);
+        table.appendChild(rowData);
     }
     tableContainer.innerHTML = '';
     tableContainer.appendChild(table);
