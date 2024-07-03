@@ -60,7 +60,7 @@ export default class CPU {
                         }
                     } else if (j.type == c.ASCII || j.type == c.ASCIZ || j.type == c.STRING){
                         for (let k of j.value) {
-                            view.setUint8(addr,l.charCodeAt(0));
+                            view.setUint8(addr,k.charCodeAt(0));
                             addr += 1;
                             
                         }
