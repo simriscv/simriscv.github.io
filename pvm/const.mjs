@@ -3,7 +3,13 @@
 export const DIRECTIVE = 0;
     export const GLOBAL = 0;
     export const DATA = 2;
-
+        export const BYTE = 0;
+        export const HALF = 1;
+        export const WORD = 2;
+        export const DWORD = 3;
+        export const ASCII = 4;
+        export const ASCIZ = 5;
+        export const STRING = 6;
 export const LABEL = 1;
 export const ECALL = 2;
 export const I_TYPE_LOAD = 3
