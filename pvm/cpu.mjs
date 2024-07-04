@@ -109,7 +109,7 @@ export default class CPU {
                     }
                 } else if(op.code == c.LA){
                     let addr = this.locateAddr(op.name);
-                    if (addr) {
+                    if (addr != null) {
                         this.registers[op.rd] = addr;
                     }
                     else {
