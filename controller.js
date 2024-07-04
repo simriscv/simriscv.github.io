@@ -38,6 +38,7 @@ window.onload = function() {
 };
 
 function loadFile(filePath) {
+    let str = "";
     fetch(filePath)
     .then(response => {
       if (!response.ok) {
@@ -46,11 +47,12 @@ function loadFile(filePath) {
       return response.text(); 
     })
     .then(content => {
-        return content;
+        str = content;
     })
     .catch(error => {
       return "Error fetching the file.";
-    });    
+    });
+    return str;    
 }
 
 
