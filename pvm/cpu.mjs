@@ -184,7 +184,7 @@ export default class CPU {
                             let str = "";
                             let addr = this.registers[6];
                             let offset = this.registers[7];
-                            let i8a = new Uint8Array(vm.stack.slice(addr,offset));
+                            let i8a = new Uint8Array(this.stack.slice(addr,offset));
                             for (let j of i8a) {
                                 str += j.toString();
                             }
