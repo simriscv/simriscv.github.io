@@ -177,8 +177,20 @@ export default class CPU {
                     }
                 } else if (op.code == c.ECALL) {
                     if (this.registers[17] == 93) {
-                        this.output += "\n"+len+" instructions executed";
+                        //this.output += "\n"+len+" instructions executed";
                         return; 
+                    } else if (this.registers[17] == 64) {
+                        if (this.registers[5] == 1) {
+                            let str = "";
+                            let addr = this.registers[6];
+                            let offset = this.registers[7];
+                            let i8a = new Uint8Array(vm.stack.slice(addr,offset));
+                            for (let j of i8a) {
+                                str += j.toString();
+                            }
+                            this.output += "\n"+str;
+                        }
+                        
                     }
 
                 } else if (op.code == c.LABEL) {
@@ -189,13 +201,13 @@ export default class CPU {
                             this.entrySymbol = true;
                         }
                     } else {
-                        this.output += "\nwarning: unknown directive";
+                        //this.output += "\nwarning: unknown directive";
                     }
                 } else {
-                    this.output += "\nwarning: unknown instruction";
+                    //this.output += "\nwarning: unknown instruction";
                 }
             }
-            this.output += "\n"+len+" instructions executed";
+            //this.output += "\n"+len+" instructions executed";
         } else {
             this.output += "\nwarning: no instruction found";
         }
