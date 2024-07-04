@@ -31,11 +31,24 @@ export function run() {
 
 // load initial code
 window.onload = function() {
-    let input = ".global _start\n\n_start:\n\tli t0, 15\n\tli t1, -2\n\tadd t2, t0, t1\n\tmv a0, t2\n\tli a7, 93\n\tecall\n"
+    let input = loadFile("src/hello.s");
     document.getElementById("code").value = input
     showRegisters();
     showStack();
 };
+
+function loadFile(filePath) {
+    fetch(filePath)
+    .then(response => {
+      if (!response.ok) {
+        return "Network response was not ok.";
+      }
+      return response.text(); 
+    })
+    .catch(error => {
+      return "Error fetching the file.";
+    });    
+}
 
 
 function updateConsole(append) {
