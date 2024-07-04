@@ -202,7 +202,7 @@ export default class CPU {
     }
 
     locateAddr(name) {
-        let item = this.globalvar.find((element)=>element.name==name);
+        let item = this.globalvar.find(obj=>{return obj.name===name});
         if (item)
             return item.addr;
         else
