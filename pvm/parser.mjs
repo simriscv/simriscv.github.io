@@ -2284,10 +2284,11 @@ function peg$parse(input, options) {
                                                       if (s2 !== peg$FAILED) {
                                                         s3 = peg$parsecomma();
                                                         if (s3 !== peg$FAILED) {
-                                                          s4 = peg$parsename();
-                                                          if (s4 !== peg$FAILED) {
+                                                          s4 = peg$parse_();
+                                                          s5 = peg$parsename();
+                                                          if (s5 !== peg$FAILED) {
                                                             peg$savedPos = s0;
-                                                            s0 = peg$f42(s1, s2, s4);
+                                                            s0 = peg$f42(s1, s2, s5);
                                                           } else {
                                                             peg$currPos = s0;
                                                             s0 = peg$FAILED;

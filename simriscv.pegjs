@@ -132,7 +132,7 @@ instruction
 		{ return { code:19, f3:4, rd:rd, rs1:rs1, rs2:-1 }; }
 	/ op:"neg "i rd:reg comma rs1:reg // sub rs2=rs1 rs1=0
 		{ return { code:51, f3:0, f7:32, rd:rd, rs1:0, rs2:rs1 }; }
-	/ op:"la "i rd:reg comma name:name
+	/ op:"la "i rd:reg comma _ name:name
 		{ return { code:24, rd:rd, name:name }; }
 
 	// others
