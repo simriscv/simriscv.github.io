@@ -180,9 +180,9 @@ export default class CPU {
                         //this.output += "\n"+len+" instructions executed";
                         return; 
                     } else if (this.registers[17] == 64) {
-                        if (this.registers[5] == 1) {
-                            let addr = this.registers[6];
-                            let offset = this.registers[7];
+                        if (this.registers[10] == 1) {
+                            let addr = this.registers[11];
+                            let offset = this.registers[12];
                             let i8a = new Uint8Array(this.stack.slice(addr,offset));
                             let str = String.fromCharCode.apply(null, i8a);
                             this.output += "\n"+str;
