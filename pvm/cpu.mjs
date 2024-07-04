@@ -181,13 +181,10 @@ export default class CPU {
                         return; 
                     } else if (this.registers[17] == 64) {
                         if (this.registers[5] == 1) {
-                            let str = "";
                             let addr = this.registers[6];
                             let offset = this.registers[7];
                             let i8a = new Uint8Array(this.stack.slice(addr,offset));
-                            for (let j of i8a) {
-                                str += j.toString();
-                            }
+                            let str = String.fromCharCode.apply(null, i8a);
                             this.output += "\n"+str;
                         }
                         
