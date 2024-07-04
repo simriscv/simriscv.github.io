@@ -18,6 +18,7 @@ export const I_TYPE = 19;
     export const XORI = 4;
     export const ORI = 6;
     export const ANDI = 7;
+export const LA = 24;
 export const R_TYPE = 51;
     export const R0 = 0;
         export const ADD = 0;

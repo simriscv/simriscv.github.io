@@ -22,6 +22,7 @@ export default class CPU {
         this.flag = flag;
         this.output = "";
         this.entrySymbol = false;
+        this.globalvar = []
     }
 
     init() {
@@ -30,6 +31,7 @@ export default class CPU {
         this.flag.init();
         this.output = "";
         this.entrySymbol = false;
+        this.globalvar = []
     }
 
     loadStack() {
@@ -37,6 +39,7 @@ export default class CPU {
         let view = new DataView(this.stack);     
         for (let i of this.instructions) {
             if (i.code == c.DIRECTIVE && i.f3 == c.DATA) {
+                this.globalvar.push({name:i.name, addr:addr});
                 for (let j of i.vars) {
                     if (j.type == c.BYTE){
                         for (let k of j.value) {
@@ -104,6 +107,16 @@ export default class CPU {
                         let rs1 = this.registers[op.rs1];
                         this.registers[op.rd] = rs1 & op.imm;
                     }
+                } else if(op.code == c.LA){
+                    let addr = this.locateAddr(op.name);
+                    if (addr) {
+                        this.registers[op.rd] = addr;
+                    }
+                    else {
+                        this.output += "\n"+(this.pc-1)+": Error: Cannot find symbol: "+op.name;
+                        return; 
+                    }
+
                 } else if (op.code == c.R_TYPE) {
                     if (op.f3 == c.R0){
                         if (op.f7 == c.ADD){
@@ -188,9 +201,12 @@ export default class CPU {
         }
     }
 
-    step() {
-
-
+    locateAddr(name) {
+        let item = vm.globalvar.find((element)=>element.name==name);
+        if (item)
+            return item.addr;
+        else
+            return null;
     }
 
 }
