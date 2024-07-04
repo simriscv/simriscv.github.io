@@ -31,14 +31,13 @@ export function run() {
 
 // load initial code
 window.onload = function() {
-    let input = loadFile("src/hello.s");
-    document.getElementById("code").value = input
+    loadFile("src/hello.s");
+    //document.getElementById("code").value = input
     showRegisters();
     showStack();
 };
 
 function loadFile(filePath) {
-    let str = "";
     fetch(filePath)
     .then(response => {
       if (!response.ok) {
@@ -47,12 +46,11 @@ function loadFile(filePath) {
       return response.text(); 
     })
     .then(content => {
-        str = content;
+        document.getElementById("code").value = content;
     })
     .catch(error => {
       return "Error fetching the file.";
-    });
-    return str;    
+    });  
 }
 
 
