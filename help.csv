@@ -18,3 +18,4 @@ Instruction,Description,Operation,Type,opcode,f3,f7
 "mv rd, rs1",move/copy,"addi rd, rs1,0",Pseudo,-,-,-
 "not rd, rs1",one's complement,"xori rd, rs1, -1",Pseudo,-,-,-
 "neg rd, rs1",two's complement,"sub rd, x0, rs1",Pseudo,-,-,-
+"la rd, symbol",load address of global var,rd = symbol address,Pseudo,-,-,-
