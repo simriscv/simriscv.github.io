@@ -45,6 +45,9 @@ function loadFile(filePath) {
       }
       return response.text(); 
     })
+    .then(content => {
+        return content;
+    })
     .catch(error => {
       return "Error fetching the file.";
     });    
