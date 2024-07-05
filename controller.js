@@ -24,7 +24,7 @@ export function assemble() {
 // run program
 export function run() {
     vm.run();
-    updateConsole("run"+vm.output+"\n$ ");
+    updateConsole("run\n"+vm.output+"$ ");
     showRegisters();
     showStack();
 }
