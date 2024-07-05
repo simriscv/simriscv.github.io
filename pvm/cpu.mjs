@@ -62,10 +62,29 @@ export default class CPU {
                             addr += 8;
                         }
                     } else if (j.type == c.ASCII || j.type == c.ASCIZ || j.type == c.STRING){
+                        let escape = false;
                         for (let k of j.value) {
-                            view.setUint8(addr,k.charCodeAt(0));
-                            addr += 1;
-                            
+                            if (escape) {
+                                if (k == "n") {
+                                    view.setUint8(addr,10);
+                                    addr += 1;
+                                } else if (k == "t") {
+                                    view.setUint8(addr,9);
+                                    addr += 1;
+                                } else {
+                                    view.setUint8(addr,k.charCodeAt(0));
+                                    addr += 1;
+                                }
+                                escape = false;
+                            } else {
+                                if (k == "\\") {
+                                    escape = true;
+                                    continue;
+                                } else {
+                                    view.setUint8(addr,k.charCodeAt(0));
+                                    addr += 1;
+                                }
+                            }
                         }
                         if (j.type == c.ASCIZ || j.type == c.STRING) {
                             view.setUint8(addr,0);
