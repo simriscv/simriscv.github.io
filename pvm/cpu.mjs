@@ -204,7 +204,7 @@ export default class CPU {
                             let offset = this.registers[12];
                             let i8a = new Uint8Array(this.stack.slice(addr,offset));
                             let str = String.fromCharCode.apply(null, i8a);
-                            this.output += "\n"+str;
+                            this.output += str;
                         }
                         
                     }
