@@ -158,9 +158,12 @@ function loadCode() {
     var selected = document.getElementById("options").value;
 
     switch (selected) {
-      case "hello":
-        loadFile("src/hello.s");
-        break;
+        case "hello":
+            loadFile("src/hello.s");
+            break;
+        case "arithmetic":
+            loadFile("src/arithmetic.s");
+            break;
     }
 }
 
