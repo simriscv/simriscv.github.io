@@ -69,8 +69,28 @@ values
  	
 
 instruction
+	// load immediate I
+	= op:"lb "i rd:reg comma _ "(" rs1:reg _ ")"  
+		{ return { code:3, f3:0, f7:0, rd:rd, rs1:rs1 }; }
+	/ op:"lb "i rd:reg comma imm:imm _ "(" rs1:reg _ ")"  
+		{ return { code:3, f3:0, f7:1, rd:rd, rs1:rs1, imm:imm }; }
+	/ op:"lb "i rd:reg comma _ name:name  
+		{ return { code:3, f3:0, f7:2, rd:rd, rs1:rs1, imm:imm }; }
+	/ op:"lh "i rd:reg comma _ "(" rs1:reg _ ")"
+		{ return { code:3, f3:1, f7:0, rd:rd, rs1:rs1 }; }
+	/ op:"lh "i rd:reg comma imm:imm _ "(" rs1:reg _ ")"  
+		{ return { code:3, f3:1, f7:1, rd:rd, rs1:rs1, imm:imm }; }
+	/ op:"lh "i rd:reg comma _ name:name
+		{ return { code:3, f3:1, f7:2, rd:rd, rs1:rs1, imm:imm }; }
+	/ op:"lw "i rd:reg comma _ "(" rs1:reg _ ")"
+		{ return { code:3, f3:2, f7:0, rd:rd, rs1:rs1 }; }
+	/ op:"lw "i rd:reg comma imm:imm _ "(" rs1:reg _ ")"  
+		{ return { code:3, f3:2, f7:1, rd:rd, rs1:rs1, imm:imm }; }
+	/ op:"lw "i rd:reg comma _ name:name
+		{ return { code:3, f3:2, f7:2, rd:rd, rs1:rs1, imm:imm }; }
+
 	// arithmetic immediate I
-	= op:"addi "i rd:reg comma rs1:reg comma imm:imm
+	/ op:"addi "i rd:reg comma rs1:reg comma imm:imm
 		{ return { code: 19, f3: 0, rd:rd, rs1:rs1, imm:imm }; }
 	/ op:"xori "i rd:reg comma rs1:reg comma imm:imm
 		{ return { code: 19, f3: 4, rd:rd, rs1:rs1, imm:imm }; }
