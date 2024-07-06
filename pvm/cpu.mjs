@@ -31,7 +31,8 @@ export default class CPU {
         this.flag.init();
         this.output = "";
         this.entrySymbol = false;
-        this.globalvar = []
+        this.globalvar = [];
+        this.stack = null;
     }
 
     loadStack() {
