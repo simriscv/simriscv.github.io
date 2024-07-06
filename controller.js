@@ -154,6 +154,15 @@ function showStack() {
     tableContainer.appendChild(table);
 }
 
+function loadCode() {
+    var selected = document.getElementById("options").value;
+
+    switch (selected) {
+      case "hello":
+        loadFile("src/hello.s");
+        break;
+    }
+}
 
 // keydown listener for tab handler
 document.getElementById('code').addEventListener('keydown', tabHandler);
@@ -162,6 +171,9 @@ document.getElementById('code').addEventListener('keydown', tabHandler);
 // keydown listener for delete and backspace handler
 document.getElementById('console').addEventListener('keydown', delHandler);
 
+document.addEventListener("DOMContentLoaded", function() {
+    loadCode(); // Llamar a cambiarOpcion() al cargar la página para mostrar el resultado inicial
+  });
 
 // assemble button listener
 document.addEventListener('DOMContentLoaded', function() {
