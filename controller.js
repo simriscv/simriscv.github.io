@@ -175,7 +175,10 @@ document.getElementById('code').addEventListener('keydown', tabHandler);
 document.getElementById('console').addEventListener('keydown', delHandler);
 
 document.addEventListener("DOMContentLoaded", function() {
-    loadCode(); // Llamar a cambiarOpcion() al cargar la página para mostrar el resultado inicial
+    var combobox = document.getElementById("options");
+    combobox.addEventListener("change", function() {
+        loadCode();
+      });    
   });
 
 // assemble button listener
