@@ -13,7 +13,7 @@ const flag = {
 export default class CPU {
     constructor() {
         this.registers = new Array(32).fill(0);
-        this.stack = new ArrayBuffer(16777215);
+        this.stack = null;
         this.addr = c.ADDR;
         this.instructions = [];
         this.alias = c.ALIAS;
@@ -32,12 +32,12 @@ export default class CPU {
         this.output = "";
         this.entrySymbol = false;
         this.globalvar = [];
+        new ArrayBuffer(16777215);
     }
 
     loadStack() {
         let addr = 0;
-        let view = new DataView(this.stack); 
-        view.fill(0);    
+        let view = new DataView(this.stack);   
         for (let i of this.instructions) {
             if (i.code == c.DIRECTIVE && i.f3 == c.DATA) {
                 this.globalvar.push({name:i.name, addr:addr});
