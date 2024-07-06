@@ -32,12 +32,12 @@ export default class CPU {
         this.output = "";
         this.entrySymbol = false;
         this.globalvar = [];
-        this.stack = null;
     }
 
     loadStack() {
         let addr = 0;
-        let view = new DataView(this.stack);     
+        let view = new DataView(this.stack); 
+        view.fill(0);    
         for (let i of this.instructions) {
             if (i.code == c.DIRECTIVE && i.f3 == c.DATA) {
                 this.globalvar.push({name:i.name, addr:addr});
