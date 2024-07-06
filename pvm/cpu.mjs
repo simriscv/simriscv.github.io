@@ -32,7 +32,7 @@ export default class CPU {
         this.output = "";
         this.entrySymbol = false;
         this.globalvar = [];
-        new ArrayBuffer(16777215);
+        this.stack = new ArrayBuffer(16777215);
     }
 
     loadStack() {
