@@ -1,4 +1,13 @@
 Instruction,Description,Operation,Type,opcode,f3,f7
+"lb rd, (rs1)",load byte,rd = address,I,3,0,0
+"lb rd, imm(rs1)",load byte,rd = address,I,3,0,1
+"lb rd, symbol",load byte,rd = address,I,3,0,2
+"lh rd, (rs1)",load half word,rd = address,I,3,1,0
+"lh rd, imm(rs1)",load half word,rd = address,I,3,1,1
+"lh rd, symbol",load half word,rd = address,I,3,1,2
+"lw rd, (rs1)",load word,rd = address,I,3,2,0
+"lw rd, imm(rs1)",load word,rd = address,I,3,2,1
+"lw rd, symbol",load word,rd = address,I,3,2,2
 "addi rd, rs1, imm",add immediate,rd = rs1 + imm,I,19,0,-
 "xori rd, rs1, imm",xor immediate,rd = rs1 ^ imm,I,19,4,-
 "ori rd, rs1, imm",or immediate,rd = rs1 | imm,I,19,6,-

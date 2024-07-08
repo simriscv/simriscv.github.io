@@ -99,6 +99,26 @@ instruction
 	/ op:"andi "i rd:reg comma rs1:reg comma imm:imm
 		{ return { code: 19, f3: 7, rd:rd, rs1:rs1, imm:imm }; }
 
+	// store S
+	/ op:"sb "i rs2:reg comma _ "(" rs1:reg _ ")"  
+		{ return { code:35, f3:0, f7:0, rs2:rs2, rs1:rs1 }; }
+	/ op:"sb "i rs2:reg comma imm:imm _ "(" rs1:reg _ ")"  
+		{ return { code:35, f3:0, f7:1, rs2:rs2, rs1:rs1, imm:imm }; }
+	/ op:"sb "i rs2:reg comma _ name:name  
+		{ return { code:35, f3:0, f7:2, rs2:rs2, name:name }; }
+	/ op:"sh "i rs2:reg comma _ "(" rs1:reg _ ")"
+		{ return { code:35, f3:1, f7:0, rs2:rs2, rs1:rs1 }; }
+	/ op:"sh "i rs2:reg comma imm:imm _ "(" rs1:reg _ ")"  
+		{ return { code:35, f3:1, f7:1, rs2:rs2, rs1:rs1, imm:imm }; }
+	/ op:"sh "i rs2:reg comma _ name:name
+		{ return { code:35, f3:1, f7:2, rs2:rs2, name:name }; }
+	/ op:"sw "i rs2:reg comma _ "(" rs1:reg _ ")"
+		{ return { code:35, f3:2, f7:0, rs2:rs2, rs1:rs1 }; }
+	/ op:"sw "i rs2:reg comma imm:imm _ "(" rs1:reg _ ")"  
+		{ return { code:35, f3:2, f7:1, rs2:rs2, rs1:rs1, imm:imm }; }
+	/ op:"sw "i rs2:reg comma _ name:name
+		{ return { code:35, f3:2, f7:2, rs2:rs2, name:name }; }
+
 	// arithmetic R
 	/ op:"add "i rd:reg comma rs1:reg comma rs2:reg
 		{ return { code: 51, f3: 0, f7: 0, rd:rd, rs1:rs1, rs2:rs2 }; }
@@ -132,14 +152,6 @@ instruction
 		{ return { code: 19, f3: 6, rd:rd, rs1:rs1, imm:imm }; }
 	/ op:"xori "i rd:reg comma rs1:reg comma imm:imm
 		{ return { code: 19, f3: 4, rd:rd, rs1:rs1, imm:imm }; }
-
-	// load I
-	/ op:"lw "i rd:reg comma imm:imm
-		{ return { code: 3, f3: 2, rd:rd, imm:imm }; }
-
-	// store S
-   	/ op:"sw "i rd:reg comma imm:imm
-		{ return { code:35, f3:2, rd:rd, imm:imm }; }
 
 	// pseudo
 	/ op:"nop"i 
