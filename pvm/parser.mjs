@@ -494,13 +494,13 @@ function peg$parse(input, options) {
   var peg$f17 = function(imm) { return imm;};
   var peg$f18 = function(op, rd, rs1) { return { code:3, f3:0, f7:0, rd:rd, rs1:rs1 }; };
   var peg$f19 = function(op, rd, imm, rs1) { return { code:3, f3:0, f7:1, rd:rd, rs1:rs1, imm:imm }; };
-  var peg$f20 = function(op, rd, name) { return { code:3, f3:0, f7:2, rd:rd, rs1:rs1, imm:imm }; };
+  var peg$f20 = function(op, rd, name) { return { code:3, f3:0, f7:2, rd:rd, name:name }; };
   var peg$f21 = function(op, rd, rs1) { return { code:3, f3:1, f7:0, rd:rd, rs1:rs1 }; };
   var peg$f22 = function(op, rd, imm, rs1) { return { code:3, f3:1, f7:1, rd:rd, rs1:rs1, imm:imm }; };
-  var peg$f23 = function(op, rd, name) { return { code:3, f3:1, f7:2, rd:rd, rs1:rs1, imm:imm }; };
+  var peg$f23 = function(op, rd, name) { return { code:3, f3:1, f7:2, rd:rd, name:name }; };
   var peg$f24 = function(op, rd, rs1) { return { code:3, f3:2, f7:0, rd:rd, rs1:rs1 }; };
   var peg$f25 = function(op, rd, imm, rs1) { return { code:3, f3:2, f7:1, rd:rd, rs1:rs1, imm:imm }; };
-  var peg$f26 = function(op, rd, name) { return { code:3, f3:2, f7:2, rd:rd, rs1:rs1, imm:imm }; };
+  var peg$f26 = function(op, rd, name) { return { code:3, f3:2, f7:2, rd:rd, name:name }; };
   var peg$f27 = function(op, rd, rs1, imm) { return { code: 19, f3: 0, rd:rd, rs1:rs1, imm:imm }; };
   var peg$f28 = function(op, rd, rs1, imm) { return { code: 19, f3: 4, rd:rd, rs1:rs1, imm:imm }; };
   var peg$f29 = function(op, rd, rs1, imm) { return { code: 19, f3: 5, rd:rd, rs1:rs1, imm:imm }; };
