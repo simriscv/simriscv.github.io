@@ -114,14 +114,14 @@ export default class CPU {
 // ********** I TYPE LOAD **********               
                 if (op.code == c.I_TYPE_LOAD) {
                     if (op.f3 == c.LB){
-                        if (op.f7 == c.LBI) {
+                        if (op.f7 == c.LBR) {
                             let addr = this.registers[op.rs1];
-                            addr += op.imm;
                             let offset = 1;
                             let i8a = new Uint8Array(this.stack.slice(addr,offset));
-                            this.registers[op.rd] = i8a[0];
-                        } else if (op.f7 == c.LBR) {
+                            this.registers[op.rd] = i8a[0]; 
+                        } else if (op.f7 == c.LBI) {
                             let addr = this.registers[op.rs1];
+                            addr += op.imm;
                             let offset = 1;
                             let i8a = new Uint8Array(this.stack.slice(addr,offset));
                             this.registers[op.rd] = i8a[0];
@@ -137,14 +137,14 @@ export default class CPU {
                             }
                         }
                     } else if (op.f3 == c.LH) {
-                        if (op.f7 == c.LHI) {
+                        if (op.f7 == c.LHR) {
                             let addr = this.registers[op.rs1];
-                            addr += op.imm;
                             let offset = 4;
                             let view = new DataView(this.stack.slice(addr,offset));
                             this.registers[op.rd] = view.getUint16();
-                        } else if (op.f7 == c.LHR) {
+                        } else if (op.f7 == c.LHI) {
                             let addr = this.registers[op.rs1];
+                            addr += op.imm;
                             let offset = 4;
                             let view = new DataView(this.stack.slice(addr,offset));
                             this.registers[op.rd] = view.getUint16();
@@ -160,14 +160,14 @@ export default class CPU {
                             }
                         }
                     } else if (op.f3 == c.LW) {
-                        if (op.f7 == c.LWI) {
+                        if (op.f7 == c.LWR) {
                             let addr = this.registers[op.rs1];
-                            addr += op.imm;
                             let offset = 8;
                             let view = new DataView(this.stack.slice(addr,offset));
                             this.registers[op.rd] = view.getUint32();
-                        } else if (op.f7 == c.LWR) {
+                        } else if (op.f7 == c.LWI) {
                             let addr = this.registers[op.rs1];
+                            addr += op.imm;
                             let offset = 8;
                             let view = new DataView(this.stack.slice(addr,offset));
                             this.registers[op.rd] = view.getUint32();
