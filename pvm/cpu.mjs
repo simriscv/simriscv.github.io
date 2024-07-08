@@ -220,9 +220,9 @@ export default class CPU {
                         if (op.f7 == c.SBR) {
                             let addr = this.registers[op.rs1];
                             let value = this.registers[op.rs2];
-                            let buffer = new ArrayBuffer(8);
+                            let buffer = new ArrayBuffer(4);
                             let dv = new DataView(buffer);
-                            dv.setInt32(value);
+                            dv.setInt32(0, value);
                             let i8a = new Uint8Array(buffer);
                             view.setInt8(addr,i8a[7]);
                         } else if (op.f7 == c.SBI) {
@@ -231,16 +231,16 @@ export default class CPU {
                             let value = this.registers[op.rs2];
                             let buffer = new ArrayBuffer(4);
                             let dv = new DataView(buffer);
-                            dv.setInt32(value);
+                            dv.setInt32(0, value);
                             let i8a = new Uint8Array(buffer);
                             view.setInt8(addr,i8a[7]);
                         } else if (op.f7 == c.SBS) {
                             let addr = this.locateAddr(op.name);
                             if (addr != null) {
                                 let value = this.registers[op.rs2];
-                                let buffer = new ArrayBuffer(8);
+                                let buffer = new ArrayBuffer(4);
                                 let dv = new DataView(buffer);
-                                dv.setInt32(value);
+                                dv.setInt32(0, value);
                                 let i8a = new Uint8Array(buffer);
                                 view.setInt8(addr,i8a[7]);
                             } else {
