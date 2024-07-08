@@ -141,23 +141,20 @@ export default class CPU {
                             let addr = this.registers[op.rs1];
                             addr += op.imm;
                             let offset = 4;
-                            let i8a = new Uint8Array(this.stack.slice(addr,offset));
-                            let view = new DataView(i8a);
+                            let view = new DataView(this.stack.slice(addr,offset));
                             this.registers[op.rd] = view.getUint16();
                         } else if (op.f7 == c.LHR) {
                             let addr = this.registers[op.rs1];
                             let offset = 4;
-                            let i8a = new Uint8Array(this.stack.slice(addr,offset));
-                            let view = new DataView(i8a);
+                            let view = new DataView(this.stack.slice(addr,offset));
                             this.registers[op.rd] = view.getUint16();
                         } else if (op.f7 == c.LHS) {
                             let addr = this.locateAddr(op.name);
                             if (addr != null) {
                                 let offset = 4;
-                                let i8a = new Uint8Array(this.stack.slice(addr,offset));
-                                let view = new DataView(i8a);
+                                let view = new DataView(this.stack.slice(addr,offset));
                                 this.registers[op.rd] = view.getUint16();
-                                } else {
+                            } else {
                                 this.output += "\n"+(this.pc-1)+": Error: Cannot find symbol: "+op.name;
                                 return; 
                             }
@@ -167,23 +164,20 @@ export default class CPU {
                             let addr = this.registers[op.rs1];
                             addr += op.imm;
                             let offset = 8;
-                            let i8a = new Uint8Array(this.stack.slice(addr,offset));
-                            let view = new DataView(i8a);
+                            let view = new DataView(this.stack.slice(addr,offset));
                             this.registers[op.rd] = view.getUint32();
                         } else if (op.f7 == c.LWR) {
                             let addr = this.registers[op.rs1];
                             let offset = 8;
-                            let i8a = new Uint8Array(this.stack.slice(addr,offset));
-                            let view = new DataView(i8a);
+                            let view = new DataView(this.stack.slice(addr,offset));
                             this.registers[op.rd] = view.getUint32();
                         } else if (op.f7 == c.LWS) {
                             let addr = this.locateAddr(op.name);
                             if (addr != null) {
                                 let offset = 8;
-                                let i8a = new Uint8Array(this.stack.slice(addr,offset));
-                                let view = new DataView(i8a);
+                                let view = new DataView(this.stack.slice(addr,offset));
                                 this.registers[op.rd] = view.getUint32();
-                                } else {
+                            } else {
                                 this.output += "\n"+(this.pc-1)+": Error: Cannot find symbol: "+op.name;
                                 return; 
                             }
