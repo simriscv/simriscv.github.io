@@ -116,19 +116,19 @@ export default class CPU {
                     if (op.f3 == c.LB){
                         if (op.f7 == c.LBR) {
                             let addr = this.registers[op.rs1];
-                            let offset = 1;
+                            let offset = addr + 1;
                             let i8a = new Uint8Array(this.stack.slice(addr,offset));
                             this.registers[op.rd] = i8a[0]; 
                         } else if (op.f7 == c.LBI) {
                             let addr = this.registers[op.rs1];
                             addr += op.imm;
-                            let offset = 1;
+                            let offset = addr + 1;
                             let i8a = new Uint8Array(this.stack.slice(addr,offset));
                             this.registers[op.rd] = i8a[0];
                         } else if (op.f7 == c.LBS) {
                             let addr = this.locateAddr(op.name);
                             if (addr != null) {
-                                let offset = 1;
+                                let offset = addr + 1;
                                 let i8a = new Uint8Array(this.stack.slice(addr,offset));
                                 this.registers[op.rd] = i8a[0];
                             } else {
@@ -139,19 +139,19 @@ export default class CPU {
                     } else if (op.f3 == c.LH) {
                         if (op.f7 == c.LHR) {
                             let addr = this.registers[op.rs1];
-                            let offset = 4;
+                            let offset = addr + 4;
                             let view = new DataView(this.stack.slice(addr,offset));
                             this.registers[op.rd] = view.getUint16();
                         } else if (op.f7 == c.LHI) {
                             let addr = this.registers[op.rs1];
                             addr += op.imm;
-                            let offset = 4;
+                            let offset = addr + 4;
                             let view = new DataView(this.stack.slice(addr,offset));
                             this.registers[op.rd] = view.getUint16();
                         } else if (op.f7 == c.LHS) {
                             let addr = this.locateAddr(op.name);
                             if (addr != null) {
-                                let offset = 4;
+                                let offset = addr + 4;
                                 let view = new DataView(this.stack.slice(addr,offset));
                                 this.registers[op.rd] = view.getUint16();
                             } else {
@@ -162,19 +162,19 @@ export default class CPU {
                     } else if (op.f3 == c.LW) {
                         if (op.f7 == c.LWR) {
                             let addr = this.registers[op.rs1];
-                            let offset = 8;
+                            let offset = addr + 8;
                             let view = new DataView(this.stack.slice(addr,offset));
                             this.registers[op.rd] = view.getUint32();
                         } else if (op.f7 == c.LWI) {
                             let addr = this.registers[op.rs1];
                             addr += op.imm;
-                            let offset = 8;
+                            let offset = addr + 8;
                             let view = new DataView(this.stack.slice(addr,offset));
                             this.registers[op.rd] = view.getUint32();
                         } else if (op.f7 == c.LWS) {
                             let addr = this.locateAddr(op.name);
                             if (addr != null) {
-                                let offset = 8;
+                                let offset = addr + 8;
                                 let view = new DataView(this.stack.slice(addr,offset));
                                 this.registers[op.rd] = view.getUint32();
                             } else {
@@ -282,7 +282,7 @@ export default class CPU {
                     } else if (this.registers[17] == 64) {
                         if (this.registers[10] == 1) {
                             let addr = this.registers[11];
-                            let offset = this.registers[12];
+                            let offset = addr + this.registers[12];
                             let i8a = new Uint8Array(this.stack.slice(addr,offset));
                             let str = String.fromCharCode.apply(null, i8a);
                             this.output += str;
