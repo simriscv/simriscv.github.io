@@ -229,7 +229,7 @@ export default class CPU {
                             let addr = this.registers[op.rs1];
                             addr += op.imm;
                             let value = this.registers[op.rs2];
-                            let buffer = new ArrayBuffer(8);
+                            let buffer = new ArrayBuffer(4);
                             let dv = new DataView(buffer);
                             dv.setInt32(value);
                             let i8a = new Uint8Array(buffer);
