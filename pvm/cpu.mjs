@@ -109,10 +109,84 @@ export default class CPU {
                 let op = this.instructions[this.pc];
                 this.pc++;
 
-                // decode
+                // decode and execute
 
-                // execute
-                if (op.code == c.I_TYPE) {
+// ********** I TYPE LOAD **********               
+                if (op.code == c.I_TYPE_LOAD) {
+                    if (op.f3 == c.LB){
+                        if (op.f7 == c.LBI) {
+                            let addr = this.registers[op.rs1];
+                            addr += op.imm;
+                            let offset = 1;
+                            let i8a = new Uint8Array(this.stack.slice(addr,offset));
+                            this.registers[op.rd] = i8a[0];
+                        } else if (op.f7 == c.LBR) {
+                            let addr = this.registers[op.rs1];
+                            let offset = 1;
+                            let i8a = new Uint8Array(this.stack.slice(addr,offset));
+                            this.registers[op.rd] = i8a[0];
+                        } else if (op.f7 == c.LBS) {
+                            let addr = this.locateAddr(op.name);
+                            if (addr != null) {
+                                let offset = 1;
+                                let i8a = new Uint8Array(this.stack.slice(addr,offset));
+                                this.registers[op.rd] = i8a[0];
+                            } else {
+                                this.output += "\n"+(this.pc-1)+": Error: Cannot find symbol: "+op.name;
+                                return; 
+                            }
+                        }
+                    } else if (op.f3 == c.LH) {
+                        if (op.f7 == c.LHI) {
+                            let addr = this.registers[op.rs1];
+                            addr += op.imm;
+                            let offset = 4;
+                            let i8a = new Uint8Array(this.stack.slice(addr,offset));
+                            this.registers[op.rd] = i8a[0];
+                        } else if (op.f7 == c.LHR) {
+                            let addr = this.registers[op.rs1];
+                            let offset = 4;
+                            let i8a = new Uint8Array(this.stack.slice(addr,offset));
+                            this.registers[op.rd] = i8a[0];
+                        } else if (op.f7 == c.LHS) {
+                            let addr = this.locateAddr(op.name);
+                            if (addr != null) {
+                                let offset = 4;
+                                let i8a = new Uint8Array(this.stack.slice(addr,offset));
+                                this.registers[op.rd] = i8a[0];
+                            } else {
+                                this.output += "\n"+(this.pc-1)+": Error: Cannot find symbol: "+op.name;
+                                return; 
+                            }
+                        }
+                    } else if (op.f3 == c.LW) {
+                        if (op.f7 == c.LWI) {
+                            let addr = this.registers[op.rs1];
+                            addr += op.imm;
+                            let offset = 8;
+                            let i8a = new Uint8Array(this.stack.slice(addr,offset));
+                            this.registers[op.rd] = i8a[0];
+                        } else if (op.f7 == c.LWR) {
+                            let addr = this.registers[op.rs1];
+                            let offset = 8;
+                            let i8a = new Uint8Array(this.stack.slice(addr,offset));
+                            this.registers[op.rd] = i8a[0];
+                        } else if (op.f7 == c.LWS) {
+                            let addr = this.locateAddr(op.name);
+                            if (addr != null) {
+                                let offset = 8;
+                                let i8a = new Uint8Array(this.stack.slice(addr,offset));
+                                this.registers[op.rd] = i8a[0];
+                            } else {
+                                this.output += "\n"+(this.pc-1)+": Error: Cannot find symbol: "+op.name;
+                                return; 
+                            }
+                        }
+                    }
+                } 
+
+// ********** I TYPE **********
+                else if (op.code == c.I_TYPE) {
                     if (op.f3 == c.ADDI){
                         let rs1 = this.registers[op.rs1];
                         this.registers[op.rd] = rs1 + op.imm;
@@ -126,17 +200,21 @@ export default class CPU {
                         let rs1 = this.registers[op.rs1];
                         this.registers[op.rd] = rs1 & op.imm;
                     }
-                } else if(op.code == c.LA){
+                }
+
+// ********** LOAD ADDRESS **********                
+                else if(op.code == c.LA){
                     let addr = this.locateAddr(op.name);
                     if (addr != null) {
                         this.registers[op.rd] = addr;
-                    }
-                    else {
+                    } else {
                         this.output += "\n"+(this.pc-1)+": Error: Cannot find symbol: "+op.name;
                         return; 
                     }
+                } 
 
-                } else if (op.code == c.R_TYPE) {
+// ********** R TYPE **********
+                else if (op.code == c.R_TYPE) {
                     if (op.f3 == c.R0){
                         if (op.f7 == c.ADD){
                             let rs1 = this.registers[op.rs1];
@@ -194,7 +272,10 @@ export default class CPU {
                             this.registers[op.rd] = rs1 % rs2;
                         }
                     }
-                } else if (op.code == c.ECALL) {
+                } 
+
+// ********** ECALL **********
+                else if (op.code == c.ECALL) {
                     if (this.registers[17] == 93) {
                         //this.output += "\n"+len+" instructions executed";
                         return; 
@@ -209,7 +290,10 @@ export default class CPU {
                         
                     }
 
-                } else if (op.code == c.LABEL) {
+                }
+
+// ********** OTHERS **********
+                else if (op.code == c.LABEL) {
 
                 } else if (op.code == c.DIRECTIVE) {
                     if (op.f3 == c.GLOBAL) {
