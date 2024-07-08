@@ -113,34 +113,24 @@ export default class CPU {
 
 // ********** I TYPE LOAD **********               
                 if (op.code == c.I_TYPE_LOAD) {
-                    let view = new DataView(this.stack);
                     if (op.f3 == c.LB){
                         if (op.f7 == c.LBR) {
                             let addr = this.registers[op.rs1];
-                            let value = this.registers[op.rs2];
-                            let buffer = new ArrayBuffer(8);
-                            let dv = new DataView(buffer);
-                            dv.setInt32(value);
-                            let i8a = new Uint8Array(buffer);
-                            view.setInt8(addr,i8a[7]);
+                            let offset = addr + 1;
+                            let i8a = new Uint8Array(this.stack.slice(addr,offset));
+                            this.registers[op.rd] = i8a[0]; 
                         } else if (op.f7 == c.LBI) {
                             let addr = this.registers[op.rs1];
                             addr += op.imm;
-                            let value = this.registers[op.rs2];
-                            let buffer = new ArrayBuffer(8);
-                            let dv = new DataView(buffer);
-                            dv.setInt32(value);
-                            let i8a = new Uint8Array(buffer);
-                            view.setInt8(addr,i8a[7]);
+                            let offset = addr + 1;
+                            let i8a = new Uint8Array(this.stack.slice(addr,offset));
+                            this.registers[op.rd] = i8a[0];
                         } else if (op.f7 == c.LBS) {
                             let addr = this.locateAddr(op.name);
                             if (addr != null) {
-                                let value = this.registers[op.rs2];
-                                let buffer = new ArrayBuffer(8);
-                                let dv = new DataView(buffer);
-                                dv.setInt32(value);
-                                let i8a = new Uint8Array(buffer);
-                                view.setInt8(addr,i8a[7]);
+                                let offset = addr + 1;
+                                let i8a = new Uint8Array(this.stack.slice(addr,offset));
+                                this.registers[op.rd] = i8a[0];
                             } else {
                                 this.output += "\n"+(this.pc-1)+": Error: Cannot find symbol: "+op.name;
                                 return; 
@@ -224,44 +214,53 @@ export default class CPU {
                 } 
 
 // ********** S TYPE STORE **********               
-                else if (op.code == c.I_TYPE_LOAD) {
-                    if (op.f3 == c.LB){
-                        if (op.f7 == c.LBR) {
-
+                else if (op.code == c.S_TYPE) {
+                    let view = new DataView(this.stack);
+                    if (op.f3 == c.SB){
+                        if (op.f7 == c.SBR) {
                             let addr = this.registers[op.rs1];
-                            let offset = addr + 1;
-                            let i8a = new Uint8Array(this.stack.slice(addr,offset));
-                            this.registers[op.rd] = i8a[0]; 
-                        } else if (op.f7 == c.LBI) {
+                            let value = this.registers[op.rs2];
+                            let buffer = new ArrayBuffer(8);
+                            let dv = new DataView(buffer);
+                            dv.setInt32(value);
+                            let i8a = new Uint8Array(buffer);
+                            view.setInt8(addr,i8a[7]);
+                        } else if (op.f7 == c.SBI) {
                             let addr = this.registers[op.rs1];
                             addr += op.imm;
-                            let offset = addr + 1;
-                            let i8a = new Uint8Array(this.stack.slice(addr,offset));
-                            this.registers[op.rd] = i8a[0];
-                        } else if (op.f7 == c.LBS) {
+                            let value = this.registers[op.rs2];
+                            let buffer = new ArrayBuffer(8);
+                            let dv = new DataView(buffer);
+                            dv.setInt32(value);
+                            let i8a = new Uint8Array(buffer);
+                            view.setInt8(addr,i8a[7]);
+                        } else if (op.f7 == c.SBS) {
                             let addr = this.locateAddr(op.name);
                             if (addr != null) {
-                                let offset = addr + 1;
-                                let i8a = new Uint8Array(this.stack.slice(addr,offset));
-                                this.registers[op.rd] = i8a[0];
+                                let value = this.registers[op.rs2];
+                                let buffer = new ArrayBuffer(8);
+                                let dv = new DataView(buffer);
+                                dv.setInt32(value);
+                                let i8a = new Uint8Array(buffer);
+                                view.setInt8(addr,i8a[7]);
                             } else {
                                 this.output += "\n"+(this.pc-1)+": Error: Cannot find symbol: "+op.name;
                                 return; 
                             }
                         }
-                    } else if (op.f3 == c.LH) {
-                        if (op.f7 == c.LHR) {
+                    } else if (op.f3 == c.SH) {
+                        if (op.f7 == c.SHR) {
                             let addr = this.registers[op.rs1];
                             let offset = addr + 4;
                             let view = new DataView(this.stack.slice(addr,offset));
                             this.registers[op.rd] = view.getUint16();
-                        } else if (op.f7 == c.LHI) {
+                        } else if (op.f7 == c.SHI) {
                             let addr = this.registers[op.rs1];
                             addr += op.imm;
                             let offset = addr + 4;
                             let view = new DataView(this.stack.slice(addr,offset));
                             this.registers[op.rd] = view.getUint16();
-                        } else if (op.f7 == c.LHS) {
+                        } else if (op.f7 == c.SHS) {
                             let addr = this.locateAddr(op.name);
                             if (addr != null) {
                                 let offset = addr + 4;
@@ -272,19 +271,19 @@ export default class CPU {
                                 return; 
                             }
                         }
-                    } else if (op.f3 == c.LW) {
-                        if (op.f7 == c.LWR) {
+                    } else if (op.f3 == c.SW) {
+                        if (op.f7 == c.SWR) {
                             let addr = this.registers[op.rs1];
                             let offset = addr + 8;
                             let view = new DataView(this.stack.slice(addr,offset));
                             this.registers[op.rd] = view.getUint32();
-                        } else if (op.f7 == c.LWI) {
+                        } else if (op.f7 == c.SWI) {
                             let addr = this.registers[op.rs1];
                             addr += op.imm;
                             let offset = addr + 8;
                             let view = new DataView(this.stack.slice(addr,offset));
                             this.registers[op.rd] = view.getUint32();
-                        } else if (op.f7 == c.LWS) {
+                        } else if (op.f7 == c.SWS) {
                             let addr = this.locateAddr(op.name);
                             if (addr != null) {
                                 let offset = addr + 8;
