@@ -154,17 +154,17 @@ instruction
 		{ return { code: 19, f3: 4, rd:rd, rs1:rs1, imm:imm }; }
 
 	// branch B
-	/ op:"beq "i rs1:reg comma rs2:reg comma label:name
+	/ op:"beq "i rs1:reg comma rs2:reg comma _ label:name
 		{ return { code: 99, f3: 0, rs1:rs1, rs2:rs2, label:label }; }
-	/ op:"bne "i rs1:reg comma rs2:reg comma label:name
+	/ op:"bne "i rs1:reg comma rs2:reg comma _ label:name
 		{ return { code: 99, f3: 1, rs1:rs1, rs2:rs2, label:label }; }
-	/ op:"blt "i rs1:reg comma rs2:reg comma label:name
+	/ op:"blt "i rs1:reg comma rs2:reg comma _ label:name
 		{ return { code: 99, f3: 4, rs1:rs1, rs2:rs2, label:label }; }
-	/ op:"bge "i rs1:reg comma rs2:reg comma label:name
+	/ op:"bge "i rs1:reg comma rs2:reg comma _ label:name
 		{ return { code: 99, f3: 5, rs1:rs1, rs2:rs2, label:label }; }
-	/ op:"bltu "i rs1:reg comma rs2:reg comma label:name
+	/ op:"bltu "i rs1:reg comma rs2:reg comma _ label:name
 		{ return { code: 99, f3: 6, rs1:rs1, rs2:rs2, label:label }; }
-	/ op:"bgeu "i rs1:reg comma rs2:reg comma label:name
+	/ op:"bgeu "i rs1:reg comma rs2:reg comma _ label:name
 		{ return { code: 99, f3: 7, rs1:rs1, rs2:rs2, label:label }; }
 
 
@@ -180,25 +180,25 @@ instruction
 		{ return { code:19, f3:4, rd:rd, rs1:rs1, rs2:-1 }; }
 	/ op:"neg "i rd:reg comma rs1:reg // sub rs2=rs1 rs1=0
 		{ return { code:51, f3:0, f7:32, rd:rd, rs1:0, rs2:rs1 }; }
-	/ op:"beqz "i rs1:reg comma label:name
+	/ op:"beqz "i rs1:reg comma _ label:name
 		{ return { code: 99, f3: 0, rs1:rs1, rs2:0, label:label }; }
-	/ op:"bnez "i rs1:reg comma label:name
+	/ op:"bnez "i rs1:reg comma _ label:name
 		{ return { code: 99, f3: 1, rs1:rs1, rs2:0, label:label }; }
-	/ op:"blez "i rs1:reg comma label:name
+	/ op:"blez "i rs1:reg comma _ label:name
 		{ return { code: 99, f3: 5, rs1:0, rs2:rs1, label:label }; }
-	/ op:"bgez "i rs1:reg comma label:name
+	/ op:"bgez "i rs1:reg comma _ label:name
 		{ return { code: 99, f3: 5, rs1:rs1, rs2:0, label:label }; }
-	/ op:"bltz "i rs1:reg comma label:name
+	/ op:"bltz "i rs1:reg comma _ label:name
 		{ return { code: 99, f3: 4, rs1:rs1, rs2:0, label:label }; }
-	/ op:"bgtz "i rs1:reg comma label:name
+	/ op:"bgtz "i rs1:reg comma _ label:name
 		{ return { code: 99, f3: 4, rs1:0, rs2:rs1, label:label }; }
-	/ op:"ble "i rs1:reg comma rs2:reg comma label:name
+	/ op:"ble "i rs1:reg comma rs2:reg comma _ label:name
 		{ return { code: 99, f3: 5, rs1:rs2, rs2:rs1, label:label }; }
-	/ op:"bgt "i rs1:reg comma rs2:reg comma label:name
+	/ op:"bgt "i rs1:reg comma rs2:reg comma _ label:name
 		{ return { code: 99, f3: 4, rs1:rs2, rs2:rs1, label:label }; }
-	/ op:"bleu "i rs1:reg comma rs2:reg comma label:name
+	/ op:"bleu "i rs1:reg comma rs2:reg comma _ label:name
 		{ return { code: 99, f3: 7, rs1:rs2, rs2:rs1, label:label }; }
-	/ op:"bgtu "i rs1:reg comma rs2:reg comma label:name
+	/ op:"bgtu "i rs1:reg comma rs2:reg comma _ label:name
 		{ return { code: 99, f3: 6, rs1:rs2, rs2:rs1, label:label }; }
 	/ op:"la "i rd:reg comma _ name:name
 		{ return { code:24, rd:rd, name:name }; }
