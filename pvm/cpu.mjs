@@ -122,8 +122,8 @@ export default class CPU {
         if (len != 0) {
             while (this.pc < len) {
                 // instruction threshold
-                if (threshold++ > 10000){
-                    this.output += "\n"+"Instruction threshold has been reached!";
+                if (threshold++ > 100000){
+                    this.output += "\n"+"Instruction threshold has been reached!\n";
                     return;
                 }
 
