@@ -60,7 +60,14 @@ export const R_TYPE = 51;
     export const R7 = 7;
         export const AND = 0;
         export const REMU = 1;
-    
+export const B_TYPE = 99
+    export const BEQ = 0
+    export const BNE = 1
+    export const BLT = 4
+    export const BGE = 5
+    export const BLTU = 6
+    export const BGEU = 7
+
 export const ALIAS = [
     "zero", "ra", "sp", "gp", "tp", "t0", "t1", "t2", 
     "s0/fp", "s1", "a0", "a1", "a2", "a3", "a4", "a5", 

@@ -23,8 +23,10 @@ export default class CPU {
         this.output = "";
         this.entrySymbol = false;
         this.globalvar = []
+        this.labels = []
     }
 
+    // initialization
     init() {
         this.registers.fill(0);
         this.pc = 0;
@@ -34,10 +36,11 @@ export default class CPU {
         this.globalvar = [];
     }
 
-    loadStack() {
+    // load stack and labels
+    load() {
         let addr = 0;
         let view = new DataView(this.stack);  
-        for (let i of this.instructions) {
+        for (let [num, i] of this.instructions) {
             if (i.code == c.DIRECTIVE && i.f3 == c.DATA) {
                 this.globalvar.push({name:i.name, addr:addr});
                 for (let j of i.vars) {
@@ -92,6 +95,8 @@ export default class CPU {
                         }
                     }
                 }
+            } else if (i.code == c.LABEL) {
+                this.labels.push({label:i.name, instr:(num + 1)});
             }
         }
     }
@@ -99,7 +104,7 @@ export default class CPU {
     run() {
         // initialization
         this.init();
-        this.loadStack();
+        this.load();
         let len = this.instructions.length;
 
         // pipeline cycle
@@ -382,6 +387,72 @@ export default class CPU {
                     }
                 } 
 
+// ********** B TYPE **********
+                else if (op.code == c.B_TYPE) {
+                    if (op.f3 == c.BEQ) {
+                        if (op.rs1 == op.rs2) {
+                            let instr = this.locateLabel(op.label);
+                            if (instr != null) {
+                                this.pc = instr;
+                            } else {
+                                this.output += "\n"+(this.pc-1)+": Error: Cannot find label: "+op.label;
+                                return; 
+                            }
+                        }
+                    } else if (op.f3 == c.BNE) {
+                        if (op.rs1 != op.rs2) {
+                            let instr = this.locateLabel(op.label);
+                            if (instr != null) {
+                                this.pc = instr;
+                            } else {
+                                this.output += "\n"+(this.pc-1)+": Error: Cannot find label: "+op.label;
+                                return; 
+                            }
+                        }
+                    } else if (op.f3 == c.BLT) {
+                        if (op.rs1 < op.rs2) {
+                            let instr = this.locateLabel(op.label);
+                            if (instr != null) {
+                                this.pc = instr;
+                            } else {
+                                this.output += "\n"+(this.pc-1)+": Error: Cannot find label: "+op.label;
+                                return; 
+                            }
+                        }
+                    } else if (op.f3 == c.BGE) {
+                        if (op.rs1 >= op.rs2) {
+                            let instr = this.locateLabel(op.label);
+                            if (instr != null) {
+                                this.pc = instr;
+                            } else {
+                                this.output += "\n"+(this.pc-1)+": Error: Cannot find label: "+op.label;
+                                return; 
+                            }
+                        }
+                    } else if (op.f3 == c.BLTU) {
+                        if (Math.abs(op.rs1) < Math.abs(op.rs2)) {
+                            let instr = this.locateLabel(op.label);
+                            if (instr != null) {
+                                this.pc = instr;
+                            } else {
+                                this.output += "\n"+(this.pc-1)+": Error: Cannot find label: "+op.label;
+                                return; 
+                            }
+                        }
+                    } else if (op.f3 == c.BGEU) {
+                        if (Math.abs(op.rs1) >= Math.abs(op.rs2)) {
+                            let instr = this.locateLabel(op.label);
+                            if (instr != null) {
+                                this.pc = instr;
+                            } else {
+                                this.output += "\n"+(this.pc-1)+": Error: Cannot find label: "+op.label;
+                                return; 
+                            }
+                        }
+                    }
+
+                }
+
 // ********** ECALL **********
                 else if (op.code == c.ECALL) {
                     if (this.registers[17] == 93) {
@@ -429,5 +500,12 @@ export default class CPU {
             return null;
     }
 
+    locateLabel(label) {
+        let item = this.labels.find(obj=>{return obj.label===label});
+        if (item)
+            return item.instr;
+        else
+            return null;
+    }
 }
 
