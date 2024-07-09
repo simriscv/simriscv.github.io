@@ -34,13 +34,14 @@ export default class CPU {
         this.output = "";
         this.entrySymbol = false;
         this.globalvar = [];
+        this.labels = [];
     }
 
-    // load stack and labels
-    load() {
+    // load global vars to stack[]
+    loadStack() {
         let addr = 0;
         let view = new DataView(this.stack);  
-        for (let [num, i] of this.instructions) {
+        for (let i of this.instructions) {
             if (i.code == c.DIRECTIVE && i.f3 == c.DATA) {
                 this.globalvar.push({name:i.name, addr:addr});
                 for (let j of i.vars) {
@@ -95,16 +96,25 @@ export default class CPU {
                         }
                     }
                 }
-            } else if (i.code == c.LABEL) {
-                this.labels.push({label:i.name, instr:(num + 1)});
-            }
+            } 
         }
+    }
+
+    // load labels and instr number to labels[]
+    loadLabels() {
+        instr = this.instructions;
+        for(let i = 0; i < instr.length; i++) {
+            if (instr.code == c.LABEL) {
+                this.labels.push({label:instr.name, instr:(i)});
+            }
+        }       
     }
 
     run() {
         // initialization
         this.init();
-        this.load();
+        this.loadStack();
+        this.loadLabels();
         let len = this.instructions.length;
 
         // pipeline cycle
