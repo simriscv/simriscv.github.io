@@ -12,6 +12,15 @@ Instruction,Description,Operation,Type,opcode,f3,f7
 "xori rd, rs1, imm",xor immediate,rd = rs1 ^ imm,I,19,4,-
 "ori rd, rs1, imm",or immediate,rd = rs1 | imm,I,19,6,-
 "andi rd, rs1, imm",and immediate,rd = rs1 & imm,I,19,7,-
+"sb rs2, (rs1)",store byte,address = rs2,S,35,0,0
+"sb rs2, imm(rs1)",store byte,address = rs2,S,35,0,1
+"sb rs2, symbol",store byte,address = rs2,S,35,0,2
+"sh rs2, (rs1)",store half word,address = rs2,S,35,1,0
+"sh rs2, imm(rs1)",store half word,address = rs2,S,35,1,1
+"sh rs2, symbol",store half word,address = rs2,S,35,1,2
+"sw rs2, (rs1)",store word,address = rs2,S,35,2,0
+"sw rs2, imm(rs1)",store word,address = rs2,S,35,2,1
+"sw rs2, symbol",store word,address = rs2,S,35,2,2
 "add rd, rs1, rs2",add,rd = rs1 + rs2,R,51,0,0
 "sub rd, rs1, rs2",sub,rd = rs1 - rs2,R,51,0,32
 "xor rd, rs1, rs2",xor,rd = rs1 ^ rs2,R,51,4,0
