@@ -400,7 +400,9 @@ export default class CPU {
 // ********** B TYPE **********
                 else if (op.code == c.B_TYPE) {
                     if (op.f3 == c.BEQ) {
-                        if (op.rs1 == op.rs2) {
+                        let rs1 = this.registers[op.rs1];
+                        let rs2 = this.registers[op.rs2];
+                        if (rs1 == rs2) {
                             let instr = this.locateLabel(op.label);
                             if (instr != null) {
                                 this.pc = instr;
@@ -410,7 +412,9 @@ export default class CPU {
                             }
                         }
                     } else if (op.f3 == c.BNE) {
-                        if (op.rs1 != op.rs2) {
+                        let rs1 = this.registers[op.rs1];
+                        let rs2 = this.registers[op.rs2];
+                        if (rs1 != rs2) {
                             let instr = this.locateLabel(op.label);
                             if (instr != null) {
                                 this.pc = instr;
@@ -420,7 +424,9 @@ export default class CPU {
                             }
                         }
                     } else if (op.f3 == c.BLT) {
-                        if (op.rs1 < op.rs2) {
+                        let rs1 = this.registers[op.rs1];
+                        let rs2 = this.registers[op.rs2];
+                        if (rs1 < rs2) {
                             let instr = this.locateLabel(op.label);
                             if (instr != null) {
                                 this.pc = instr;
@@ -430,7 +436,9 @@ export default class CPU {
                             }
                         }
                     } else if (op.f3 == c.BGE) {
-                        if (op.rs1 >= op.rs2) {
+                        let rs1 = this.registers[op.rs1];
+                        let rs2 = this.registers[op.rs2];
+                        if (rs1 >= rs2) {
                             let instr = this.locateLabel(op.label);
                             if (instr != null) {
                                 this.pc = instr;
@@ -440,7 +448,9 @@ export default class CPU {
                             }
                         }
                     } else if (op.f3 == c.BLTU) {
-                        if (Math.abs(op.rs1) < Math.abs(op.rs2)) {
+                        let rs1 = this.registers[op.rs1];
+                        let rs2 = this.registers[op.rs2];
+                        if (Math.abs(rs1) < Math.abs(rs2)) {
                             let instr = this.locateLabel(op.label);
                             if (instr != null) {
                                 this.pc = instr;
@@ -450,7 +460,9 @@ export default class CPU {
                             }
                         }
                     } else if (op.f3 == c.BGEU) {
-                        if (Math.abs(op.rs1) >= Math.abs(op.rs2)) {
+                        let rs1 = this.registers[op.rs1];
+                        let rs2 = this.registers[op.rs2];
+                        if (Math.abs(rs1) >= Math.abs(rs2)) {
                             let instr = this.locateLabel(op.label);
                             if (instr != null) {
                                 this.pc = instr;
