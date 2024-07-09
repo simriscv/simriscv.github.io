@@ -122,8 +122,8 @@ export default class CPU {
         if (len != 0) {
             while (this.pc < len) {
                 // instruction threshold
-                if (threshold++ > 100000){
-                    this.output += "\n"+"Instruction threshold has been reached!\n";
+                if (threshold++ > 200000){
+                    this.output += "Instruction threshold has been reached!\n";
                     return;
                 }
 
@@ -155,7 +155,7 @@ export default class CPU {
                                 let i8a = new Uint8Array(this.stack.slice(addr,offset));
                                 this.registers[op.rd] = i8a[0];
                             } else {
-                                this.output += "\n"+(this.pc-1)+": Error: Cannot find symbol: "+op.name;
+                                this.output += ""+(this.pc-1)+": Error: Cannot find symbol: "+op.name;
                                 return; 
                             }
                         }
@@ -178,7 +178,7 @@ export default class CPU {
                                 let view = new DataView(this.stack.slice(addr,offset));
                                 this.registers[op.rd] = view.getUint16();
                             } else {
-                                this.output += "\n"+(this.pc-1)+": Error: Cannot find symbol: "+op.name;
+                                this.output += ""+(this.pc-1)+": Error: Cannot find symbol: "+op.name;
                                 return; 
                             }
                         }
@@ -201,7 +201,7 @@ export default class CPU {
                                 let view = new DataView(this.stack.slice(addr,offset));
                                 this.registers[op.rd] = view.getUint32();
                             } else {
-                                this.output += "\n"+(this.pc-1)+": Error: Cannot find symbol: "+op.name;
+                                this.output += ""+(this.pc-1)+": Error: Cannot find symbol: "+op.name;
                                 return; 
                             }
                         }
@@ -231,7 +231,7 @@ export default class CPU {
                     if (addr != null) {
                         this.registers[op.rd] = addr;
                     } else {
-                        this.output += "\n"+(this.pc-1)+": Error: Cannot find symbol: "+op.name;
+                        this.output += ""+(this.pc-1)+": Error: Cannot find symbol: "+op.name;
                         return; 
                     }
                 } 
@@ -267,7 +267,7 @@ export default class CPU {
                                 let i8a = new Uint8Array(buffer);
                                 view.setInt8(addr,i8a[3]);
                             } else {
-                                this.output += "\n"+(this.pc-1)+": Error: Cannot find symbol: "+op.name;
+                                this.output += ""+(this.pc-1)+": Error: Cannot find symbol: "+op.name;
                                 return; 
                             }
                         }
@@ -299,7 +299,7 @@ export default class CPU {
                                 let i8a = new Uint16Array(buffer);
                                 view.setInt16(addr,i8a[1]);
                             } else {
-                                this.output += "\n"+(this.pc-1)+": Error: Cannot find symbol: "+op.name;
+                                this.output += ""+(this.pc-1)+": Error: Cannot find symbol: "+op.name;
                                 return; 
                             }
                         }
@@ -320,7 +320,7 @@ export default class CPU {
                                 addr += op.imm;                            
                                 view.setInt32(addr,value);
                             } else {
-                                this.output += "\n"+(this.pc-1)+": Error: Cannot find symbol: "+op.name;
+                                this.output += ""+(this.pc-1)+": Error: Cannot find symbol: "+op.name;
                                 return; 
                             }
                         }
@@ -415,7 +415,7 @@ export default class CPU {
                             if (instr != null) {
                                 this.pc = instr;
                             } else {
-                                this.output += "\n"+(this.pc-1)+": Error: Cannot find label: "+op.label;
+                                this.output += ""+(this.pc-1)+": Error: Cannot find label: "+op.label;
                                 return; 
                             }
                         }
@@ -427,7 +427,7 @@ export default class CPU {
                             if (instr != null) {
                                 this.pc = instr;
                             } else {
-                                this.output += "\n"+(this.pc-1)+": Error: Cannot find label: "+op.label;
+                                this.output += ""+(this.pc-1)+": Error: Cannot find label: "+op.label;
                                 return; 
                             }
                         }
@@ -439,7 +439,7 @@ export default class CPU {
                             if (instr != null) {
                                 this.pc = instr;
                             } else {
-                                this.output += "\n"+(this.pc-1)+": Error: Cannot find label: "+op.label;
+                                this.output += ""+(this.pc-1)+": Error: Cannot find label: "+op.label;
                                 return; 
                             }
                         }
@@ -451,7 +451,7 @@ export default class CPU {
                             if (instr != null) {
                                 this.pc = instr;
                             } else {
-                                this.output += "\n"+(this.pc-1)+": Error: Cannot find label: "+op.label;
+                                this.output += ""+(this.pc-1)+": Error: Cannot find label: "+op.label;
                                 return; 
                             }
                         }
@@ -463,7 +463,7 @@ export default class CPU {
                             if (instr != null) {
                                 this.pc = instr;
                             } else {
-                                this.output += "\n"+(this.pc-1)+": Error: Cannot find label: "+op.label;
+                                this.output += ""+(this.pc-1)+": Error: Cannot find label: "+op.label;
                                 return; 
                             }
                         }
@@ -475,7 +475,7 @@ export default class CPU {
                             if (instr != null) {
                                 this.pc = instr;
                             } else {
-                                this.output += "\n"+(this.pc-1)+": Error: Cannot find label: "+op.label;
+                                this.output += ""+(this.pc-1)+": Error: Cannot find label: "+op.label;
                                 return; 
                             }
                         }
@@ -518,7 +518,7 @@ export default class CPU {
             }
             //this.output += "\n"+len+" instructions executed";
         } else {
-            this.output += "\nwarning: no instruction found";
+            this.output += "Warning: no instruction found\n";
         }
     }
 
