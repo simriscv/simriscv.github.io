@@ -112,6 +112,7 @@ export default class CPU {
 
     run() {
         // initialization
+        let threshold = 0;
         this.init();
         this.loadStack();
         this.loadLabels();
@@ -119,7 +120,14 @@ export default class CPU {
 
         // pipeline cycle
         if (len != 0) {
-            while (this.pc < len) {               
+            while (this.pc < len) {
+                // instruction threshold
+                if (threshold++ > 10000){
+                    this.output += "\n"+"Instruction threshold has been reached!";
+                    return;
+                }
+
+                        
                 // fetch
                 let op = this.instructions[this.pc];
                 this.pc++;
