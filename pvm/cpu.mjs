@@ -105,7 +105,7 @@ export default class CPU {
         let instr = this.instructions;
         for(let i = 0; i < instr.length; i++) {
             if (instr[i].code == c.LABEL) {
-                this.labels.push({label:instr[i].name, instr:i});
+                this.labels.push({label:instr[i].name, instr:(i+1)});
             }
         }       
     }
