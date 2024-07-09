@@ -224,7 +224,7 @@ export default class CPU {
                             let dv = new DataView(buffer);
                             dv.setInt32(0, value);
                             let i8a = new Uint8Array(buffer);
-                            view.setInt8(addr,i8a[7]);
+                            view.setInt8(addr,i8a[3]);
                         } else if (op.f7 == c.SBI) {
                             let addr = this.registers[op.rs1];
                             addr += op.imm;
@@ -233,7 +233,7 @@ export default class CPU {
                             let dv = new DataView(buffer);
                             dv.setInt32(0, value);
                             let i8a = new Uint8Array(buffer);
-                            view.setInt8(addr,i8a[7]);
+                            view.setInt8(addr,i8a[3]);
                         } else if (op.f7 == c.SBS) {
                             let addr = this.locateAddr(op.name);
                             if (addr != null) {
@@ -242,7 +242,7 @@ export default class CPU {
                                 let dv = new DataView(buffer);
                                 dv.setInt32(0, value);
                                 let i8a = new Uint8Array(buffer);
-                                view.setInt8(addr,i8a[7]);
+                                view.setInt8(addr,i8a[3]);
                             } else {
                                 this.output += "\n"+(this.pc-1)+": Error: Cannot find symbol: "+op.name;
                                 return; 
