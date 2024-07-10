@@ -525,11 +525,13 @@ export default class CPU {
 
 // ********** J TYPE **********
                 else if (op.code == c.JALR) {
-                    this.registers[op.rd] = this.pc;
+                    if (op.rd != 0)
+                        this.registers[op.rd] = this.pc;
                     let rs1 = this.registers[op.rs1];
-                    this.pc = rs1+op.imm;
+                    this.pc = rs1+op.imm;                    
                 } else if (op.code == c.JAL) {
-                    this.registers[op.rd] = this.pc;
+                    if (op.rd != 0)
+                        this.registers[op.rd] = this.pc;
                     let instr = this.locateLabel(op.label);
                     if (instr != null) {
                         this.pc = instr;
