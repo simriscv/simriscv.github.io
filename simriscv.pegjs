@@ -116,10 +116,20 @@ instruction
 	// arithmetic immediate I
 	/ op:"addi "i rd:reg comma rs1:reg comma imm:imm
 		{ return { code: 19, f3: 0, rd:rd, rs1:rs1, imm:imm }; }
+	/ op:"slli "i rd:reg comma rs1:reg comma imm:imm
+		{ return { code: 19, f3: 1, rd:rd, rs1:rs1, imm:imm }; }
+	/ op:"slti "i rd:reg comma rs1:reg comma imm:imm
+		{ return { code: 19, f3: 2, rd:rd, rs1:rs1, imm:imm }; }
+	/ op:"slitu "i rd:reg comma rs1:reg comma imm:imm
+		{ return { code: 19, f3: 3, rd:rd, rs1:rs1, imm:imm }; }
 	/ op:"xori "i rd:reg comma rs1:reg comma imm:imm
 		{ return { code: 19, f3: 4, rd:rd, rs1:rs1, imm:imm }; }
+	/ op:"srli "i rd:reg comma rs1:reg comma imm:imm
+		{ return { code: 19, f3: 5, f7:0, rd:rd, rs1:rs1, imm:imm }; }
+	/ op:"srai "i rd:reg comma rs1:reg comma imm:imm
+		{ return { code: 19, f3: 5, f7:32, rd:rd, rs1:rs1, imm:imm }; }
 	/ op:"ori "i rd:reg comma rs1:reg comma imm:imm
-		{ return { code: 19, f3: 5, rd:rd, rs1:rs1, imm:imm }; }
+		{ return { code: 19, f3: 6, rd:rd, rs1:rs1, imm:imm }; }
 	/ op:"andi "i rd:reg comma rs1:reg comma imm:imm
 		{ return { code: 19, f3: 7, rd:rd, rs1:rs1, imm:imm }; }
 
@@ -162,8 +172,18 @@ instruction
 		{ return { code: 51, f3: 7, f7: 1, rd:rd, rs1:rs1, rs2:rs2 }; }
 
 	// logic R
+	/ op:"sll "i rd:reg comma rs1:reg comma rs2:reg
+		{ return { code: 51, f3: 1, f7: 0, rd:rd, rs1:rs1, rs2:rs2 }; }
+	/ op:"slt "i rd:reg comma rs1:reg comma rs2:reg
+		{ return { code: 51, f3: 2, f7: 0, rd:rd, rs1:rs1, rs2:rs2 }; }
+	/ op:"sltu "i rd:reg comma rs1:reg comma rs2:reg
+		{ return { code: 51, f3: 3, f7: 0, rd:rd, rs1:rs1, rs2:rs2 }; }
 	/ op:"xor "i rd:reg comma rs1:reg comma rs2:reg
 		{ return { code: 51, f3: 4, f7: 0, rd:rd, rs1:rs1, rs2:rs2 }; }
+	/ op:"srl "i rd:reg comma rs1:reg comma rs2:reg
+		{ return { code: 51, f3: 5, f7: 0, rd:rd, rs1:rs1, rs2:rs2 }; }
+	/ op:"sra "i rd:reg comma rs1:reg comma rs2:reg
+		{ return { code: 51, f3: 5, f7: 32, rd:rd, rs1:rs1, rs2:rs2 }; }
 	/ op:"or "i rd:reg comma rs1:reg comma rs2:reg
 		{ return { code: 51, f3: 6, f7: 0, rd:rd, rs1:rs1, rs2:rs2 }; }
 	/ op:"and "i rd:reg comma rs1:reg comma rs2:reg
@@ -209,6 +229,14 @@ instruction
 		{ return { code:19, f3:4, rd:rd, rs1:rs1, rs2:-1 }; }
 	/ op:"neg "i rd:reg comma rs1:reg // sub rs2=rs1 rs1=0
 		{ return { code:51, f3:0, f7:32, rd:rd, rs1:0, rs2:rs1 }; }
+	/ op:"seqz "i rd:reg comma rs1:reg
+		{ return { code: 19, f3: 3, rd:rd, rs1:rs1, imm:1 }; }
+	/ op:"snez "i rd:reg comma rs1:reg
+		{ return { code: 51, f3: 3, f7: 0, rd:rd, rs1:0, rs2:rs1 }; }
+	/ op:"sltz "i rd:reg comma rs1:reg
+		{ return { code: 51, f3: 2, f7: 0, rd:rd, rs1:rs1, rs2:0 }; }
+	/ op:"sgtz "i rd:reg comma rs1:reg 
+		{ return { code: 51, f3: 2, f7: 0, rd:rd, rs1:0, rs2:rs1 }; }
 	/ op:"beqz "i rs1:reg comma _ label:name
 		{ return { code: 99, f3: 0, rs1:rs1, rs2:0, label:label }; }
 	/ op:"bnez "i rs1:reg comma _ label:name
