@@ -7,7 +7,7 @@
 _start:
 	la t0, str
 	li t1, 0
-	li t2, 97	// ascii 'a'
+	li t2, 97
 	li t3, 26
 
 loop:
