@@ -167,6 +167,9 @@ function loadCode() {
         case "gen_abc":
             loadFile("src/gen_abc.s");
             break;
+        case "factorial":
+                loadFile("src/factorial.s");
+                break;
     }
 }
 
