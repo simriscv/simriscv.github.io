@@ -13,7 +13,7 @@ statements
 	= statement *
 
 statement
-	= __ stmt:label		
+	= __ stmt:label	end?	
 		{ i.push(stmt); }
     / __ stmt:directive	
     / __ stmt:instruction comment? end
@@ -241,7 +241,7 @@ instruction
 		{ return { code: 103, rd:0, rs1:rs1, imm:0 }; }
 	/ op:"jalr "i rs1:reg
 		{ return { code: 103, rd:1, rs1:rs1, imm:0 }; }
-	/ op:"ret "i rd:reg comma rs1:reg comma imm:imm
+	/ op:"ret"i
 		{ return { code: 103, rd:0, rs1:1, imm:0 }; }
 
 	// others
