@@ -521,6 +521,22 @@ export default class CPU {
                     } else {
                         //this.output += "\nwarning: unknown directive";
                     }
+                } 
+
+// ********** J TYPE **********
+                else if (op.code == c.JALR) {
+                    this.registers[op.rd] = this.pc;
+                    let rs1 = this.registers[op.rs1];
+                    this.pc = rs1+op.imm;
+                } else if (op.code == c.JAL) {
+                    this.registers[op.rd] = this.pc;
+                    let instr = this.locateLabel(op.label);
+                    if (instr != null) {
+                        this.pc = instr;
+                    } else {
+                        this.output += ""+(this.pc-1)+": Error: Cannot find label: "+op.label;
+                        return; 
+                    }                    
                 } else {
                     //this.output += "\nwarning: unknown instruction";
                 }

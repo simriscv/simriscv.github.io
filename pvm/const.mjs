@@ -70,6 +70,8 @@ export const B_TYPE = 99
     export const BGE = 5
     export const BLTU = 6
     export const BGEU = 7
+export const JALR = 103
+export const JAL = 111
 
 export const ALIAS = [
     "zero", "ra", "sp", "gp", "tp", "t0", "t1", "t2", 

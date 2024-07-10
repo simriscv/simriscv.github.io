@@ -16,7 +16,7 @@ statement
 	= __ stmt:label		
 		{ i.push(stmt); }
     / __ stmt:directive	
-    / __ stmt:instruction comments? end
+    / __ stmt:instruction comment? end
 		{ i.push(stmt); }
     / __ comments
     
@@ -76,7 +76,7 @@ type_bss
 	/ ".space "i { return 7; }
 	
 bss_size
-	= _ s:("+")? _ n:[1-9][0-9]* 
+	= _ s:("+")? _ n:([1-9][0-9]*)
     	{ return parseInt(n.join("")); }
 
 bss
@@ -191,6 +191,11 @@ instruction
 	/ op:"bgeu "i rs1:reg comma rs2:reg comma _ label:name
 		{ return { code: 99, f3: 7, rs1:rs1, rs2:rs2, label:label }; }
 
+	// jump J
+	/ op:"jalr "i rd:reg comma rs1:reg comma imm:imm
+		{ return { code: 103, rd:rd, rs1:rs1, imm:imm }; }
+	/ op:"jal "i rd:reg comma _ label:name
+		{ return { code: 111, rd:rd, label:label }; }
 
 
 	// pseudo
@@ -226,6 +231,18 @@ instruction
 		{ return { code: 99, f3: 6, rs1:rs2, rs2:rs1, label:label }; }
 	/ op:"la "i rd:reg comma _ name:name
 		{ return { code:24, rd:rd, name:name }; }
+	/ op:"j "i _ label:name
+		{ return { code: 111, rd:0, label:label }; }
+	/ op:"jal "i _ label:name
+		{ return { code: 111, rd:1, label:label }; }
+	/ op:"call "i _ label:name
+		{ return { code: 111, rd:1, label:label }; }
+	/ op:"jr "i rs1:reg
+		{ return { code: 103, rd:0, rs1:rs1, imm:0 }; }
+	/ op:"jalr "i rs1:reg
+		{ return { code: 103, rd:1, rs1:rs1, imm:0 }; }
+	/ op:"ret "i rd:reg comma rs1:reg comma imm:imm
+		{ return { code: 103, rd:0, rs1:1, imm:0 }; }
 
 	// others
 	/ "ecall"i
@@ -291,6 +308,6 @@ ___ "ignoredwithnewlineempty"
 comments
 	= _ "//"str:("\t"/" "/"!"/[#-~])* end 
 
-    
+comment
+	= _ "//"str:("\t"/" "/"!"/[#-~])* 
 
-    
