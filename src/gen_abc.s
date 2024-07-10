@@ -13,8 +13,8 @@ _start:
 loop:
 	sb t2, (t0)
 	addi t2, t2, 1
-	add t1, t1, 1
-	add t0, t0, 1
+	addi t1, t1, 1
+	addi t0, t0, 1
 	bne t1, t3, loop
 	
 	li t2, 10
