@@ -94,9 +94,18 @@ export default class CPU {
                             view.setUint8(addr,0);
                             addr += 1;
                         }
+                    } else if (j.type == c.SKIP) {
+                        addr += j.size;
                     }
                 }
-            } 
+            } else if (i.code == c.DIRECTIVE && i.f3 == c.BSS) {
+                this.globalvar.push({name:i.name, addr:addr});
+                for (let j of i.vars) {
+                    if (j.type == c.SKIP){
+                        addr += j.size;
+                    }
+                }
+            }
         }
     }
 

@@ -28,12 +28,14 @@ directive
 	= "."("global "i/"globl "i) _ n:name end 	
  		{ i.push({ code:0, f3:0, name:n }); }
 	/ data
+	/ bss
    
     / ".text"i end
- 		{ i.push({ code:0, f3:4, name:"text" }); }
+ 		{ i.push({ code:0, f3:3, name:"text" }); }
 
 data
 	= __ ".data"i end (declaration)*
+
 
 declaration
 	= __ n:name _ ":" tail:(__ definition end)+
@@ -48,7 +50,9 @@ definition
 		{
 			return {type:t, 
 			value:[head].concat(tail.map(function(i){return i[1];}))};
-		} 
+		}
+	/ t:type_bss s:bss_size 
+    	{ return { type:t, size:s }; }
 
 type
 	= ".ascii "i { return 4; }
@@ -66,7 +70,27 @@ type_array
 
 values
 	= imm:imm { return imm;}
- 	
+
+type_bss
+	= ".skip "i { return 7; }
+	/ ".space "i { return 7; }
+	
+bss_size
+	= _ s:("+")? _ n:[1-9][0-9]* 
+    	{ return parseInt(n.join("")); }
+
+bss
+	= __ ".bss"i end (bssdeclaration)*
+
+bssdeclaration
+	= __ n:name _ ":" tail:(__ bssdefinition end)+
+		{
+			i.push({ code:0, f3:4, name:n,
+			vars:[].concat(tail.map(function(i){return i[1];}))});
+		}         
+bssdefinition
+	= t:type_bss s:bss_size 
+    	{ return { type:t, size:s }; }
 
 instruction
 	// load immediate I
