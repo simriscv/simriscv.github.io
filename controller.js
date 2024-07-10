@@ -164,6 +164,9 @@ function loadCode() {
         case "arithmetic":
             loadFile("src/arithmetic.s");
             break;
+        case "gen_abc":
+            loadFile("src/gen_abc.s");
+            break;
     }
 }
 
