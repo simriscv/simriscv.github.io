@@ -12,6 +12,7 @@ export const DIRECTIVE = 0;
         export const STRING = 6;
     export const TEXT = 3;
     export const BSS = 4;
+        export const SKIP = 7;
 export const LABEL = 1;
 export const ECALL = 2;
 export const I_TYPE_LOAD = 3
