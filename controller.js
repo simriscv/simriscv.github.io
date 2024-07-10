@@ -23,6 +23,7 @@ export function assemble() {
 
 // run program
 export function run() {
+    assemble();
     vm.run();
     updateConsole("run\n"+vm.output+"$ ");
     showRegisters();
