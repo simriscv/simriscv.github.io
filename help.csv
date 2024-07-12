@@ -31,9 +31,34 @@ Instruction,Description,Operation,Type,opcode,f3,f7
 "divu rd, rs1, rs2",divide unsigned,rd = rs1 / rs2,R,51,5,1
 "rem rd, rs1, rs2",remainder signed,rd = rs1 % rs2,R,51,6,1
 "remu rd, rs1, rs2",remainder unsigned,rd = rs1 % rs2,R,51,7,1
+"beq rs1, rs2, label",branch if equal,if(rs1==rs2) pc=pc+addr(label),B,99,0,-
+"bne rs1, rs2, label",branch if not equal,if(rs1!=rs2) pc=pc+addr(label),B,99,1,-
+"blt rs1, rs2, label",branch if less than,if(rs1<rs2) pc=pc+addr(label),B,99,4,-
+"bge rs1, rs2, label",branch if greater equal than,if(rs1>=rs2) pc=pc+addr(label),B,99,5,-
+"bltu rs1, rs2, label",branch if less than unsigned,if(rs1<rs2) pc=pc+addr(label),B,99,6,-
+"bgeu rs1, rs2, label",branch if greater equal than unsigned,if(rs1>=rs2) pc=pc+addr(label),B,99,7,-
+"jalr rd, rs1, imm",jump and link register,rd = pc + 4 & pc = rs1 + imm,I,103,-,-
+"jal rd, label",jump and link,rd = pc + 4 & pc = addr(label),I,111,-,-
 "nop",no operation,"addi x0, x0, 0",Pseudo,-,-,-
 "li rd, imm",load immediate,"addi rd, x0, imm",Pseudo,-,-,-
 "mv rd, rs1",move/copy,"addi rd, rs1,0",Pseudo,-,-,-
 "not rd, rs1",one's complement,"xori rd, rs1, -1",Pseudo,-,-,-
 "neg rd, rs1",two's complement,"sub rd, x0, rs1",Pseudo,-,-,-
 "la rd, symbol",load address of global var,rd = symbol address,Pseudo,-,-,-
+"beqz rs1, label",branch if equal 0,"beq rs1, x0, label",Pseudo,-,-,-
+"bnez rs1, label",branch if not equal 0,"bne rs1, x0, label",Pseudo,-,-,-
+"blez rs1, label",branch if less equal than 0,"bge x0, rs1, label",Pseudo,-,-,-
+"bgez rs1, label",branch if greater equal than 0,"bge rs1, x0, label",Pseudo,-,-,-
+"bltz rs1, label",branch if less than 0,"blt rs1, x0, label",Pseudo,-,-,-
+"bgtz rs1, label",branch if greater than 0,"blt x0, rs1, label",Pseudo,-,-,-
+"ble rs1, rs2, label",branch if less equal than,"bge rs2, rs1, label",Pseudo,-,-,-
+"bgt rs1, rs2, label",branch if greater than,"blt rs2, rs1, label",Pseudo,-,-,-
+"bleu rs1, rs2, label",branch if less equal than unsigned,"bgeu rs2, rs1, label",Pseudo,-,-,-
+"bgtu rs1, rs2, label",branch if greater than unsigned,"bltu rs2, rs1, label",Pseudo,-,-,-
+"j label",jump,"jal x0, label",Pseudo,-,-,-
+"jal label",jump and link,"jal ra, label",Pseudo,-,-,-
+"jr rs1",jump register,"jalr x0, rs1, label",Pseudo,-,-,-
+"jalr rs1",jump and link register,"jal ra, rs1, 0",Pseudo,-,-,-
+"ret",return from function,"jalr x0, ra, 0",Pseudo,-,-,-
+"call label",call function,"jal ra, label",Pseudo,-,-,-
+"ecall",transfer control to OS,"ecall,Privileged,-,-,-
