@@ -9,7 +9,12 @@ Instruction,Description,Operation,Type,opcode,f3,f7
 "lw rd, imm(rs1)",load word,rd = address,I,3,2,1
 "lw rd, symbol",load word,rd = address,I,3,2,2
 "addi rd, rs1, imm",add immediate,rd = rs1 + imm,I,19,0,-
+"slli rd, rs1, imm",shift left logical immediate,rd = rs1 << imm,I,19,1,-
+"slti rd, rs1, imm",set less than immediate,if (rs1 < imm) rd = 1 else rd = 0,I,19,2,-
+"sltiu rd, rs1, imm",set les than immediate unsigned,if (|rs1| < |imm|) rd = 1 else rd =0,I,19,3,-
 "xori rd, rs1, imm",xor immediate,rd = rs1 ^ imm,I,19,4,-
+"srli rd, rs1, imm",shift right logical immediate,rd = rs1 >> imm,I,19,0,-
+"srai rd, rs1, imm",shift right arithmetic immediate,rd = rs1 >>> imm,I,19,0,-
 "ori rd, rs1, imm",or immediate,rd = rs1 | imm,I,19,6,-
 "andi rd, rs1, imm",and immediate,rd = rs1 & imm,I,19,7,-
 "sb rs2, (rs1)",store byte,address = rs2,S,35,0,0
@@ -23,7 +28,12 @@ Instruction,Description,Operation,Type,opcode,f3,f7
 "sw rs2, symbol",store word,address = rs2,S,35,2,2
 "add rd, rs1, rs2",add,rd = rs1 + rs2,R,51,0,0
 "sub rd, rs1, rs2",sub,rd = rs1 - rs2,R,51,0,32
+"sll rd, rs1, rs2",shift left logical,rd = rs1 << rs2,R,51,1,0
+"slt rd, rs1, rs2",set less than,if (rs1 < rs2) rd = 1 else rd = 0,R,51,2,0
+"sltu rd, rs1, rs2",set less than unsigned,if (|rs1| < |rs2|) rd = 1 else rd = 0,R,51,3,0
 "xor rd, rs1, rs2",xor,rd = rs1 ^ rs2,R,51,4,0
+"srl rd, rs1, rs2",shift right logical,rd = rs1 >> rs2,R,51,5,0
+"sra rd, rs1, rs2",shift right arithmetic,rd = rs1 >>> rs2,R,51,5,32
 "or rd, rs1, rs2",or,rd = rs1 | rs2,R,51,6,0
 "and rd, rs1, rs2",and,rd = rs1 & rs2,R,51,7,0
 "mul rd, rs1, rs2",multiply,rd = rs1 * rs2,R,51,0,1
@@ -44,6 +54,10 @@ Instruction,Description,Operation,Type,opcode,f3,f7
 "mv rd, rs1",move/copy,"addi rd, rs1,0",Pseudo,-,-,-
 "not rd, rs1",one's complement,"xori rd, rs1, -1",Pseudo,-,-,-
 "neg rd, rs1",two's complement,"sub rd, x0, rs1",Pseudo,-,-,-
+"seqz rd, rs1",set if equal 0,"sltiu rd, rs1, 1",Pseudo,-,-,-
+"snez rd, rs1",set if not equal 0,"sltu rd, x0, rs1",Pseudo,-,-,-
+"sltz rd, rs1",set if less than 0,"slt rd, rs1, x0",Pseudo,-,-,-
+"sgtz rd, rs1",set if greater than 0,"slt rd, x0, rs1",Pseudo,-,-,-
 "la rd, symbol",load address of global var,rd = symbol address,Pseudo,-,-,-
 "beqz rs1, label",branch if equal 0,"beq rs1, x0, label",Pseudo,-,-,-
 "bnez rs1, label",branch if not equal 0,"bne rs1, x0, label",Pseudo,-,-,-

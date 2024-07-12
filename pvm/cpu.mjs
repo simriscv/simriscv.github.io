@@ -341,9 +341,31 @@ export default class CPU {
                     if (op.f3 == c.ADDI){
                         let rs1 = this.registers[op.rs1];
                         this.registers[op.rd] = rs1 + op.imm;
+                    } else if (op.f3 == c.SLLI) {
+                        let rs1 = this.registers[op.rs1];
+                        this.registers[op.rd] = rs1 << op.imm;
+                    } else if (op.f3 == c.SLTI) {
+                        let rs1 = this.registers[op.rs1];
+                        if (rs1 < op.imm) {
+                            this.registers[op.rd] = 1;
+                        } else {
+                            this.registers[op.rd] = 0;
+                        }                        
+                    } else if (op.f3 == c.SLTIU) {
+                        let rs1 = this.registers[op.rs1];
+                        if (Math.abs(rs1) < Math.abs(op.imm)) {
+                            this.registers[op.rd] = 1;
+                        } else {
+                            this.registers[op.rd] = 0;
+                        }                        
                     } else if (op.f3 == c.XORI) {
                         let rs1 = this.registers[op.rs1];
                         this.registers[op.rd] = rs1 ^ op.imm;
+                    } else if (op.f3 == c.I5) {
+                        if (op.f7 == c.SRLI || op.f7 == c.SRAI) {
+                            let rs1 = this.registers[op.rs1];
+                            this.registers[op.rd] = rs1 >> op.imm;                            
+                        }
                     } else if (op.f3 == c.ORI) {
                         let rs1 = this.registers[op.rs1];
                         this.registers[op.rd] = rs1 | op.imm;
@@ -369,6 +391,32 @@ export default class CPU {
                             let rs2 = this.registers[op.rs2];
                             this.registers[op.rd] = rs1 * rs2;
                         }
+                    } else if (op.f3 == c.R1) {
+                        if (op.f7 == c.SLL){
+                            let rs1 = this.registers[op.rs1];
+                            let rs2 = this.registers[op.rs2];
+                            this.registers[op.rd] = rs1 << rs2;
+                        }  
+                    } else if (op.f3 == c.R2) {
+                        if (op.f3 == c.SLT) {
+                            let rs1 = this.registers[op.rs1];
+                            let rs2 = this.registers[op.rs2];
+                            if (rs1 < rs2) {
+                                this.registers[op.rd] = 1;
+                            } else {
+                                this.registers[op.rd] = 0;
+                            }                        
+                        }
+                    } else if (op.f3 == c.R3) {
+                        if (op.f3 == c.SLTU) {
+                            let rs1 = this.registers[op.rs1];
+                            let rs2 = this.registers[op.rs2];
+                            if (Math.abs(rs1) < Math.abs(rs2)) {
+                                this.registers[op.rd] = 1;
+                            } else {
+                                this.registers[op.rd] = 0;
+                            }                        
+                        }
                     } else if (op.f3 == c.R4){
                         if (op.f7 == c.XOR){
                             let rs1 = this.registers[op.rs1];
@@ -392,6 +440,10 @@ export default class CPU {
                             rs2 = Math.abs(rs2);
                             let rd = parseInt(rs1 / rs2);
                             this.registers[op.rd] = rd;
+                        } else if (op.f7 == c.SRL || op.f7 == c.SRA){
+                            let rs1 = this.registers[op.rs1];
+                            let rs2 = this.registers[op.rs2];
+                            this.registers[op.rd] = rs1 >> rs2;
                         }
                     } else if (op.f3 == c.R6){
                         if (op.f7 == c.REM){
