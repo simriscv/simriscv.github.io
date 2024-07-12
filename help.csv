@@ -61,4 +61,4 @@ Instruction,Description,Operation,Type,opcode,f3,f7
 "jalr rs1",jump and link register,"jal ra, rs1, 0",Pseudo,-,-,-
 "ret",return from function,"jalr x0, ra, 0",Pseudo,-,-,-
 "call label",call function,"jal ra, label",Pseudo,-,-,-
-"ecall",transfer control to OS,"ecall,Privileged,-,-,-
+"ecall",transfer control to OS,"ecall",Privileged,-,-,-
