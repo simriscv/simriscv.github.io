@@ -13,6 +13,7 @@ const flag = {
 export default class CPU {
     constructor() {
         this.registers = new Array(32).fill(0);
+        this.fregisters = new Array(32).fill(0.0);
         this.stack = new ArrayBuffer(16777215);
         this.addr = c.ADDR;
         this.instructions = [];
@@ -96,6 +97,16 @@ export default class CPU {
                         }
                     } else if (j.type == c.SKIP) {
                         addr += j.size;
+                    } else if (j.type == c.FLOAT){
+                        for (let k of j.value) {
+                            view.setFloat32(addr,k);
+                            addr += 4;
+                        }
+                    } else if (j.type == c.DOUBLE){
+                        for (let k of j.value) {
+                            view.setFloat64(addr,k);
+                            addr += 8;
+                        }
                     }
                 }
             } else if (i.code == c.DIRECTIVE && i.f3 == c.BSS) {
@@ -466,6 +477,114 @@ export default class CPU {
                     }
                 } 
 
+// ********** FD TYPE **********
+                else if (op.code == c.FD_TYPE) {
+                    if (op.f3 == c.FADDS || op.f3 == c.FADDD) {
+                        let fs1 = this.fregisters[op.fs1];
+                        let fs2 = this.fregisters[op.fs2];
+                        this.fregisters[op.fd] = fs1 + fs2;
+                    } else if (op.f3 == c.FSUBS || op.f3 == c.FSUBD) {
+                        let fs1 = this.fregisters[op.fs1];
+                        let fs2 = this.fregisters[op.fs2];
+                        this.fregisters[op.fd] = fs1 - fs2;
+                    } else if (op.f3 == c.FMULS || op.f3 == c.FMULD) {
+                        let fs1 = this.fregisters[op.fs1];
+                        let fs2 = this.fregisters[op.fs2];
+                        this.fregisters[op.fd] = fs1 * fs2;
+                    } else if (op.f3 == c.FDIVS || op.f3 == c.FDIVD) {
+                        let fs1 = this.fregisters[op.fs1];
+                        let fs2 = this.fregisters[op.fs2];
+                        this.fregisters[op.fd] = fs1 / fs2;
+                    } else if (op.f3 == c.FMINS || op.f3 == c.FMIND) {
+                        let fs1 = this.fregisters[op.fs1];
+                        let fs2 = this.fregisters[op.fs2];
+                        this.fregisters[op.fd] = Math.min(fs1, fs2);
+                    } else if (op.f3 == c.FMAXS || op.f3 == c.FMAXD) {
+                        let fs1 = this.fregisters[op.fs1];
+                        let fs2 = this.fregisters[op.fs2];
+                        this.fregisters[op.fd] = Math.max(fs1, fs2);
+                    } else if (op.f3 == c.FSQRTS || op.f3 == c.FSQRTD) {
+                        let fs1 = this.fregisters[op.fs1];
+                        this.fregisters[op.fd] = Math.sqrt(fs1);
+                    } else if (op.f3 == c.FEQS || op.f3 == c.FEQD) {
+                        let fs1 = this.fregisters[op.fs1];
+                        let fs2 = this.fregisters[op.fs2];
+                        this.registers[op.rd] = (fs1==fs2)?1:0;
+                    } else if (op.f3 == c.FLTS || op.f3 == c.FLTD) {
+                        let fs1 = this.fregisters[op.fs1];
+                        let fs2 = this.fregisters[op.fs2];
+                        this.registers[op.rd] = (fs1<fs2)?1:0;
+                    } else if (op.f3 == c.FLES || op.f3 == c.FLED) {
+                        let fs1 = this.fregisters[op.fs1];
+                        let fs2 = this.fregisters[op.fs2];
+                        this.registers[op.rd] = (fs1<=fs2)?1:0;
+                    } else if (op.f3 == c.FLW) {
+                        let addr = this.registers[op.rs1];
+                        let view = new DataView(this.stack.slice(addr,addr+4));
+                        this.fregisters[op.fd] = view.getFloat32();
+                    } else if (op.f3 == c.FLWI) {
+                        let addr = this.registers[op.rs1];
+                        addr += op.imm;
+                        let view = new DataView(this.stack.slice(addr,addr+4));
+                        this.fregisters[op.fd] = view.getFloat32();
+                    } else if (op.f3 == c.FSW) {
+                        let addr = this.registers[op.rs1];
+                        let value = this.fregisters[op.fs2];
+                        let view = new DataView(this.stack);
+                        view.setFloat32(addr,value);
+                    } else if (op.f3 == c.FSWI) {
+                        let addr = this.registers[op.rs1];
+                        let value = this.fregisters[op.fs2];
+                        let view = new DataView(this.stack);
+                        addr += op.imm;                            
+                        view.setFloat32(addr,value);
+                    } else if (op.f3 == c.FLD) {
+                        let addr = this.registers[op.rs1];
+                        let view = new DataView(this.stack.slice(addr,addr+8));
+                        this.fregisters[op.fd] = view.getFloat64();
+                    } else if (op.f3 == c.FLDI) {
+                        let addr = this.registers[op.rs1];
+                        addr += op.imm;
+                        let view = new DataView(this.stack.slice(addr,addr+8));
+                        this.fregisters[op.fd] = view.getFloat64();
+                    } else if (op.f3 == c.FSD) {
+                        let addr = this.registers[op.rs1];
+                        let value = this.fregisters[op.fs2];
+                        let view = new DataView(this.stack);
+                        view.setFloat64(addr,value);
+                    } else if (op.f3 == c.FSDI) {
+                        let addr = this.registers[op.rs1];
+                        let value = this.fregisters[op.fs2];
+                        let view = new DataView(this.stack);
+                        addr += op.imm;                            
+                        view.setFloat64(addr,value);
+                    } else if (op.f3 == c.FCVTWS || op.f3 == c.FCVTWD) {
+                        let fs1 = this.fregisters[op.fs1];
+                        this.registers[op.rd] = Math.round(fs1);
+                    } else if (op.f3 == c.FCVTSW || op.f3 == c.FCVTDW) {
+                        let rs1 = this.registers[op.rs1];
+                        this.fregisters[op.fd] = parseFloat(rs1);
+                    } else if (op.f3 == c.FMVXW) {                        
+                        let fs1 = this.fregisters[op.fs1];
+                        let b = new ArrayBuffer(4);
+                        let f = new Float32Array(b);
+                        f[0] = fs1;
+                        let i = new Uint32Array(b);
+                        this.registers[op.fd] = i[0];
+                    } else if (op.f3 == c.FMVWX) {
+                        let value = this.registers[op.rs1];
+                        this.fregisters[op.fd] = value;                        
+                    } else if (op.f3 == c.FCVTSD) {
+                        let value = this.fregisters[op.fs1];
+                        value = doubleToFloat(value);
+                        this.fregisters[op.fd] = value;  
+                    } else if (op.f3 == c.FCVTDS) {
+                        let value = this.fregisters[op.fs1];
+                        value = floatToDouble(value);
+                        this.fregisters[op.fd] = value;                          
+                    }
+                }
+
 // ********** B TYPE **********
                 else if (op.code == c.B_TYPE) {
                     if (op.f3 == c.BEQ) {
@@ -616,5 +735,25 @@ export default class CPU {
         else
             return null;
     }
+
+
+}
+
+// Convertir de float (32 bits) a double (64 bits)
+function floatToDouble(floatNumber) {
+    const buffer = new ArrayBuffer(8); // Crear un buffer de 8 bytes (64 bits)
+    const float32View = new Float32Array(buffer); // Vista de 32 bits para el buffer
+    float32View[0] = floatNumber; // Escribir el float en el buffer
+    const float64View = new Float64Array(buffer); // Vista de 64 bits para el mismo buffer
+    return float64View[0]; // Leer el double desde el buffer
+}
+
+// Convertir de double (64 bits) a float (32 bits)
+function doubleToFloat(doubleNumber) {
+    const buffer = new ArrayBuffer(8); // Crear un buffer de 8 bytes (64 bits)
+    const float64View = new Float64Array(buffer); // Vista de 64 bits para el buffer
+    float64View[0] = doubleNumber; // Escribir el double en el buffer
+    const float32View = new Float32Array(buffer); // Vista de 32 bits para el mismo buffer
+    return float32View[0]; // Leer el float desde el buffer
 }
 

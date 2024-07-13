@@ -10,11 +10,16 @@ export const DIRECTIVE = 0;
         export const ASCII = 4;
         export const ASCIZ = 5;
         export const STRING = 6;
+        export const FLOAT = 8;
+        export const DOUBLE = 9;
     export const TEXT = 3;
     export const BSS = 4;
         export const SKIP = 7;
+
 export const LABEL = 1;
+
 export const ECALL = 2;
+
 export const I_TYPE_LOAD = 3
     export const LB = 0
         export const LBR = 0
@@ -27,7 +32,8 @@ export const I_TYPE_LOAD = 3
     export const LW = 2
         export const LWR = 0
         export const LWI = 1
-        export const LWS = 2    
+        export const LWS = 2  
+
 export const I_TYPE = 19;
     export const ADDI = 0;
     export const SLLI = 1;
@@ -39,7 +45,9 @@ export const I_TYPE = 19;
         export const SRAI = 32;
     export const ORI = 6;
     export const ANDI = 7;
+
 export const LA = 24;
+
 export const S_TYPE = 35
     export const SB = 0
         export const SBR = 0
@@ -52,7 +60,8 @@ export const S_TYPE = 35
     export const SW = 2
         export const SWR = 0
         export const SWI = 1
-        export const SWS = 2  
+        export const SWS = 2 
+
 export const R_TYPE = 51;
     export const R0 = 0;
         export const ADD = 0;
@@ -77,6 +86,47 @@ export const R_TYPE = 51;
     export const R7 = 7;
         export const AND = 0;
         export const REMU = 1;
+
+export const FD_TYPE = 83;
+    export const FADDS = 0;
+    export const FADDD = 1;
+    export const FSUBS = 2;
+    export const FSUBD = 3;
+    export const FMULS = 4;
+    export const FMULD = 5;
+    export const FDIVS = 6;
+    export const FDIVD = 7;
+    export const FMINS = 8;
+    export const FMIND = 9;
+    export const FMAXS = 10;
+    export const FMAXD = 11;
+    export const FSQRTS = 12;
+    export const FSQRTD = 13;
+    export const FEQS = 14;
+    export const FEQD = 15;
+    export const FLTS = 16;
+    export const FLTD = 17;
+    export const FLES = 18;
+    export const FLED = 19;
+
+    export const FLW = 32;
+    export const FLWI = 33;
+    export const FSW = 34;
+    export const FSWI = 35;
+    export const FLD = 36;
+    export const FLDI = 37;
+    export const FSD = 38;
+    export const FSDI = 39;
+
+    export const FCVTWS = 64;
+    export const FCVTSW = 65;
+    export const FMVXW = 66;
+    export const FMVWX = 67;
+    export const FCVTWD = 68;
+    export const FCVTDW = 69;
+    export const FCVTSD = 70;
+    export const FCVTDS = 71;
+
 export const B_TYPE = 99
     export const BEQ = 0
     export const BNE = 1
@@ -84,7 +134,9 @@ export const B_TYPE = 99
     export const BGE = 5
     export const BLTU = 6
     export const BGEU = 7
+
 export const JALR = 103
+
 export const JAL = 111
 
 export const ALIAS = [

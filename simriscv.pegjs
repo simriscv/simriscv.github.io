@@ -51,6 +51,11 @@ definition
 			return {type:t, 
 			value:[head].concat(tail.map(function(i){return i[1];}))};
 		}
+	/ t:type_float head:float tail:(comma float)*
+		{
+			return {type:t, 
+			value:[head].concat(tail.map(function(i){return i[1];}))};
+		}
 	/ t:type_bss s:bss_size 
     	{ return { type:t, size:s }; }
 
@@ -70,6 +75,10 @@ type_array
 
 values
 	= imm:imm { return imm;}
+
+type_float
+	= ".float "i { return 8; }
+	/ ".double "i { return 9; }
 
 type_bss
 	= ".skip "i { return 7; }
@@ -276,6 +285,81 @@ instruction
 	/ "ecall"i
 		{ return { code: 2 }; }
 
+	// floating point FD
+	/ op:"fadd.s "i fd:freg comma fs1:freg comma fs2:freg
+		{ return { code: 83, f3: 0, fd:fd, fs1:fs1, fs2:fs2 }; }
+	/ op:"fadd.d "i fd:freg comma fs1:freg comma fs2:freg
+		{ return { code: 83, f3: 1, fd:fd, fs1:fs1, fs2:fs2 }; }
+	/ op:"fsub.s "i fd:freg comma fs1:freg comma fs2:freg
+		{ return { code: 83, f3: 2, fd:fd, fs1:fs1, fs2:fs2 }; }
+	/ op:"fsub.d "i fd:freg comma fs1:freg comma fs2:freg
+		{ return { code: 83, f3: 3, fd:fd, fs1:fs1, fs2:fs2 }; }
+	/ op:"fmul.s "i fd:freg comma fs1:freg comma fs2:freg
+		{ return { code: 83, f3: 4, fd:fd, fs1:fs1, fs2:fs2 }; }
+	/ op:"fmul.d "i fd:freg comma fs1:freg comma fs2:freg
+		{ return { code: 83, f3: 5, fd:fd, fs1:fs1, fs2:fs2 }; }
+	/ op:"fdiv.s "i fd:freg comma fs1:freg comma fs2:freg
+		{ return { code: 83, f3: 6, fd:fd, fs1:fs1, fs2:fs2 }; }
+	/ op:"fdiv.d "i fd:freg comma fs1:freg comma fs2:freg
+		{ return { code: 83, f3: 7, fd:fd, fs1:fs1, fs2:fs2 }; }
+	/ op:"fmin.s "i fd:freg comma fs1:freg comma fs2:freg
+		{ return { code: 83, f3: 8, fd:fd, fs1:fs1, fs2:fs2 }; }
+	/ op:"fmin.d "i fd:freg comma fs1:freg comma fs2:freg
+		{ return { code: 83, f3: 9, fd:fd, fs1:fs1, fs2:fs2 }; }
+	/ op:"fmax.s "i fd:freg comma fs1:freg comma fs2:freg
+		{ return { code: 83, f3: 10, fd:fd, fs1:fs1, fs2:fs2 }; }
+	/ op:"fmax.d "i fd:freg comma fs1:freg comma fs2:freg
+		{ return { code: 83, f3: 11, fd:fd, fs1:fs1, fs2:fs2 }; }
+	/ op:"fsqrt.s "i fd:freg comma fs1:freg
+		{ return { code: 83, f3: 12, fd:fd, fs1:fs1 }; }
+	/ op:"fsqrt.d "i fd:freg comma fs1:freg
+		{ return { code: 83, f3: 13, fd:fd, fs1:fs1 }; }
+	/ op:"feq.s "i rd:reg comma fs1:freg comma fs2:freg
+		{ return { code: 83, f3: 14, rd:rd, fs1:fs1, fs2:fs2 }; }
+	/ op:"feq.d "i rd:reg comma fs1:freg comma fs2:freg
+		{ return { code: 83, f3: 15, rd:rd, fs1:fs1, fs2:fs2 }; }
+	/ op:"flt.s "i rd:reg comma fs1:freg comma fs2:freg
+		{ return { code: 83, f3: 16, rd:rd, fs1:fs1, fs2:fs2 }; }
+	/ op:"flt.d "i rd:reg comma fs1:freg comma fs2:freg
+		{ return { code: 83, f3: 17, rd:rd, fs1:fs1, fs2:fs2 }; }
+	/ op:"fld.s "i rd:reg comma fs1:freg comma fs2:freg
+		{ return { code: 83, f3: 18, rd:rd, fs1:fs1, fs2:fs2 }; }
+	/ op:"fld.d "i rd:reg comma fs1:freg comma fs2:freg
+		{ return { code: 83, f3: 19, rd:rd, fs1:fs1, fs2:fs2 }; }
+
+	/ op:"flw "i fd:freg comma _ "(" rs1:reg _ ")"
+		{ return { code:83, f3:32, fd:fd, rs1:rs1 }; }
+	/ op:"flw "i fd:freg comma imm:imm _ "(" rs1:reg _ ")"  
+		{ return { code:83, f3:33, fd:fd, rs1:rs1, imm:imm }; }
+	/ op:"fsw "i fs2:freg comma _ "(" rs1:reg _ ")"
+		{ return { code:83, f3:34, fs2:fs2, rs1:rs1 }; }
+	/ op:"fsw "i fs2:freg comma imm:imm _ "(" rs1:reg _ ")"  
+		{ return { code:83, f3:35, fs2:fs2, rs1:rs1, imm:imm }; }
+	/ op:"fld "i fd:freg comma _ "(" rs1:reg _ ")"
+		{ return { code:83, f3:36, fd:fd, rs1:rs1 }; }
+	/ op:"fld "i fd:freg comma imm:imm _ "(" rs1:reg _ ")"  
+		{ return { code:83, f3:37, fd:fd, rs1:rs1, imm:imm }; }
+	/ op:"fsd "i fs2:freg comma _ "(" rs1:reg _ ")"
+		{ return { code:83, f3:38, fs2:fs2, rs1:rs1 }; }
+	/ op:"fsd "i fs2:freg comma imm:imm _ "(" rs1:reg _ ")"  
+		{ return { code:83, f3:39, fs2:fs2, rs1:rs1, imm:imm }; }
+
+	/ op:"fcvt.w.s "i rd:reg comma fs1:freg
+		{ return { code:83, f3:64, rd:rd, fs1:fs1}; }
+	/ op:"fcvt.s.w "i fd:freg comma rs1:reg
+		{ return { code:83, f3:65, fd:fd, rs1:rs1}; }
+	/ op:"fmv.s.w "i rd:reg comma fs1:freg
+		{ return { code:83, f3:66, rd:rd, fs1:fs1}; }
+	/ op:"fmv.w.x "i fd:freg comma rs1:reg
+		{ return { code:83, f3:67, fd:fd, rs1:rs1}; }
+	/ op:"fcvt.w.d "i rd:reg comma fs1:freg
+		{ return { code:83, f3:68, rd:rd, fs1:fs1}; }
+	/ op:"fcvt.d.w "i fd:freg comma rs1:reg
+		{ return { code:83, f3:69, fd:fd, rs1:rs1}; }
+	/ op:"fcvt.s.d "i fd:freg comma fs1:reg
+		{ return { code:83, f3:70, fd:fd, fs1:fs1}; }
+	/ op:"fcvt.d.s "i fd:freg comma fs1:reg
+		{ return { code:83, f3:71, fd:fd, fs1:fs1}; }
 
 reg "register"
 	= _ ("zero"i/"x0"i/"r0"i) { return 0; }
@@ -350,6 +434,18 @@ imm "signed immediate"
 	= _ s:("-"/"+")? _ n:[0-9]+ 
     	{if(s) return parseInt(s + n.join("")); 
         else return parseInt(n.join(""));}
+
+float "floating point"
+	= _ s:("-"/"*")? _ n:([0-9]*"."?[0-9]*)
+		{ 	if (s) {
+				let f = parseFloat(s + n.join(""));
+				return Number.isNaN(f)?0:f;
+			} else {
+				let f = parseFloat(n.join(""));
+				return Number.isNaN(f)?0:f;
+			}
+		}
+
 
 comma "comma"
 	= _ "," 
