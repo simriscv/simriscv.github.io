@@ -169,8 +169,11 @@ function loadCode() {
             loadFile("src/gen_abc.s");
             break;
         case "factorial":
-                loadFile("src/factorial.s");
-                break;
+            loadFile("src/factorial.s");
+            break;
+        case "float":
+            loadFile("src/float.s");
+            break;
     }
 }
 
