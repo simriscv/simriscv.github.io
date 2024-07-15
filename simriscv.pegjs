@@ -436,14 +436,10 @@ imm "signed immediate"
         else return parseInt(n.join(""));}
 
 float "floating point"
-	= _ s:("-"/"*")? _ n:([0-9]*"."?[0-9]*)
-		{ 	if (s) {
-				let f = parseFloat(s + n.join(""));
-				return Number.isNaN(f)?0:f;
-			} else {
-				let f = parseFloat(n.join(""));
-				return Number.isNaN(f)?0:f;
-			}
+	= _ ("+"/"-")? _ [0-9]* "."? [0-9]* 
+		{
+			let f = parseFloat(text().replace(/\s/g, "")); 
+			return Number.isNaN(f)?0:f;
 		}
 
 
