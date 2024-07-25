@@ -44,9 +44,9 @@ body, html {
     width: 40%; /* Ancho del 30% para la columna derecha */
     padding: 10px; /* Espacio interno dentro de la columna */
     box-sizing: border-box; /* Incluir el padding en el ancho total */
-    display: flex; /* Utiliza flexbox para alinear verticalmente */
-    justify-content: center; /* Centrar contenido horizontalmente */
-    align-items: center; /* Centrar contenido verticalmente */
+    /*display: flex; /* Utiliza flexbox para alinear verticalmente */
+    /*justify-content: center; /* Centrar contenido horizontalmente */
+    /*align-items: center; /* Centrar contenido verticalmente */
   }
   
   .button-container {
