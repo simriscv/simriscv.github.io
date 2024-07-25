@@ -30,7 +30,13 @@
             <textarea id="console" class="custom-text2" spellcheck="false">$ </textarea>
         </div>
         <div class="middle-column">
-            <div id="registers-table"></div>
+            <div class="tabs">
+                <button class="tab-button active" onclick="openTab('tab1')">Pestaña 1</button>
+                <button class="tab-button" onclick="openTab('tab2')">Pestaña 2</button>
+                <button class="tab-button" onclick="openTab('tab3')">Pestaña 3</button>
+            </div>
+            <div id="registers-table" class="tab active"></div>
+            <div id="stack-table"  class="tab active"></div>
         </div>
         <div class="right-column">
             <div id="stack-table"></div>
