@@ -63,7 +63,8 @@ body, html {
   
   table {
     width: 100%; /* Ancho completo de la tabla */
-    max-width: 100%; /* Máximo ancho de la tabla */
+    height: 85%;
+    /*max-width: 100%; /* Máximo ancho de la tabla */
     border-collapse: collapse; /* Colapsar bordes de celda */
     table-layout: fixed; /* Fijar el tamaño de la tabla */
   }
@@ -89,11 +90,11 @@ body, html {
 .tab-button {
   cursor: pointer;
   padding: 8px 16px;
-  background-color: #f1f1f1;
-  border: 1px solid #ccc;
+  background-color: #000000;
+  border: 1px solid #555;
   border-bottom: none;
   transition: background-color 0.3s ease;
 }
 .tab-button.active {
-  background-color: #ddd;
+  background-color: #555555;
 }
