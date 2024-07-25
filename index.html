@@ -30,12 +30,35 @@
             <textarea id="console" class="custom-text2" spellcheck="false">$ </textarea>
         </div>
         <div class="middle-column">
-            <div id="registers-table" ></div>
+            <div class="tab-buttons">
+                <button class="tab-button active" onclick="openTab('registers-table')">Registers</button>
+                <button class="tab-button" onclick="openTab('stack-table')">Memory</button>
+            </div>
+            <div id="registers-table" class="tab active"></div>
+            <div id="stack-table" class="tab active"></div>
         </div>
         <div class="right-column">
-            <div id="stack-table"></div>
+            
         </div>
     </div>
+
+    <script>
+        function openTab(tabName) {
+            // Ocultar todas las pestañas y desactivar los botones
+            var tabs = document.getElementsByClassName("tab");
+            for (var i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove("active");
+            }
+            var buttons = document.getElementsByClassName("tab-button");
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove("active");
+            }
+    
+            // Mostrar la pestaña seleccionada y activar su botón
+            document.getElementById(tabName).classList.add("active");
+            event.currentTarget.classList.add("active");
+        }
+    </script>
 </body>
 
 </html>
