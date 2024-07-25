@@ -145,6 +145,12 @@ export const ALIAS = [
     "a6", "a7", "s2", "s3", "s4", "s5", "s6", "s7", 
     "s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6" ];
 
+export const ALIAS_FLOAT = [
+    "ft0", "ft1", "ft2", "ft3", "ft4", "ft5", "ft6", "ft7", 
+    "fs0", "fs1", "fa0", "fa1", "fa2", "fa3", "fa4", "fa5", 
+    "fa6", "fa7", "fs2", "fs3", "fs4", "fs5", "fs6", "fs7", 
+    "fs8", "fs9", "fs10", "fs11", "ft8", "ft9", "ft10", "ft11" ];
+
 export const ADDR = [
     "0xFFFF80", "0xFFFF88", "0xFFFF90", "0xFFFF98",
     "0xFFFFA0", "0xFFFFA8", "0xFFFFB0", "0xFFFFB8",

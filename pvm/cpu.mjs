@@ -18,6 +18,7 @@ export default class CPU {
         this.addr = c.ADDR;
         this.instructions = [];
         this.alias = c.ALIAS;
+        this.aliasFloat = c.ALIAS_FLOAT;
         this.pc = 0;
         this.debug = false;
         this.flag = flag;

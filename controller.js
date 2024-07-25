@@ -27,6 +27,7 @@ export function run() {
     vm.run();
     updateConsole("run\n"+vm.output+"$ ");
     showRegisters();
+    showFloatRegisters();
     showStack();
 }
 
@@ -35,6 +36,7 @@ window.onload = function() {
     loadFile("src/hello.s");
     //document.getElementById("code").value = input
     showRegisters();
+    showFloatRegisters();
     showStack();
 };
 
@@ -115,6 +117,39 @@ function showRegisters() {
     tableContainer.appendChild(table);
 }
 
+// show register
+function showFloatRegisters() {
+    const tableContainer = document.getElementById('float-table');
+    const table = document.createElement('table');
+    const headerRow = document.createElement('tr');
+    const indexHeader = document.createElement('th');
+    indexHeader.textContent = 'Register';
+    headerRow.appendChild(indexHeader);
+    const aliasHeader = document.createElement('th');
+    aliasHeader.textContent = 'Alias';
+    headerRow.appendChild(aliasHeader);
+    const contentHeader = document.createElement('th');
+    contentHeader.textContent = 'Value';
+    headerRow.appendChild(contentHeader);
+    table.appendChild(headerRow);
+
+    // load values
+    for (let i = 0; i < vm.registers.length; i++) {
+      const rowData = document.createElement('tr');
+      const indexCell = document.createElement('td');
+      indexCell.textContent = "f"+i;
+      rowData.appendChild(indexCell);
+      const aliasCell = document.createElement('td');
+      aliasCell.textContent = vm.aliasFloat[i];
+      rowData.appendChild(aliasCell);
+      const contentCell = document.createElement('td');
+      contentCell.textContent = vm.fregisters[i];
+      rowData.appendChild(contentCell);
+      table.appendChild(rowData);
+    }
+    tableContainer.innerHTML = '';
+    tableContainer.appendChild(table);
+}
 
 // show stack
 function showStack() {
