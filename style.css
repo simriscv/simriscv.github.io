@@ -34,22 +34,14 @@ body, html {
  }
   
   .left-column {
-    width: 55%; /* Ancho del 70% para la columna izquierda */
+    width: 60%; /* Ancho del 70% para la columna izquierda */
     padding: 10px; /* Espacio interno dentro de la columna */
     box-sizing: border-box; /* Incluir el padding en el ancho total */
   }
   
-  .middle-column {
-    width: 20%; /* Ancho del 30% para la columna derecha */
-    padding: 10px; /* Espacio interno dentro de la columna */
-    box-sizing: border-box; /* Incluir el padding en el ancho total */
-    display: flex; /* Utiliza flexbox para alinear verticalmente */
-    justify-content: center; /* Centrar contenido horizontalmente */
-    align-items: center; /* Centrar contenido verticalmente */
-  }
 
   .right-column {
-    width: 25%; /* Ancho del 30% para la columna derecha */
+    width: 40%; /* Ancho del 30% para la columna derecha */
     padding: 10px; /* Espacio interno dentro de la columna */
     box-sizing: border-box; /* Incluir el padding en el ancho total */
     display: flex; /* Utiliza flexbox para alinear verticalmente */
