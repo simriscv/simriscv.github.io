@@ -350,7 +350,6 @@ export default class CPU {
 
 // ********** I TYPE **********
                 else if (op.code == c.I_TYPE) {
-                    alert(op.f3);
                     if (op.f3 == c.ADDI){
                         let rs1 = this.registers[op.rs1];
                         this.registers[op.rd] = rs1 + op.imm;
