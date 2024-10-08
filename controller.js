@@ -226,6 +226,7 @@ document.addEventListener("DOMContentLoaded", function() {
       });    
   });
 
+/*
 // assemble button listener
 document.addEventListener('DOMContentLoaded', function() {
   const loadButton = document.getElementById('assemble');
@@ -233,6 +234,7 @@ document.addEventListener('DOMContentLoaded', function() {
       assemble();
   });
 });
+*/
 
 // run button listener
 document.addEventListener('DOMContentLoaded', function() {
