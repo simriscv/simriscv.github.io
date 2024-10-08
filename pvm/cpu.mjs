@@ -355,8 +355,7 @@ export default class CPU {
                         this.registers[op.rd] = rs1 + op.imm;
                     } else if (op.f3 == c.SLLI) {
                         let rs1 = this.registers[op.rs1];
-                        this.registers[op.rd] = rs1 << op.imm;
-                        alert(rs1 << op.imm);
+                        this.registers[op.rd] = rs1 + op.imm;
                     } else if (op.f3 == c.SLTI) {
                         let rs1 = this.registers[op.rs1];
                         if (rs1 < op.imm) {
