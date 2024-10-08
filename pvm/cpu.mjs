@@ -234,9 +234,31 @@ export default class CPU {
                     if (op.f3 == c.ADDI){
                         let rs1 = this.registers[op.rs1];
                         this.registers[op.rd] = rs1 + op.imm;
+                    } else if (op.f3 == c.SLLI) {
+                        let rs1 = this.registers[op.rs1];
+                        this.registers[op.rd] = rs1 + op.imm;
+                    } else if (op.f3 == c.SLTI) {
+                        let rs1 = this.registers[op.rs1];
+                        if (rs1 < op.imm) {
+                            this.registers[op.rd] = 1;
+                        } else {
+                            this.registers[op.rd] = 0;
+                        }                        
+                    } else if (op.f3 == c.SLTIU) {
+                        let rs1 = this.registers[op.rs1];
+                        if (Math.abs(rs1) < Math.abs(op.imm)) {
+                            this.registers[op.rd] = 1;
+                        } else {
+                            this.registers[op.rd] = 0;
+                        }                        
                     } else if (op.f3 == c.XORI) {
                         let rs1 = this.registers[op.rs1];
                         this.registers[op.rd] = rs1 ^ op.imm;
+                    } else if (op.f3 == c.I5) {
+                        if (op.f7 == c.SRLI || op.f7 == c.SRAI) {
+                            let rs1 = this.registers[op.rs1];
+                            this.registers[op.rd] = rs1 >> op.imm;                            
+                        }
                     } else if (op.f3 == c.ORI) {
                         let rs1 = this.registers[op.rs1];
                         this.registers[op.rd] = rs1 | op.imm;
@@ -348,44 +370,6 @@ export default class CPU {
                     }
                 } 
 
-// ********** I TYPE **********
-                else if (op.code == c.I_TYPE) {
-                    if (op.f3 == c.ADDI){
-                        let rs1 = this.registers[op.rs1];
-                        this.registers[op.rd] = rs1 + op.imm;
-                    } else if (op.f3 == c.SLLI) {
-                        let rs1 = this.registers[op.rs1];
-                        this.registers[op.rd] = rs1 + op.imm;
-                    } else if (op.f3 == c.SLTI) {
-                        let rs1 = this.registers[op.rs1];
-                        if (rs1 < op.imm) {
-                            this.registers[op.rd] = 1;
-                        } else {
-                            this.registers[op.rd] = 0;
-                        }                        
-                    } else if (op.f3 == c.SLTIU) {
-                        let rs1 = this.registers[op.rs1];
-                        if (Math.abs(rs1) < Math.abs(op.imm)) {
-                            this.registers[op.rd] = 1;
-                        } else {
-                            this.registers[op.rd] = 0;
-                        }                        
-                    } else if (op.f3 == c.XORI) {
-                        let rs1 = this.registers[op.rs1];
-                        this.registers[op.rd] = rs1 ^ op.imm;
-                    } else if (op.f3 == c.I5) {
-                        if (op.f7 == c.SRLI || op.f7 == c.SRAI) {
-                            let rs1 = this.registers[op.rs1];
-                            this.registers[op.rd] = rs1 >> op.imm;                            
-                        }
-                    } else if (op.f3 == c.ORI) {
-                        let rs1 = this.registers[op.rs1];
-                        this.registers[op.rd] = rs1 | op.imm;
-                    } else if (op.f3 == c.ANDI) {
-                        let rs1 = this.registers[op.rs1];
-                        this.registers[op.rd] = rs1 & op.imm;
-                    }
-                }
 
 // ********** R TYPE **********
                 else if (op.code == c.R_TYPE) {
