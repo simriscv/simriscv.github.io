@@ -13,7 +13,7 @@ statements
 	= statement *
 
 statement
-	= __ stmt:label	end?	
+	= __ stmt:label	comment? end?	
 		{ i.push(stmt); }
     / __ stmt:directive	
     / __ stmt:instruction comment? end
@@ -25,20 +25,20 @@ label
 		{ return { code: 1, name: n }; }
 
 directive
-	= "."("global "i/"globl "i) _ n:name end 	
+	= "."("global "i/"globl "i) _ n:name comment? end 	
  		{ i.push({ code:0, f3:0, name:n }); }
 	/ data
 	/ bss
    
-    / ".text"i end
+    / ".text"i comment? end
  		{ i.push({ code:0, f3:3, name:"text" }); }
 
 data
-	= __ ".data"i end (declaration)*
+	= __ ".data"i comment? end (declaration)*
 
 
 declaration
-	= __ n:name _ ":" tail:(__ definition end)+
+	= __ n:name _ ":" tail:(__ definition comment? end)+
 		{
 			i.push({ code:0, f3:2, name:n,
 			vars:[].concat(tail.map(function(i){return i[1];}))});
@@ -92,7 +92,7 @@ bss
 	= __ ".bss"i end (bssdeclaration)*
 
 bssdeclaration
-	= __ n:name _ ":" tail:(__ bssdefinition end)+
+	= __ n:name _ ":" tail:(__ bssdefinition comment? end)+
 		{
 			i.push({ code:0, f3:4, name:n,
 			vars:[].concat(tail.map(function(i){return i[1];}))});
@@ -432,8 +432,10 @@ name "name"
 
 imm "signed immediate"
 	= _ s:("-"/"+")? _ n:[0-9]+ 
-    	{if(s) return parseInt(s + n.join("")); 
-        else return parseInt(n.join(""));}
+    	{ 	if(s) return parseInt(s + n.join("")); 
+        	else return parseInt(n.join("")); }
+	/ "'" c:[^'] "'" 
+      	{ 	return c.charCodeAt(0); }
 
 float "floating point"
 	= _ ("+"/"-")? _ [0-9]* "."? [0-9]* 
