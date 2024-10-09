@@ -95,7 +95,7 @@ function showRegisters() {
     aliasHeader.textContent = 'Alias';
     headerRow.appendChild(aliasHeader);
     const contentHeader = document.createElement('th');
-    contentHeader.textContent = 'Value';
+    contentHeader.textContent = 'Decimal value';
     headerRow.appendChild(contentHeader);
     table.appendChild(headerRow);
 
@@ -129,7 +129,7 @@ function showFloatRegisters() {
     aliasHeader.textContent = 'Alias';
     headerRow.appendChild(aliasHeader);
     const contentHeader = document.createElement('th');
-    contentHeader.textContent = 'Value';
+    contentHeader.textContent = 'Decimal value';
     headerRow.appendChild(contentHeader);
     table.appendChild(headerRow);
 
@@ -160,7 +160,7 @@ function showStack() {
     indexHeader.textContent = 'Address';
     headerRow.appendChild(indexHeader);
     const contentHeader = document.createElement('th');
-    contentHeader.textContent = 'Content';
+    contentHeader.textContent = 'Hexadecimal content';
     headerRow.appendChild(contentHeader);
     table.appendChild(headerRow);
 
