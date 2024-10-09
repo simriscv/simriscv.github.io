@@ -1,15 +1,15 @@
 .global _start
 
 .data
-	str: .string "Hello, World!\n"
+msg: .string "Hello, world!\n"
 
 .text
 _start:
-	li a0, 1
-	la a1, str
-	li a2, 14
-	li a7, 64
-	ecall
+	li a0, 1       # load stdout number
+	la a1, msg     # load msg address
+	li a2, 14      # load msg size
+	li a7, 64      # load write number
+	ecall          # syscall
 
-	li a7, 93
-	ecall
+	li a7, 93      # load exit number
+	ecall          # syscall
