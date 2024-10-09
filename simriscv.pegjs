@@ -434,7 +434,7 @@ imm "signed immediate"
 	= _ s:("-"/"+")? _ n:[0-9]+ 
     	{ 	if(s) return parseInt(s + n.join("")); 
         	else return parseInt(n.join("")); }
-	/ "'" c:[^'] "'" 
+	/ _ "'" c:[^'] "'" 
       	{ 	return c.charCodeAt(0); }
 
 float "floating point"
