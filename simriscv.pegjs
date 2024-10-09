@@ -459,8 +459,8 @@ ___ "ignoredwithnewlineempty"
 	= [ \t\n]+
     
 comments
-	= _ "//"str:("\t"/" "/"!"/[#-~])* end 
+	= _ "#"str:("\t"/" "/"!"/[#-~])* end 
 
 comment
-	= _ "//"str:("\t"/" "/"!"/[#-~])* 
+	= _ "#"str:("\t"/" "/"!"/[#-~])* 
 
