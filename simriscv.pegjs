@@ -431,11 +431,11 @@ name "name"
 	= [A-Z_a-z][A-Z_a-z0-9]* { return text(); }
 
 imm "signed immediate"
-	= _ s:("-"/"+")? _ n:[0-9]+ 
+	= _ "0x"i s:[0-9a-fA-F]+ 
+    	{	return parseInt(s.join(""), 16); }
+    / _ s:("-"/"+")? _ n:[0-9]+ 
     	{ 	if(s) return parseInt(s + n.join("")); 
         	else return parseInt(n.join("")); }
-	/ _ "0x" s:[0-9a-fA-F]+ 
-    	{	return parseInt(s.join(""), 16); }
 	/ _ "'" c:[^'] "'" 
       	{ 	return c.charCodeAt(0); }
 
@@ -467,4 +467,3 @@ comments
 
 comment
 	= _ "#"str:("\t"/" "/"!"/[#-~])* 
-
