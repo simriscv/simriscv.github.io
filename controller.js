@@ -33,7 +33,7 @@ export function run() {
 
 // load initial code
 window.onload = function() {
-    loadFile("src/hello.s");
+    loadFile("src/print.s");
     //document.getElementById("code").value = input
     showRegisters();
     showFloatRegisters();
