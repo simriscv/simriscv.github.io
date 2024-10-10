@@ -662,6 +662,13 @@ export default class CPU {
                             this.output += str;
                         }
                         
+                    } else if (this.registers[17] == 63) {
+                        if (this.registers[10] == 0) {
+                            let addr = this.registers[11];
+                            let offset = this.registers[12];
+                            let person = prompt("Please enter buffer", "SimRISCV");
+
+                        }
                     }
 
                 }
