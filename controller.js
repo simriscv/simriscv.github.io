@@ -19,9 +19,20 @@ export function assemble() {
         quad_json = JSON.stringify(vm.instructions); 
         updateConsole(quad_json+"\n$ ");
      } catch (e) {
-        updateConsole(e+"\n$ ");
+        if (e instanceof peg$SyntaxError) {
+            // Acceder a la ubicación del error
+            const { location } = e;
+            const errorMessage = `Error in line ${location.start.line}, column ${location.start.column}: ${e.message}`;
+            updateConsole(errorMessage + "\n$ ");
+        } else {
+            // Manejar otros tipos de errores
+            updateConsole(e.message + "\n$ ");
+        }
+        //updateConsole(e+"\n$ ");
     }
 }
+
+
 
 // run program
 export function run() {
