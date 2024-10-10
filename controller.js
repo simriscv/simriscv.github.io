@@ -4,7 +4,9 @@ import CPU from './pvm/cpu.mjs'
 
 
 const vm = new CPU();
-
+const fileSelect = document.getElementById('options');
+//const loadFileButton = document.getElementById('loadFile');
+const fileContent = document.getElementById('code');
 
 // assemble code
 export function assemble() {
@@ -31,14 +33,43 @@ export function run() {
     showStack();
 }
 
+// Obtener la lista de archivos de la carpeta
+async function loadFileList() {
+    const response = await fetch(`https://api.github.com/repos/luisespino/assembly/contents/risc-v`);
+    const data = await response.json();
+
+    if (Array.isArray(data)) {
+        data.forEach(file => {
+            if (file.type === 'file') {
+                const option = document.createElement('option');
+                option.value = file.download_url; // URL para descargar el archivo
+                option.textContent = file.name; // Nombre del archivo
+                fileSelect.appendChild(option);
+            }
+        });
+    }
+}
+
 // load initial code
 window.onload = function() {
-    loadFile("src/print.s");
+    //loadFile("src/print.s");
     //document.getElementById("code").value = input
+    loadFileList();
     showRegisters();
     showFloatRegisters();
     showStack();
 };
+
+// Cargar el contenido del archivo seleccionado
+async function loadFileContent() {
+    const selectedFileUrl = fileSelect.value;
+    if (selectedFileUrl) {
+        const response = await fetch(selectedFileUrl);
+        const text = await response.text();
+        fileContent.value = text; // Mostrar el contenido en el textarea
+    }
+}
+
 
 function loadFile(filePath) {
     fetch(filePath)
@@ -222,10 +253,13 @@ document.getElementById('code').addEventListener('keydown', tabHandler);
 // keydown listener for delete and backspace handler
 document.getElementById('console').addEventListener('keydown', delHandler);
 
+
+//loadFileButton.addEventListener('click', loadFileContent);
 document.addEventListener("DOMContentLoaded", function() {
     var combobox = document.getElementById("options");
     combobox.addEventListener("change", function() {
-        loadCode();
+        //loadCode();
+        loadFileContent();
       });    
   });
 
