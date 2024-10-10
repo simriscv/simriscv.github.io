@@ -26,7 +26,7 @@ export function assemble() {
             updateConsole(errorMessage + "\n$ ");
         } else {
             // Manejar otros tipos de errores
-            updateConsole(e.message + "\n$ ");
+            updateConsole(e + "\n$ ");
         }
         //updateConsole(e+"\n$ ");
     }
