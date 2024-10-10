@@ -194,9 +194,12 @@ function loadCode() {
     var selected = document.getElementById("options").value;
 
     switch (selected) {
-        case "hello":
-            loadFile("src/hello.s");
+        case "print":
+            loadFile("src/print.s");
             break;
+        case "read":
+            loadFile("src/read.s");
+            break;            
         case "arithmetic":
             loadFile("src/arithmetic.s");
             break;
