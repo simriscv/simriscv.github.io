@@ -42,6 +42,7 @@ export function run() {
     showRegisters();
     showFloatRegisters();
     showStack();
+    vm.init();
 }
 
 // Obtener la lista de archivos de la carpeta
