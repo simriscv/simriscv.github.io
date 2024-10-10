@@ -18,6 +18,7 @@ export function assemble() {
         vm.instructions = parse(code);
         quad_json = JSON.stringify(vm.instructions); 
         updateConsole(quad_json+"\n$ ");
+        return true;
      } catch (e) {
         if (e instanceof SyntaxError) {
             // Acceder a la ubicación del error
@@ -29,6 +30,7 @@ export function assemble() {
             updateConsole(e + "\n$ ");
         }
         //updateConsole(e+"\n$ ");
+        return false;
     }
 }
 
@@ -36,13 +38,13 @@ export function assemble() {
 
 // run program
 export function run() {
-    assemble();
-    vm.run();
-    updateConsole("run\n"+vm.output+"$ ");
-    showRegisters();
-    showFloatRegisters();
-    showStack();
-    vm.init();
+    if (assemble()) {
+        vm.run();
+        updateConsole("run\n"+vm.output+"$ ");
+        showRegisters();
+        showFloatRegisters();
+        showStack();   
+    }
 }
 
 // Obtener la lista de archivos de la carpeta
