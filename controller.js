@@ -19,7 +19,7 @@ export function assemble() {
         quad_json = JSON.stringify(vm.instructions); 
         updateConsole(quad_json+"\n$ ");
      } catch (e) {
-        if (e instanceof peg$SyntaxError) {
+        if (e instanceof SyntaxError) {
             // Acceder a la ubicación del error
             const { location } = e;
             const errorMessage = `Error in line ${location.start.line}, column ${location.start.column}: ${e.message}`;
