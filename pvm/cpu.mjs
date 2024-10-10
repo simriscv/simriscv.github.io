@@ -664,9 +664,22 @@ export default class CPU {
                         
                     } else if (this.registers[17] == 63) {
                         if (this.registers[10] == 0) {
+                            let view = new DataView(this.stack);
                             let addr = this.registers[11];
                             let offset = this.registers[12];
-                            let person = prompt("Please enter buffer", "SimRISCV");
+                            let stdin = prompt("Standard input:");
+                            if (stdin != null) {
+                                if (stdin.length < offset) {
+                                    stdin += '\n';
+                                } else {
+                                    stdin = stdin.slice(0, offset) + '\n';
+                                }
+                                for (let k of stdin) {
+                                    view.setUint8(addr,k.charCodeAt(0));
+                                    addr += 1;
+                                } 
+                                this.output += stdin;
+                            }
 
                         }
                     }
