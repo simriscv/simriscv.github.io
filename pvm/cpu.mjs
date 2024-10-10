@@ -658,6 +658,15 @@ export default class CPU {
                             let addr = this.registers[11];
                             let offset = addr + this.registers[12];
                             let i8a = new Uint8Array(this.stack.slice(addr,offset));
+                            // Encuentra la posición del primer 0
+                            let index = i8a.indexOf(0);
+
+                            if (index !== -1) {
+                                // Corta el arreglo en el índice del primer 0
+                                i8a = i8a.slice(0, index);
+                            }
+
+                            
                             let str = String.fromCharCode.apply(null, i8a);
                             this.output += str;
                         }
