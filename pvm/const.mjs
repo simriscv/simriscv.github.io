@@ -127,17 +127,19 @@ export const FD_TYPE = 83;
     export const FCVTSD = 70;
     export const FCVTDS = 71;
 
-export const B_TYPE = 99
-    export const BEQ = 0
-    export const BNE = 1
-    export const BLT = 4
-    export const BGE = 5
-    export const BLTU = 6
-    export const BGEU = 7
+export const B_TYPE = 99;
+    export const BEQ = 0;
+    export const BNE = 1;
+    export const BLT = 4;
+    export const BGE = 5;
+    export const BLTU = 6;
+    export const BGEU = 7;
 
-export const JALR = 103
+export const JALR = 103;
 
-export const JAL = 111
+export const JAL = 111;
+
+export const MEM_SIZE = 16777216;
 
 export const ALIAS = [
     "zero", "ra", "sp", "gp", "tp", "t0", "t1", "t2", 
