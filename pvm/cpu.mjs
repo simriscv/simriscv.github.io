@@ -209,7 +209,7 @@ export default class CPU {
                             if (addr < 0) {
                                 let bin = (addr >>> 0).toString(2);
                                 let bin24 = bin.padStart(24, '1');
-                                let addr = parseInt(bin24, 2);
+                                addr = parseInt(bin24, 2);
                             }
                             let offset = addr + 8;
                             let view = new DataView(this.stack.slice(addr,offset));
@@ -220,7 +220,7 @@ export default class CPU {
                             if (addr < 0) {
                                 let bin = (addr >>> 0).toString(2);
                                 let bin24 = bin.padStart(24, '1');
-                                let addr = parseInt(bin24, 2);
+                                addr = parseInt(bin24, 2);
                             }
                             let offset = addr + 8;
                             let view = new DataView(this.stack.slice(addr,offset));
@@ -363,7 +363,7 @@ export default class CPU {
                             if (addr < 0) {
                                 let bin = (addr >>> 0).toString(2);
                                 let bin24 = bin.padStart(24, '1');
-                                let addr = parseInt(bin24, 2);
+                                addr = parseInt(bin24, 2);
                             }
                             view.setInt32(addr,value);
                         } else if (op.f7 == c.SWI) {
@@ -373,7 +373,7 @@ export default class CPU {
                             if (addr < 0) {
                                 let bin = (addr >>> 0).toString(2);
                                 let bin24 = bin.padStart(24, '1');
-                                let addr = parseInt(bin24, 2);
+                                addr = parseInt(bin24, 2);
                             }                                                        
                             view.setInt32(addr,value);
                         } else if (op.f7 == c.SWS) {
