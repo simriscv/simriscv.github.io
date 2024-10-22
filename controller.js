@@ -218,7 +218,7 @@ function showStack() {
         indexCell.textContent = vm.addr[i];
         rowData.appendChild(indexCell);
         const contentCell = document.createElement('td');
-        if (i<16) a = 2097135 + i;
+        if (i<16) a = 2097136 + i;
         else a = i - 16;
         let str = "";
         let i8a = new Uint8Array(vm.stack.slice(a*8,a*8+8));
