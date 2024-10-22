@@ -14,11 +14,7 @@
             <h2><img src="riscv.svg" style="width: 25px; background-color: white;">&nbsp;SimRISC-V</h2>
             code:
             <select id="options" >
-                <option value="hello" selected>hello.s</option>
-                <option value="arithmetic">arithmetic.s</option>
-                <option value="gen_abc">gen_abc.s</option>
-                <option value="factorial">factorial.s</option>
-                <option value="float">float.s</option>
+                <option value="">Select a file...</option>
             </select>
             <br \>
             <textarea id="code" class="custom-text1" spellcheck="false"></textarea>
@@ -33,7 +29,7 @@
             <h2></h2>
             <div>
             <button class="tab-button active" onclick="openTab('registers-table')">Integer Registers</button>
-            <button class="tab-button" onclick="openTab('stack-table')">Memory Process</button>
+            <button class="tab-button" onclick="openTab('stack-table')">Memory</button>
             <button class="tab-button" onclick="openTab('float-table')">Float Registers</button>
             <div id="registers-table" class="tab active"></div>
             <div id="stack-table" class="tab"></div>

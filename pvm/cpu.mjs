@@ -244,9 +244,31 @@ export default class CPU {
                     if (op.f3 == c.ADDI){
                         let rs1 = this.registers[op.rs1];
                         this.registers[op.rd] = rs1 + op.imm;
+                    } else if (op.f3 == c.SLLI) {
+                        let rs1 = this.registers[op.rs1];
+                        this.registers[op.rd] = rs1 << op.imm;
+                    } else if (op.f3 == c.SLTI) {
+                        let rs1 = this.registers[op.rs1];
+                        if (rs1 < op.imm) {
+                            this.registers[op.rd] = 1;
+                        } else {
+                            this.registers[op.rd] = 0;
+                        }                        
+                    } else if (op.f3 == c.SLTIU) {
+                        let rs1 = this.registers[op.rs1];
+                        if (Math.abs(rs1) < Math.abs(op.imm)) {
+                            this.registers[op.rd] = 1;
+                        } else {
+                            this.registers[op.rd] = 0;
+                        }                        
                     } else if (op.f3 == c.XORI) {
                         let rs1 = this.registers[op.rs1];
                         this.registers[op.rd] = rs1 ^ op.imm;
+                    } else if (op.f3 == c.I5) {
+                        if (op.f7 == c.SRLI || op.f7 == c.SRAI) {
+                            let rs1 = this.registers[op.rs1];
+                            this.registers[op.rd] = rs1 >> op.imm;                            
+                        }
                     } else if (op.f3 == c.ORI) {
                         let rs1 = this.registers[op.rs1];
                         this.registers[op.rd] = rs1 | op.imm;
@@ -368,44 +390,6 @@ export default class CPU {
                     }
                 } 
 
-// ********** I TYPE **********
-                else if (op.code == c.I_TYPE) {
-                    if (op.f3 == c.ADDI){
-                        let rs1 = this.registers[op.rs1];
-                        this.registers[op.rd] = rs1 + op.imm;
-                    } else if (op.f3 == c.SLLI) {
-                        let rs1 = this.registers[op.rs1];
-                        this.registers[op.rd] = rs1 << op.imm;
-                    } else if (op.f3 == c.SLTI) {
-                        let rs1 = this.registers[op.rs1];
-                        if (rs1 < op.imm) {
-                            this.registers[op.rd] = 1;
-                        } else {
-                            this.registers[op.rd] = 0;
-                        }                        
-                    } else if (op.f3 == c.SLTIU) {
-                        let rs1 = this.registers[op.rs1];
-                        if (Math.abs(rs1) < Math.abs(op.imm)) {
-                            this.registers[op.rd] = 1;
-                        } else {
-                            this.registers[op.rd] = 0;
-                        }                        
-                    } else if (op.f3 == c.XORI) {
-                        let rs1 = this.registers[op.rs1];
-                        this.registers[op.rd] = rs1 ^ op.imm;
-                    } else if (op.f3 == c.I5) {
-                        if (op.f7 == c.SRLI || op.f7 == c.SRAI) {
-                            let rs1 = this.registers[op.rs1];
-                            this.registers[op.rd] = rs1 >> op.imm;                            
-                        }
-                    } else if (op.f3 == c.ORI) {
-                        let rs1 = this.registers[op.rs1];
-                        this.registers[op.rd] = rs1 | op.imm;
-                    } else if (op.f3 == c.ANDI) {
-                        let rs1 = this.registers[op.rs1];
-                        this.registers[op.rd] = rs1 & op.imm;
-                    }
-                }
 
 // ********** R TYPE **********
                 else if (op.code == c.R_TYPE) {
@@ -694,10 +678,39 @@ export default class CPU {
                             let addr = this.registers[11];
                             let offset = addr + this.registers[12];
                             let i8a = new Uint8Array(this.stack.slice(addr,offset));
+                            // Encuentra la posición del primer 0
+                            let index = i8a.indexOf(0);
+
+                            if (index !== -1) {
+                                // Corta el arreglo en el índice del primer 0
+                                i8a = i8a.slice(0, index);
+                            }
+
+                            
                             let str = String.fromCharCode.apply(null, i8a);
                             this.output += str;
                         }
                         
+                    } else if (this.registers[17] == 63) {
+                        if (this.registers[10] == 0) {
+                            let view = new DataView(this.stack);
+                            let addr = this.registers[11];
+                            let offset = this.registers[12];
+                            let stdin = prompt("Standard input:");
+                            if (stdin != null) {
+                                if (stdin.length < offset) {
+                                    stdin += '\n';
+                                } else {
+                                    stdin = stdin.slice(0, offset) + '\n';
+                                }
+                                for (let k of stdin) {
+                                    view.setUint8(addr,k.charCodeAt(0));
+                                    addr += 1;
+                                } 
+                                this.output += stdin;
+                            }
+
+                        }
                     }
 
                 }
