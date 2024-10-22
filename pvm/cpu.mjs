@@ -206,12 +206,22 @@ export default class CPU {
                     } else if (op.f3 == c.LW) {
                         if (op.f7 == c.LWR) {
                             let addr = this.registers[op.rs1];
+                            if (addr < 0) {
+                                let bin = (addr >>> 0).toString(2);
+                                let bin24 = bin.padStart(24, '1');
+                                let addr = parseInt(bin24, 2);
+                            }
                             let offset = addr + 8;
                             let view = new DataView(this.stack.slice(addr,offset));
                             this.registers[op.rd] = view.getUint32();
                         } else if (op.f7 == c.LWI) {
                             let addr = this.registers[op.rs1];
                             addr += op.imm;
+                            if (addr < 0) {
+                                let bin = (addr >>> 0).toString(2);
+                                let bin24 = bin.padStart(24, '1');
+                                let addr = parseInt(bin24, 2);
+                            }
                             let offset = addr + 8;
                             let view = new DataView(this.stack.slice(addr,offset));
                             this.registers[op.rd] = view.getUint32();
@@ -328,11 +338,21 @@ export default class CPU {
                         if (op.f7 == c.SWR) {
                             let addr = this.registers[op.rs1];
                             let value = this.registers[op.rs2];
+                            if (addr < 0) {
+                                let bin = (addr >>> 0).toString(2);
+                                let bin24 = bin.padStart(24, '1');
+                                let addr = parseInt(bin24, 2);
+                            }
                             view.setInt32(addr,value);
                         } else if (op.f7 == c.SWI) {
                             let addr = this.registers[op.rs1];
                             let value = this.registers[op.rs2];
-                            addr += op.imm;                            
+                            addr += op.imm;
+                            if (addr < 0) {
+                                let bin = (addr >>> 0).toString(2);
+                                let bin24 = bin.padStart(24, '1');
+                                let addr = parseInt(bin24, 2);
+                            }                                                        
                             view.setInt32(addr,value);
                         } else if (op.f7 == c.SWS) {
                             let addr = this.locateAddr(op.name);
